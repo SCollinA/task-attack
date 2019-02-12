@@ -6,8 +6,8 @@ import TaskDisplay from './TaskDisplay';
 import UpdateUser, { toggleUserModal } from './UpdateUser';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faUserAstronaut, faDoorClosed, faDoorOpen, faPlus, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-library.add(faUserAstronaut, faDoorClosed, faDoorOpen, faPlus, faTrashAlt)
+import { faUserAstronaut, faDoorClosed, faDoorOpen, faPlus, faTrashAlt, faBan } from '@fortawesome/free-solid-svg-icons'
+library.add(faUserAstronaut, faDoorClosed, faDoorOpen, faPlus, faTrashAlt, faBan)
 
 export default class TaskAttack extends React.Component {
     constructor(props) {

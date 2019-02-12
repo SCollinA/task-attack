@@ -66,6 +66,19 @@ html, body, #root {
   background-color: lightgrey;
 }
 
+.UpdateTaskContainer {
+  display: flex;
+  width: 100%;
+}
+
+.UpdateTaskContainer > * {
+  flex: 1;
+}
+
+.TaskDelete {
+  padding: 10% 0;
+}
+
 #UpdateUserForm, #UpdateTaskForm {
   height: 40%;
   width: 90%;

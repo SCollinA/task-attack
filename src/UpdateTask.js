@@ -1,9 +1,10 @@
 import React from 'react'
 import TaskDelete from './TaskDelete'
+import TaskCancel from './TaskCancel'
 
-export default function UpdateTask({ task, updateTask, deleteTask }) {
+export default function UpdateTask({ task, selectTask, updateTask, deleteTask }) {
     return (
-        <>
+        <div className='UpdateTaskContainer'>
             <TaskDelete task={task} deleteTask={deleteTask}/>
             <form id='UpdateTaskForm' onSubmit={event => {
                 event.preventDefault()
@@ -34,7 +35,7 @@ export default function UpdateTask({ task, updateTask, deleteTask }) {
                 <input type='submit' value='update'/>
                 <input type='reset' value='reset'/>
             </form>
-            {/* <TaskCancel /> */}
-        </>
+            <TaskCancel task={task} selectTask={selectTask}/>
+        </div>
     )
 } 

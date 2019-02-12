@@ -9,6 +9,7 @@ export default function TaskCell({ task, selectTask, selectedTask, updateTask, d
             {(selectedTask && task.id === selectedTask.id) && 
                 <UpdateTask 
                 task={selectedTask} 
+                selectTask={selectTask}
                 updateTask={updateTask} 
                 deleteTask={deleteTask}
             />}
