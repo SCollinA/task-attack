@@ -51,7 +51,7 @@ html, body, #root, #TaskAttack {
   padding: 5% 0;
 }
 
-.registerButton:hover, .loginButton:hover, .updateUserIcon:hover, .logoutIcon:hover, .TaskCell:hover, .TaskAdd:hover, .TaskDelete:hover, .TaskCancel:hover {
+.registerButton:hover, .loginButton:hover, .updateUserIcon:hover, .TaskHeader > h1:hover, .logoutIcon:hover, .TaskCell:hover, .TaskAdd:hover, .TaskDelete:hover, .TaskCancel:hover {
   background-color: lightgrey;
   cursor: pointer;
 }

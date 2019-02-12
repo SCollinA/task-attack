@@ -74,6 +74,8 @@ export default class TaskAttack extends React.Component {
         this.setState({ selectedTask: null })
     }
 
+    _goHome = () => this.setState({ updatingUser: false, selectedTask: null })
+
     // UPDATE
     _updateUsername = (username) => this.setState({ username })
 
@@ -130,6 +132,7 @@ export default class TaskAttack extends React.Component {
                 <TaskHeader 
                     username={this.state.username}
                     isLoggedIn={isLoggedIn}
+                    goHome={this._goHome}
                     selectUser={this._selectUser} 
                     logout={this._logout}
                 />

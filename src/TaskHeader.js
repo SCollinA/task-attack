@@ -2,7 +2,7 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import TaskDoor from './TaskDoor'
 
-export default function TaskHeader({ username, isLoggedIn, selectUser, logout }) {
+export default function TaskHeader({ username, isLoggedIn, goHome, selectUser, logout }) {
     return (
         <div className='TaskHeader'>
             {isLoggedIn && (
@@ -12,7 +12,7 @@ export default function TaskHeader({ username, isLoggedIn, selectUser, logout })
                     <h6>{username}</h6>
                 </div>
             )}
-            <h1>TaskAttack</h1>
+            <h1 onClick={goHome}>TaskAttack</h1>
             {isLoggedIn && (
                 <div className='logoutIcon'
                     onClick={() => isLoggedIn && logout()}
