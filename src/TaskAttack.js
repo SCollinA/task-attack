@@ -59,7 +59,11 @@ export default class TaskAttack extends React.Component {
         .then(data => this.setState({ ...data }))
     }
 
-    _selectTask = (selectedTask) => this.setState({ selectedTask })
+    _selectTask = (selectedTask) => {
+        !this.state.selectedTask || this.state.selectedTask.id !== selectedTask.id ?
+        this.setState({ selectedTask }) :
+        this.setState({ selectedTask: null })
+    }
 
     // UPDATE
     _updateUser = (updatedUser) => {
