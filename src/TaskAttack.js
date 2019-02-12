@@ -32,7 +32,14 @@ export default class TaskAttack extends React.Component {
         .then(user => this.setState({ user }))
     }
 
-    _addTask = (newTask) => {
+    _addTask = () => {
+        const newTask = {
+            name: 'new task', 
+            timeStart: new Date().toLocaleTimeString(),
+            timeEnd: new Date().toLocaleTimeString(),
+            mandatory: false,
+            active: false
+        }
         fetch('addTask', {
             method: 'post',
             headers: {
@@ -133,6 +140,7 @@ export default class TaskAttack extends React.Component {
                             selectTask={this._selectTask}
                             selectedTask={this.state.selectedTask}
                             updateTask={this._updateTask}
+                            addTask={this._addTask}
                         />
                         {/* <TaskBar tasks={this.state.tasks} updateTask={this._updateTask}/> */}
                     </div>
