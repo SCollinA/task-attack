@@ -25,14 +25,13 @@ export default class TaskCell extends React.Component {
         const isSelected = selectedTask && selectedTask.id === task.id
         console.log(task.time_end, this.state.task.time_end)
         return (
-            <div className='TaskCellWrapper'
-                style={{
-                    // height: `${task.time_end - task.time_start}px`
-                    height: `100px`
-                }}
-            >
+            <div className='TaskCellWrapper'>
                 <div className={`TaskCell${isSelected ? ' selectedTask' : ''}${task.active ? ' activeTask' : ''}`} 
                     onClick={() => selectTask(task)}
+                    style={{
+                        height: `${(task.time_end[0] * 60 + task.time_end[1]) - (task.time_start[0] * 60 + task.time_start[1])}px`
+                        // height: `100px`
+                    }}
                 >
                     <h4>{this.state.task.name}</h4>
                     <h6>{this.state.task.time_start.join(':')}</h6>

@@ -66,9 +66,8 @@ html, body, #root, #TaskAttack {
   width: 100%;
 }
 
-.TaskDisplay {
-  flex: 1;
-}
+/* .TaskDisplay {
+} */
 
 .TaskCell {
   display: flex;
