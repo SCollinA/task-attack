@@ -17,7 +17,7 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
                     event.preventDefault()
                     if (event.target.timeStart.value > event.target.timeEnd.value) {
                         window.alert('time end must be after time start')
-                        updateTaskForm({time_start: event.target.timeEnd.value})
+                        updateTaskForm({time_start: event.target.timeEnd.value.split(':')})
                     } else {
                         updateTask({
                             id: task.id,
@@ -38,14 +38,14 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
                     <input type='time' name='timeStart' 
                         value={task.time_start.join(':')} 
                         max={task.time_end.join(':')} 
-                        onChange={event => event.target.value < event.target.form.timeEnd.value && updateTaskForm({time_start: event.target.value})}
+                        onChange={event => event.target.value < event.target.form.timeEnd.value && updateTaskForm({time_start: event.target.value.split(':')})}
                     />
                 </label>
                 <label name='timeEnd'>time end
                     <input type='time' name='timeEnd' 
                         value={task.time_end.join(':')}
                         min={task.time_start.join(':')}
-                        onChange={event => event.target.value > event.target.form.timeStart.value && updateTaskForm({time_end: event.target.value})}
+                        onChange={event => event.target.value > event.target.form.timeStart.value && updateTaskForm({time_end: event.target.value.split(':')})}
                     />
                 </label>
                 <div className='updateTaskChecks'>

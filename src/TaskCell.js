@@ -23,7 +23,7 @@ export default class TaskCell extends React.Component {
     render() {
         const { task, selectTask, selectedTask, updateTask, deleteTask } = this.props
         const isSelected = selectedTask && selectedTask.id === task.id
-        console.log(task.time_end, this.state.task.time_end)
+        console.log(this.state.task.time_start)
         return (
             <div className='TaskCellWrapper'>
                 <div className={`TaskCell${isSelected ? ' selectedTask' : ''}${task.active ? ' activeTask' : ''}`} 
