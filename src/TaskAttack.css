@@ -35,6 +35,19 @@ html, body, #root {
   margin-top: 5%;
 }
 
+.loginButtons {
+  display: flex;
+}
+
+.registerButton, .loginButton{
+  flex: 1;
+}
+
+.registerButton:hover, .loginButton:hover {
+  background-color: lightgrey;
+  cursor: pointer;
+}
+
 .TaskAttack {
   overflow-y: auto;
   height: 100%;
