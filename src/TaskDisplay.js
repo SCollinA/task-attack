@@ -2,7 +2,7 @@ import React from 'react'
 import TaskCell from './TaskCell'
 import TaskAdd from './TaskAdd';
 
-export default function TaskDisplay({ tasks, selectTask, selectedTask, updateTask, addTask }) {
+export default function TaskDisplay({ tasks, selectTask, selectedTask, updateTask, addTask, deleteTask }) {
     return (
         <div className='TaskDisplay'>
             {tasks.map(task => (
@@ -11,6 +11,7 @@ export default function TaskDisplay({ tasks, selectTask, selectedTask, updateTas
                     selectTask={selectTask} 
                     selectedTask={selectedTask}
                     updateTask={updateTask}
+                    deleteTask={deleteTask}
                 />
             ))}
             <TaskAdd addTask={addTask} />

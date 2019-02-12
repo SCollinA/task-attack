@@ -51,6 +51,7 @@ html, body, #root {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
+  padding: 2%;
 }
 
 .TaskCell > h4 {
@@ -66,11 +67,38 @@ html, body, #root {
   background-color: lightgrey;
 }
 
+.UpdateTaskContainer {
+  display: flex;
+  width: 100%;
+}
+
+.UpdateTaskContainer > * {
+  flex: 1;
+}
+
+.TaskDelete, .TaskCancel {
+  padding: 10% 0;
+}
+
+.TaskDelete:hover, .TaskCancel:hover {
+  background-color: lightgrey;
+}
+
 #UpdateUserForm, #UpdateTaskForm {
   height: 40%;
   width: 90%;
   display: flex;
   flex-direction: column;
+  background-color: lightgrey;
+}
+
+#UpdateUserForm, #UpdateTaskForm > label {
+  display: flex;
+  white-space: nowrap;
+}
+
+.TaskAdd {
+  padding: 2%;
 }
 
 /* ===================== */
