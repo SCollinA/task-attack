@@ -54,7 +54,7 @@ export default class TaskAttack extends React.Component {
     }
 
     // RETRIEVE
-    _submitLogin = (loginAttempt) => {
+    _login = (loginAttempt) => {
         fetch('login', {
             method: 'post',
             headers: {
@@ -139,7 +139,7 @@ export default class TaskAttack extends React.Component {
                 />
                 {/* show login form if not logged in */}
                 {(!isLoggedIn && 
-                    <Login login={this._submitLogin} register={this._register}/>) 
+                    <Login login={this._login} register={this._register}/>) 
                 || (
                     <div className='TaskAttack'>
                         {this.state.updatingUser ?
