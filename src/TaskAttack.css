@@ -22,6 +22,10 @@ html, body, #root {
   justify-content: space-around;
 }
 
+.TaskHeader > * {
+  padding: 2% 0;
+}
+
 .TaskHeader > .TaskDoor:active {
   background-color: lightgrey;
 }
@@ -100,10 +104,20 @@ html, body, #root {
   padding: 2% 5%;
 }
 
-#UpdateUserForm > label, #UpdateTaskForm > label {
+#UpdateUserForm > label, #UpdateTaskForm > label, .updateTaskChecks {
   display: flex;
   white-space: nowrap;
-  /* padding: 2% 5%; */
+  padding: 5% 0;
+}
+
+.updateTaskButtons, .updateTaskChecks {
+  width: 100%;
+  display: flex;
+}
+
+.updateTaskButtons > * {
+  flex: 1;
+  padding: 2%;
 }
 
 .TaskAdd {

@@ -26,14 +26,18 @@ export default function UpdateTask({ task, selectTask, updateTask, deleteTask })
                 <label name='timeEnd'>time end
                     <input type='time' name='timeEnd' defaultValue={`${task.time_end}`}/>
                 </label>
-                <label name='mandatory'>mandatory
-                    <input type='checkbox' name='mandatory' defaultChecked={task.mandatory}/>
-                </label>
-                <label name='active'>active
-                    <input type='checkbox' name='active' defaultChecked={task.active}/>
-                </label>
-                <input type='submit' value='update'/>
-                <input type='reset' value='reset'/>
+                <div className='updateTaskChecks'>
+                    <label name='mandatory'>mandatory
+                        <input type='checkbox' name='mandatory' defaultChecked={task.mandatory}/>
+                    </label>
+                    <label name='active'>active
+                        <input type='checkbox' name='active' defaultChecked={task.active}/>
+                    </label>
+                </div>
+                <div className='updateTaskButtons'>
+                    <input type='reset' value='reset'/>
+                    <input type='submit' value='update'/>
+                </div>
             </form>
             <TaskCancel task={task} selectTask={selectTask}/>
         </div>
