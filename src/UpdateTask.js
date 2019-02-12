@@ -2,7 +2,7 @@ import React from 'react'
 import TaskDelete from './TaskDelete'
 import TaskCancel from './TaskCancel'
 
-export default function UpdateTask({ task, selectTask, updateTask, deleteTask }) {
+export default function UpdateTask({ task, taskname, updateTaskname, selectTask, updateTask, deleteTask }) {
     return (
         <div className='UpdateTaskContainer'>
             <TaskDelete task={task} deleteTask={deleteTask}/>
@@ -18,7 +18,7 @@ export default function UpdateTask({ task, selectTask, updateTask, deleteTask })
                 })
             }}>
                 <label name='name'>new name
-                    <input type='text' name='name' defaultValue={`${task.name}`}/>
+                    <input type='text' name='name' value={taskname} onChange={event => updateTaskname(event.target.value)}/>
                 </label>
                 <label name='timeStart'>time start
                     <input type='time' name='timeStart' defaultValue={`${task.time_start}`}/>
