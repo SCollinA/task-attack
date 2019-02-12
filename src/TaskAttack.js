@@ -1,11 +1,11 @@
 import React from 'react'
 import './TaskAttack.css'
-import TaskHeader, { toggleUserModal } from './TaskHeader'
+import TaskHeader from './TaskHeader'
 import Login from './TaskLogin';
 import TaskBar from './TaskBar';
 import TaskDisplay from './TaskDisplay';
-import UpdateUser from './UpdateUser';
-import UpdateTask from './UpdateTask';
+import UpdateUser, { toggleUserModal } from './UpdateUser';
+import UpdateTask, { toggleTaskModal } from './UpdateTask';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserAstronaut, faDoorClosed, faDoorOpen } from '@fortawesome/free-solid-svg-icons'
@@ -81,7 +81,7 @@ export default class TaskAttack extends React.Component {
             body: JSON.stringify(updatedTask)
         })
         .then(res => res.json())
-        .then(task => this.setState({ tasks: [ ...this.state.tasks.filter(oldTask => oldTask.id !== task.id), task ] }))
+        .then(task => this.setState({ tasks: [ ...this.state.tasks.filter(oldTask => oldTask.id !== task.id), task ] }, toggleTaskModal()))
     }
 
     // DELETE

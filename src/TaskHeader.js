@@ -1,5 +1,6 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { toggleUserModal } from './UpdateUser'
 
 export default function TaskHeader({ isLoggedIn, logout }) {
     return (
@@ -22,14 +23,4 @@ export default function TaskHeader({ isLoggedIn, logout }) {
             )}
         </div>
     )
-}
-
-export function toggleUserModal(logout=false) {
-    const updateUserForm = document.getElementById('UpdateUserForm')
-    // if form does not contain modal-hidden class or logging out
-    !updateUserForm.classList.contains('modal-hidden') || logout ?
-        // add the modal-hidden class
-        updateUserForm.classList.add('modal-hidden') :
-        // remove the modal hidden class
-        updateUserForm.classList.remove('modal-hidden')
 }
