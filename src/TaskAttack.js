@@ -87,7 +87,14 @@ export default class TaskAttack extends React.Component {
             body: JSON.stringify(updatedTask)
         })
         .then(res => res.json())
-        .then(task => this.setState({ tasks: [ ...this.state.tasks.filter(oldTask => oldTask.id !== task.id), task ] }))
+        .then(task => this.setState({ 
+            tasks: [ 
+                ...this.state.tasks.filter(oldTask => oldTask.id !== task.id),
+                 task 
+                ],
+            selectedTask: null
+            })
+        )
     }
 
     // DELETE

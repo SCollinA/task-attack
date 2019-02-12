@@ -44,6 +44,11 @@ html, body, #root {
   flex-wrap: wrap;
 }
 
+.taskCell > h4 {
+  margin: 0;
+  width: 100%;
+}
+
 .taskCell:hover {
   background-color: lightgrey;
 }
