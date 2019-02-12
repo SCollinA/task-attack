@@ -38,18 +38,18 @@ html, body, #root {
   overflow-y: auto;
 }
 
-.taskCell {
+.TaskCell {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
 }
 
-.taskCell > h4 {
+.TaskCell > h4 {
   margin: 0;
   width: 100%;
 }
 
-.taskCell:hover {
+.TaskCell:hover {
   background-color: lightgrey;
 }
 
