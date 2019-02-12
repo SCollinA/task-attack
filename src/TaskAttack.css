@@ -30,20 +30,21 @@ html, body, #root {
   flex: 1;
 }
 
-.Login {
+#LoginForm {
   flex: 1;
   margin-top: 5%;
 }
 
-.loginButtons {
+.loginButtons, .userInputs {
   display: flex;
+  padding: 5% 2%;
 }
 
 .registerButton, .loginButton{
   flex: 1;
 }
 
-.registerButton:hover, .loginButton:hover {
+.registerButton:hover, .loginButton:hover, .updateUserIcon:hover, .TaskDoor:hover, .TaskCell:hover, .TaskAdd:hover {
   background-color: lightgrey;
   cursor: pointer;
 }
