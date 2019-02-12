@@ -44,10 +44,10 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
                 </label>
                 <div className='updateTaskChecks'>
                     <label name='mandatory'>mandatory
-                        <input type='checkbox' name='mandatory' defaultChecked={task.mandatory}/>
+                        <input type='checkbox' name='mandatory' checked={task.mandatory} onChange={event => updateTaskForm({mandatory: event.target.checked})}/>
                     </label>
                     <label name='active'>active
-                        <input type='checkbox' name='active' defaultChecked={task.active}/>
+                        <input type='checkbox' name='active' checked={task.active} onChange={event => updateTaskForm({active: event.target.checked})}/>
                     </label>
                 </div>
                 <div className='updateTaskButtons'>
