@@ -9,7 +9,6 @@ export default function TaskDisplay({ tasks, selectTask, selectedTask, children 
                     {(selectedTask && task.id === selectedTask.id) && children}
                 </div>
             ))}
-            
         </div>
     )
 }
