@@ -1,6 +1,6 @@
 import React from 'react'
 import './TaskAttack.css'
-import TaskHeader from './TaskHeader'
+import TaskHeader, { toggleUserModal } from './TaskHeader'
 import Login from './TaskLogin';
 import TaskBar from './TaskBar';
 import TaskDisplay from './TaskDisplay';
@@ -69,7 +69,7 @@ export default class TaskAttack extends React.Component {
             body: JSON.stringify(updatedUser)
         })
         .then(res => res.json())
-        .then(user => this.setState({ user }))
+        .then(user => this.setState({ user }, toggleUserModal()))
     }
 
     _updateTask = (updatedTask) => {
@@ -107,12 +107,12 @@ export default class TaskAttack extends React.Component {
                 {/* show login form if not logged in */}
                 {(!isLoggedIn && <Login login={this._submitLogin} register={this._register}/>) || (
                     <div className='TaskAttack'>
+                    <UpdateUser user={this.state.user} updateUser={this._updateUser} />
+                    {this.state.selectedTask && <UpdateTask task={this.state.selectedTask} updateTask={this._updateTask} />}
                         <TaskDisplay tasks={this.state.tasks}/>
                         <TaskBar tasks={this.state.tasks} updateTask={this._updateTask}/>
                     </div>
                 )}
-                {isLoggedIn && <UpdateUser user={this.state.user} updateUser={this._updateUser} />}
-                {(isLoggedIn && this.state.selectedTask) && <UpdateTask task={this.state.selectedTask} updateTask={this._updateTask} />}
             </div>
         )
     }

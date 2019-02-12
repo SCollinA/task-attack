@@ -39,9 +39,9 @@ html, body, #root {
 } 
 
 #UpdateUserForm, #UpdateTaskForm {
-  height: 90%;
-  margin-top: 15%;
-  width: 100%;
+  height: 40%;
+  margin-top: 10%;
+  width: 90%;
   background-color: rgba(0, 0, 0, 0.25);
 }
 
