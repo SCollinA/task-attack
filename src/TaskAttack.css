@@ -44,7 +44,7 @@ html, body, #root {
   flex: 1;
 }
 
-.registerButton:hover, .loginButton:hover, .updateUserIcon:hover, .TaskDoor:hover, .TaskCell:hover, .TaskAdd:hover {
+.registerButton:hover, .loginButton:hover, .updateUserIcon:hover, .TaskDoor:hover, .TaskCell:hover, .TaskAdd:hover, .TaskDelete:hover, .TaskCancel:hover {
   background-color: lightgrey;
   cursor: pointer;
 }
@@ -74,10 +74,6 @@ html, body, #root {
   background-color: lightgrey;
 }
 
-.updateUserIcon:hover, .TaskDoor:hover, .TaskCell:hover, .TaskAdd:hover {
-  background-color: lightgrey;
-}
-
 .UpdateTaskContainer {
   display: flex;
   width: 100%;
@@ -96,16 +92,18 @@ html, body, #root {
 }
 
 #UpdateUserForm, #UpdateTaskForm {
-  height: 40%;
-  width: 90%;
+  /* height: 40%; */
+  /* width: 90%; */
   display: flex;
   flex-direction: column;
   background-color: lightgrey;
+  padding: 2% 5%;
 }
 
-#UpdateUserForm, #UpdateTaskForm > label {
+#UpdateUserForm > label, #UpdateTaskForm > label {
   display: flex;
   white-space: nowrap;
+  /* padding: 2% 5%; */
 }
 
 .TaskAdd {
