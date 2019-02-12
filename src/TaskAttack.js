@@ -14,6 +14,7 @@ export default class TaskAttack extends React.Component {
         super(props)
         this.state = {
             user: null,
+            username: '',
             tasks: [],
             selectedTask: null,
             updatingUser: false
@@ -30,7 +31,7 @@ export default class TaskAttack extends React.Component {
             body: JSON.stringify(newUser)
         })
         .then(res => res.json())
-        .then(user => this.setState({ user }))
+        .then(user => this.setState({ user, username: user.name }))
     }
 
     _addTask = () => {
@@ -62,10 +63,10 @@ export default class TaskAttack extends React.Component {
             body: JSON.stringify(loginAttempt)
         })
         .then(res => res.json())
-        .then(data => this.setState({ ...data }))
+        .then(data => this.setState({ ...data, username: data.user.name }))
     }
 
-    _selectUser = () => this.setState({ updatingUser: !this.state.updatingUser })
+    _selectUser = () => this.setState({ updatingUser: !this.state.updatingUser, selectedTask: null })
 
     _selectTask = (selectedTask) => {
         !this.state.selectedTask || this.state.selectedTask.id !== selectedTask.id ?
@@ -74,6 +75,8 @@ export default class TaskAttack extends React.Component {
     }
 
     // UPDATE
+    _updateUsername = (username) => this.setState({ username })
+
     _updateUser = (updatedUser) => {
         fetch('updateUser', {
             method: 'post',
@@ -125,7 +128,7 @@ export default class TaskAttack extends React.Component {
         return (
             <div id='TaskAttack'>
                 <TaskHeader 
-                    user={this.state.user}
+                    username={this.state.username}
                     isLoggedIn={isLoggedIn}
                     selectUser={this._selectUser} 
                     logout={this._logout}
@@ -138,7 +141,9 @@ export default class TaskAttack extends React.Component {
                         {this.state.updatingUser ?
                             <UpdateUser 
                                 user={this.state.user} 
-                                updateUser={this._updateUser} 
+                                username={this.state.username}
+                                updateUser={this._updateUser}
+                                updateUsername={this._updateUsername}
                             /> :
                             <TaskDisplay 
                                 tasks={this.state.tasks} 

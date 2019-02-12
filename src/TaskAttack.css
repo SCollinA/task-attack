@@ -47,9 +47,11 @@ html, body, #root, #TaskAttack {
 
 .registerButton, .loginButton {
   flex: 1;
+  margin: 0 5%;
+  padding: 5% 0;
 }
 
-.registerButton:hover, .loginButton:hover, .updateUserIcon:hover, .TaskDoor:hover, .TaskCell:hover, .TaskAdd:hover, .TaskDelete:hover, .TaskCancel:hover {
+.registerButton:hover, .loginButton:hover, .updateUserIcon:hover, .logoutIcon:hover, .TaskCell:hover, .TaskAdd:hover, .TaskDelete:hover, .TaskCancel:hover {
   background-color: lightgrey;
   cursor: pointer;
 }
