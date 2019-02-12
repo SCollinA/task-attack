@@ -76,7 +76,7 @@ export default class TaskAttack extends React.Component {
         })
         .then(res => res.json())
         // will need to receive all tasks here
-        .then(tasks => this.scrubData({ tasks, selectedTask: newTask }))
+        .then(tasks => this.scrubData({ tasks, selectedTask: tasks[tasks.length - 1] }))
     }
 
     // RETRIEVE

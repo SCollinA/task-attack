@@ -29,8 +29,8 @@ export default class TaskCell extends React.Component {
                 <div className={`TaskCell${isSelected ? ' selectedTask' : ''}${task.active ? ' activeTask' : ''}`} 
                     onClick={() => selectTask(task)}
                     style={{
-                        height: `${(task.time_end[0] * 60 + task.time_end[1]) - (task.time_start[0] * 60 + task.time_start[1])}px`
-                        // height: `100px`
+                        height: `${(task.time_end[0] * 60 + task.time_end[1]) - (task.time_start[0] * 60 + task.time_start[1])}px`,
+                        minHeight: `40px`
                     }}
                 >
                     <h4>{this.state.task.name}</h4>
