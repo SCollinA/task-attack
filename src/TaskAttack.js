@@ -2,14 +2,12 @@ import React from 'react'
 import './TaskAttack.css'
 import TaskHeader from './TaskHeader'
 import Login from './TaskLogin';
-// import TaskBar from './TaskBar';
 import TaskDisplay from './TaskDisplay';
 import UpdateUser, { toggleUserModal } from './UpdateUser';
-import UpdateTask from './UpdateTask';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faUserAstronaut, faDoorClosed, faDoorOpen } from '@fortawesome/free-solid-svg-icons'
-library.add(faUserAstronaut, faDoorClosed, faDoorOpen)
+import { faUserAstronaut, faDoorClosed, faDoorOpen, faPlus } from '@fortawesome/free-solid-svg-icons'
+library.add(faUserAstronaut, faDoorClosed, faDoorOpen, faPlus)
 
 export default class TaskAttack extends React.Component {
     constructor(props) {
@@ -34,7 +32,14 @@ export default class TaskAttack extends React.Component {
         .then(user => this.setState({ user }))
     }
 
-    _addTask = (newTask) => {
+    _addTask = () => {
+        const newTask = {
+            name: 'new task', 
+            timeStart: new Date().toLocaleTimeString(),
+            timeEnd: new Date().toLocaleTimeString(),
+            mandatory: false,
+            active: false
+        }
         fetch('addTask', {
             method: 'post',
             headers: {
@@ -134,13 +139,9 @@ export default class TaskAttack extends React.Component {
                             tasks={this.state.tasks} 
                             selectTask={this._selectTask}
                             selectedTask={this.state.selectedTask}
-                        >
-                            {this.state.selectedTask && 
-                                <UpdateTask 
-                                    task={this.state.selectedTask} 
-                                    updateTask={this._updateTask} 
-                                />}
-                        </TaskDisplay>
+                            updateTask={this._updateTask}
+                            addTask={this._addTask}
+                        />
                         {/* <TaskBar tasks={this.state.tasks} updateTask={this._updateTask}/> */}
                     </div>
                 )}
