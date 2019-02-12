@@ -40,6 +40,11 @@ html, body, #root {
 
 .TaskAttack {
   overflow-y: auto;
+  height: 100%;
+}
+
+.TaskDisplay {
+  height: 100%;
 }
 
 .TaskCell {
