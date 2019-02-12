@@ -4,7 +4,12 @@ import TaskDoor from './TaskDoor';
 
 export default function Login({ login, register }) {
     return (
-        <form id='LoginForm'>
+        <form id='LoginForm' action=''
+            onSubmit={event => {
+                event.preventDefault()
+                login({name: event.target.name.value, password: event.target.password.value})
+            }}
+        >
             <div className='userInputs'>
                 <input type='text' name='name' placeholder='name'/>
                 <input type='password' name='password' placeholder='password'/>
@@ -41,9 +46,9 @@ export default function Login({ login, register }) {
                     <TaskDoor/>
                     <h4>login</h4>
                 </div>
-                {/* <input type='submit' value='login' id='loginButton'
-                    style={{visibility: "hidden", position: "absolute"}}
-                /> */}
+                <input type='submit' value='login' id='loginButton'
+                    style={{display: "none"}}
+                />
             </div>
         </form>
     )
