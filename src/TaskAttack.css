@@ -33,11 +33,6 @@ html, body, #root, #TaskAttack {
   flex: 1;
 }
 
-#LoginForm {
-  flex: 1;
-  margin-top: 5%;
-}
-
 .loginButtons, .userInputs {
   display: flex;
   flex-wrap: wrap;

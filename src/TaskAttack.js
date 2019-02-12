@@ -101,8 +101,7 @@ export default class TaskAttack extends React.Component {
                  task 
                 ],
             selectedTask: null
-            })
-        )
+        }))
     }
 
     // DELETE
@@ -118,7 +117,7 @@ export default class TaskAttack extends React.Component {
 
     _logout = () => {
         fetch('logout', { method: 'post' })
-        .then(() => this.setState({ user: null, tasks: [] }))
+        .then(() => this.setState({ user: null, tasks: [], selectedTask: null, updatingUser: false }))
     }
     
     render() {
