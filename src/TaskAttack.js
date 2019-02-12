@@ -123,8 +123,8 @@ export default class TaskAttack extends React.Component {
         return (
             <div id='TaskAttack'>
                 <TaskHeader 
+                    user={this.state.user}
                     isLoggedIn={isLoggedIn} 
-                    updateUser={this._updateUser} 
                     logout={this._logout}
                 />
                 {/* show login form if not logged in */}

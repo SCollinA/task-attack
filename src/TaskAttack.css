@@ -28,11 +28,7 @@ html, body, #root, #TaskAttack {
   padding: 2% 0;
 }
 
-.TaskHeader > .TaskDoor:active {
-  background-color: lightgrey;
-}
-
-.updateUserIcon, .TaskDoor {
+.updateUserIcon, .logoutIcon {
   flex: 1;
 }
 
