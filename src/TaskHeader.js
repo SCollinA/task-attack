@@ -1,6 +1,7 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { toggleUserModal } from './UpdateUser'
+import TaskDoor from './TaskDoor'
 
 export default function TaskHeader({ isLoggedIn, logout }) {
     return (
@@ -12,17 +13,7 @@ export default function TaskHeader({ isLoggedIn, logout }) {
                 </div>
             )}
             <h1>TaskAttack</h1>
-            {isLoggedIn && (
-                <div className='TaskDoor' onClick={() => {
-                        if (isLoggedIn) {
-                            toggleUserModal(logout)
-                            logout()
-                        }
-                    }}>
-                    {/* <FontAwesomeIcon id='closedDoorIcon' size='2x' icon={['fas', 'door-closed']}/> */}
-                    <FontAwesomeIcon id='openDoorIcon' size='2x' icon={['fas', 'door-open']}/>
-                </div>
-            )}
+            {isLoggedIn && <TaskDoor isLoggedIn={isLoggedIn} logout={logout}/>}
         </div>
     )
 }
