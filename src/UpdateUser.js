@@ -19,8 +19,10 @@ export default function UpdateUser({ user, updateUser }) {
             <label name='oldPassword'>old password
                 <input type='password' name='oldPassword' defaultValue={`${user.name}`} required/>
             </label>
-            <input type='submit' value='update'/>
-            <input type='reset' value='reset'/>
+            <div className='updateUserButtons'>
+                <input type='submit' value='update'/>
+                <input type='reset' value='reset'/>
+            </div>
         </form>
     )
 } 

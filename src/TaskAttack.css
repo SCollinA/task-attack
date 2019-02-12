@@ -1,4 +1,4 @@
-html, body, #root {
+html, body, #root, #TaskAttack {
   height: 100%;
   width: 100%;
   overflow: hidden;
@@ -6,15 +6,17 @@ html, body, #root {
 
 *, ::before, ::after {
   box-sizing: border-box;
-  margin: auto;
+  margin: 0;
   padding: 0;
   text-align: center;
   border-radius: 10px;
 }
 
-#TaskAttack {
-  height: 100%;
-}
+/* #TaskAttack {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+} */
 
 .TaskHeader {
   width: 100%;
@@ -41,10 +43,17 @@ html, body, #root {
 
 .loginButtons, .userInputs {
   display: flex;
+  flex-wrap: wrap;
   padding: 5% 2%;
 }
 
-.registerButton, .loginButton{
+.userInputs > * {
+  flex: 1;
+  padding: 2% 5%;
+  margin: 2% 5%;
+}
+
+.registerButton, .loginButton {
   flex: 1;
 }
 
@@ -55,11 +64,11 @@ html, body, #root {
 
 .TaskAttack {
   overflow-y: auto;
-  height: 100%;
+  width: 100%;
 }
 
 .TaskDisplay {
-  height: 100%;
+  flex: 1;
 }
 
 .TaskCell {
@@ -106,17 +115,21 @@ html, body, #root {
 
 #UpdateUserForm > label, #UpdateTaskForm > label, .updateTaskChecks {
   display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
   white-space: nowrap;
   padding: 5% 0;
 }
 
-.updateTaskButtons, .updateTaskChecks {
+.updateTaskButtons, .updateTaskChecks, .updateUserButtons {
   width: 100%;
   display: flex;
+  justify-content: space-around;
 }
 
-.updateTaskButtons > * {
+.updateTaskButtons > *, .updateUserButtons > * {
   flex: 1;
+  max-width: 100px;
   padding: 2%;
 }
 

@@ -6,8 +6,8 @@ export default function Login({ login, register }) {
     return (
         <form id='LoginForm'>
             <div className='userInputs'>
-                <input type='text' name='name'/>
-                <input type='password' name='password'/>
+                <input type='text' name='name' placeholder='name'/>
+                <input type='password' name='password' placeholder='password'/>
             </div>
             <div className='loginButtons'>
                 <div className='registerButton'
