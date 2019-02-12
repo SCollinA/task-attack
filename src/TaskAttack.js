@@ -57,7 +57,7 @@ export default class TaskAttack extends React.Component {
         })
         .then(res => res.json())
         // will need to receive all tasks here
-        .then(task => this.setState({ tasks: [ ...this.state.tasks, task ], selectedTask: task}))
+        .then(tasks => this.setState({ tasks, selectedTask: newTask }))
     }
 
     // RETRIEVE
@@ -108,11 +108,8 @@ export default class TaskAttack extends React.Component {
         })
         .then(res => res.json())
         // will need to receive all tasks here
-        .then(task => this.setState({ 
-            tasks: [ 
-                ...this.state.tasks.filter(oldTask => oldTask.id !== task.id),
-                 task 
-            ],
+        .then(tasks => this.setState({ 
+            tasks,
             selectedTask: null
         }))
     }
