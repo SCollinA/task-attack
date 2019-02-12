@@ -25,11 +25,11 @@ html, body, #root {
   justify-content: space-around;
 }
 
-.TaskHeader > .logoutDoor:active {
+.TaskHeader > .TaskDoor:active {
   background-color: lightgrey;
 }
 
-.updateUserIcon, .logoutDoor {
+.updateUserIcon, .TaskDoor {
   flex: 1;
 }
 
@@ -63,7 +63,7 @@ html, body, #root {
   background-color: lightgrey;
 }
 
-.updateUserIcon:hover, .logoutDoor:hover, .TaskCell:hover, .TaskAdd:hover {
+.updateUserIcon:hover, .TaskDoor:hover, .TaskCell:hover, .TaskAdd:hover {
   background-color: lightgrey;
 }
 

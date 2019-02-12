@@ -13,9 +13,11 @@ export default function TaskHeader({ isLoggedIn, logout }) {
             )}
             <h1>TaskAttack</h1>
             {isLoggedIn && (
-                <div className='logoutDoor' onClick={() => {
-                        toggleUserModal(logout)
-                        logout()
+                <div className='TaskDoor' onClick={() => {
+                        if (isLoggedIn) {
+                            toggleUserModal(logout)
+                            logout()
+                        }
                     }}>
                     {/* <FontAwesomeIcon id='closedDoorIcon' size='2x' icon={['fas', 'door-closed']}/> */}
                     <FontAwesomeIcon id='openDoorIcon' size='2x' icon={['fas', 'door-open']}/>
