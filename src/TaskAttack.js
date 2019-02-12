@@ -50,6 +50,7 @@ export default class TaskAttack extends React.Component {
             body: JSON.stringify(newTask)
         })
         .then(res => res.json())
+        // will need to receive all tasks here
         .then(task => this.setState({ tasks: [ ...this.state.tasks, task ], selectedTask: task}))
     }
 
@@ -100,11 +101,12 @@ export default class TaskAttack extends React.Component {
             body: JSON.stringify(updatedTask)
         })
         .then(res => res.json())
+        // will need to receive all tasks here
         .then(task => this.setState({ 
             tasks: [ 
                 ...this.state.tasks.filter(oldTask => oldTask.id !== task.id),
                  task 
-                ],
+            ],
             selectedTask: null
         }))
     }
@@ -117,7 +119,7 @@ export default class TaskAttack extends React.Component {
         .then(() => this.setState({ 
             tasks: this.state.tasks.filter(task => task.id !== deletedTask.id),
             selectedTask: null
-         }))
+        }))
     }
 
     _logout = () => {
