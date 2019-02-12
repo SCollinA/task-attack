@@ -50,7 +50,7 @@ export default class TaskAttack extends React.Component {
             body: JSON.stringify(newTask)
         })
         .then(res => res.json())
-        .then(task => this.setState({ tasks: [ ...this.state.tasks, task ]}))
+        .then(task => this.setState({ tasks: [ ...this.state.tasks, task ], selectedTask: task}))
     }
 
     // RETRIEVE

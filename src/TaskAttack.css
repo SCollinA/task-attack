@@ -71,6 +71,11 @@ html, body, #root, #TaskAttack {
   justify-content: space-around;
   flex-wrap: wrap;
   padding: 2%;
+  background-color: lightpink;
+}
+
+.activeTask {
+  background-color: lightgreen;
 }
 
 .TaskCell > h4 {

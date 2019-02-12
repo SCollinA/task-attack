@@ -38,7 +38,7 @@ export default function Login({ login, register }) {
                         })
                     }}
                 >
-                    <TaskDoor isLoggedIn={false} logout={() => null}/>
+                    <TaskDoor/>
                     <h4>login</h4>
                 </div>
                 {/* <input type='submit' value='login' id='loginButton'

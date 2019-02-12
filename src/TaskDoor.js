@@ -10,10 +10,8 @@ export default class TaskDoor extends React.Component {
     }
 
     render() {
-        const { isLoggedIn, logout } = this.props
         return (
             <div className='TaskDoor' 
-                onClick={() => isLoggedIn && logout()}
                 onMouseEnter={() => this.setState({ doorOpen: true })}
                 onMouseLeave={() => this.setState({ doorOpen: false})}
             >
