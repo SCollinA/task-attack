@@ -3,19 +3,21 @@ import './TaskAttack.css'
 import TaskHeader from './TaskHeader'
 import Login from './TaskLogin';
 import TaskDisplay from './TaskDisplay';
-import UpdateUser, { toggleUserModal } from './UpdateUser';
+import UpdateUser from './UpdateUser';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faUserAstronaut, faDoorClosed, faDoorOpen, faPlus, faTrashAlt, faBan } from '@fortawesome/free-solid-svg-icons'
-library.add(faUserAstronaut, faDoorClosed, faDoorOpen, faPlus, faTrashAlt, faBan)
+import { faUserPlus, faUserAstronaut, faDoorClosed, faDoorOpen, faPlus, faTrashAlt, faBan } from '@fortawesome/free-solid-svg-icons'
+library.add(faUserPlus, faUserAstronaut, faDoorClosed, faDoorOpen, faPlus, faTrashAlt, faBan)
 
 export default class TaskAttack extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             user: null,
+            username: '',
             tasks: [],
-            selectedTask: null
+            selectedTask: null,
+            updatingUser: false
         }
     }
 
@@ -29,7 +31,7 @@ export default class TaskAttack extends React.Component {
             body: JSON.stringify(newUser)
         })
         .then(res => res.json())
-        .then(user => this.setState({ user }))
+        .then(user => this.setState({ user, username: user.name }))
     }
 
     _addTask = () => {
@@ -48,7 +50,7 @@ export default class TaskAttack extends React.Component {
             body: JSON.stringify(newTask)
         })
         .then(res => res.json())
-        .then(task => this.setState({ tasks: [ ...this.state.tasks, task ]}))
+        .then(task => this.setState({ tasks: [ ...this.state.tasks, task ], selectedTask: task}))
     }
 
     // RETRIEVE
@@ -61,8 +63,10 @@ export default class TaskAttack extends React.Component {
             body: JSON.stringify(loginAttempt)
         })
         .then(res => res.json())
-        .then(data => this.setState({ ...data }))
+        .then(data => this.setState({ ...data, username: data.user.name }))
     }
+
+    _selectUser = () => this.setState({ updatingUser: !this.state.updatingUser, selectedTask: null })
 
     _selectTask = (selectedTask) => {
         !this.state.selectedTask || this.state.selectedTask.id !== selectedTask.id ?
@@ -70,7 +74,11 @@ export default class TaskAttack extends React.Component {
         this.setState({ selectedTask: null })
     }
 
+    _goHome = () => this.setState({ updatingUser: false, selectedTask: null })
+
     // UPDATE
+    _updateUsername = (username) => this.setState({ username })
+
     _updateUser = (updatedUser) => {
         fetch('updateUser', {
             method: 'post',
@@ -80,7 +88,7 @@ export default class TaskAttack extends React.Component {
             body: JSON.stringify(updatedUser)
         })
         .then(res => res.json())
-        .then(user => this.setState({ user }, toggleUserModal()))
+        .then(user => this.setState({ user, updatingUser: false }))
     }
 
     _updateTask = (updatedTask) => {
@@ -98,8 +106,7 @@ export default class TaskAttack extends React.Component {
                  task 
                 ],
             selectedTask: null
-            })
-        )
+        }))
     }
 
     // DELETE
@@ -115,7 +122,7 @@ export default class TaskAttack extends React.Component {
 
     _logout = () => {
         fetch('logout', { method: 'post' })
-        .then(() => this.setState({ user: null, tasks: [] }))
+        .then(() => this.setState({ user: null, tasks: [], selectedTask: null, updatingUser: false }))
     }
     
     render() {
@@ -123,8 +130,10 @@ export default class TaskAttack extends React.Component {
         return (
             <div id='TaskAttack'>
                 <TaskHeader 
-                    isLoggedIn={isLoggedIn} 
-                    updateUser={this._updateUser} 
+                    username={this.state.username}
+                    isLoggedIn={isLoggedIn}
+                    goHome={this._goHome}
+                    selectUser={this._selectUser} 
                     logout={this._logout}
                 />
                 {/* show login form if not logged in */}
@@ -132,18 +141,22 @@ export default class TaskAttack extends React.Component {
                     <Login login={this._submitLogin} register={this._register}/>) 
                 || (
                     <div className='TaskAttack'>
-                        <UpdateUser 
-                            user={this.state.user} 
-                            updateUser={this._updateUser} 
-                        />
-                        <TaskDisplay 
-                            tasks={this.state.tasks} 
-                            selectTask={this._selectTask}
-                            selectedTask={this.state.selectedTask}
-                            updateTask={this._updateTask}
-                            addTask={this._addTask}
-                            deleteTask={this._deleteTask}
-                        />
+                        {this.state.updatingUser ?
+                            <UpdateUser 
+                                user={this.state.user} 
+                                username={this.state.username}
+                                updateUser={this._updateUser}
+                                updateUsername={this._updateUsername}
+                            /> :
+                            <TaskDisplay 
+                                tasks={this.state.tasks} 
+                                selectTask={this._selectTask}
+                                selectedTask={this.state.selectedTask}
+                                updateTask={this._updateTask}
+                                addTask={this._addTask}
+                                deleteTask={this._deleteTask}
+                            />
+                        }
                         {/* <TaskBar tasks={this.state.tasks} updateTask={this._updateTask}/> */}
                     </div>
                 )}

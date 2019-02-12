@@ -1,36 +1,31 @@
 import React from 'react'
 
-export default function UpdateUser({ user, updateUser }) {
+export default function UpdateUser({ user, username, updateUser, updateUsername }) {
     return (
-        <form id='UpdateUserForm' className='modal-hidden' onSubmit={event => {
-            event.preventDefault()
-            updateUser({
-                newName: event.target.newName.value,
-                newPassword: event.target.newPassword.value,
-                oldPassword: event.target.oldPassword.value
-            })
-        }}>
+        <form id='UpdateUserForm' 
+            onSubmit={event => {
+                event.preventDefault()
+                updateUser({
+                    newName: event.target.newName.value,
+                    newPassword: event.target.newPassword.value,
+                    oldPassword: event.target.oldPassword.value
+                })
+            }}
+            onReset={() => updateUsername(user.name)}
+        >
             <label name='newName'>new name
-                <input type='text' name='newName' defaultValue={`${user.name}`}/>
+                <input type='text' name='newName' value={username} onChange={event => updateUsername(event.target.value)}/>
             </label>
             <label name='newPassword'>new password
-                <input type='password' name='newPassword' defaultValue={`${user.name}`}/>
+                <input type='password' name='newPassword' placeholder='new password'/>
             </label>
             <label name='oldPassword'>old password
-                <input type='password' name='oldPassword' defaultValue={`${user.name}`} required/>
+                <input type='password' name='oldPassword' placeholder='old password' required/>
             </label>
-            <input type='submit' value='update'/>
-            <input type='reset' value='reset'/>
+            <div className='updateUserButtons'>
+                <input type='reset' value='reset'/>
+                <input type='submit' value='update'/>
+            </div>
         </form>
     )
 } 
-
-export function toggleUserModal(logout=false) {
-    const updateUserForm = document.getElementById('UpdateUserForm')
-    // if form does not contain modal-hidden class or logging out
-    !updateUserForm.classList.contains('modal-hidden') || logout ?
-        // add the modal-hidden class
-        updateUserForm.classList.add('modal-hidden') :
-        // remove the modal hidden class
-        updateUserForm.classList.remove('modal-hidden')
-}
