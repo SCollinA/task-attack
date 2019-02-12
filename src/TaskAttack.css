@@ -33,6 +33,10 @@ html, body, #root, #TaskAttack {
   flex: 1;
 }
 
+.updatingUser {
+  background-color: lightgrey;
+}
+
 .loginButtons, .userInputs {
   display: flex;
   flex-wrap: wrap;

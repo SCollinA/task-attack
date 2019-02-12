@@ -133,7 +133,8 @@ export default class TaskAttack extends React.Component {
                     username={this.state.username}
                     isLoggedIn={isLoggedIn}
                     goHome={this._goHome}
-                    selectUser={this._selectUser} 
+                    selectUser={this._selectUser}
+                    isUpdating={this.state.updatingUser}
                     logout={this._logout}
                 />
                 {/* show login form if not logged in */}

@@ -2,11 +2,11 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import TaskDoor from './TaskDoor'
 
-export default function TaskHeader({ username, isLoggedIn, goHome, selectUser, logout }) {
+export default function TaskHeader({ username, isLoggedIn, goHome, selectUser, isUpdating, logout }) {
     return (
         <div className='TaskHeader'>
             {isLoggedIn && (
-                <div className='updateUserIcon' onClick={selectUser}>
+                <div className={`updateUserIcon${isUpdating ? ' updatingUser' : ''}`} onClick={selectUser}>
                     {/* <FontAwesomeIcon id='closedDoorIcon' size='2x' icon={['fas', 'door-closed']}/> */}
                     <FontAwesomeIcon id='userIcon' size='2x' icon={['fas', 'user-astronaut']}/>
                     <h6>{username}</h6>
