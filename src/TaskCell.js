@@ -1,7 +1,7 @@
 import React from 'react'
 import UpdateTask from './UpdateTask';
 
-export default function TaskCell({ task, selectTask, selectedTask, updateTask }) {
+export default function TaskCell({ task, selectTask, selectedTask, updateTask, deleteTask }) {
     const isSelected = selectedTask && selectedTask.id === task.id
     return (
         <div className={`TaskCell${isSelected ? ' selectedTask' : ''}`}>
@@ -10,6 +10,7 @@ export default function TaskCell({ task, selectTask, selectedTask, updateTask })
                 <UpdateTask 
                 task={selectedTask} 
                 updateTask={updateTask} 
+                deleteTask={deleteTask}
             />}
         </div>
     )

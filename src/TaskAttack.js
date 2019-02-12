@@ -6,8 +6,8 @@ import TaskDisplay from './TaskDisplay';
 import UpdateUser, { toggleUserModal } from './UpdateUser';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faUserAstronaut, faDoorClosed, faDoorOpen, faPlus } from '@fortawesome/free-solid-svg-icons'
-library.add(faUserAstronaut, faDoorClosed, faDoorOpen, faPlus)
+import { faUserAstronaut, faDoorClosed, faDoorOpen, faPlus, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+library.add(faUserAstronaut, faDoorClosed, faDoorOpen, faPlus, faTrashAlt)
 
 export default class TaskAttack extends React.Component {
     constructor(props) {
@@ -105,11 +105,12 @@ export default class TaskAttack extends React.Component {
     // DELETE
     _deleteTask = (deletedTask) => {
         fetch(`deleteTask/${deletedTask.id}`, {
-            method: 'delete',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(deletedTask.id)
+            method: 'delete'
         })
-        .then(() => this.setState({ tasks: this.state.tasks.filter(task => task.id !== deletedTask.id) }))
+        .then(() => this.setState({ 
+            tasks: this.state.tasks.filter(task => task.id !== deletedTask.id),
+            selectedTask: null
+         }))
     }
 
     _logout = () => {
@@ -141,6 +142,7 @@ export default class TaskAttack extends React.Component {
                             selectedTask={this.state.selectedTask}
                             updateTask={this._updateTask}
                             addTask={this._addTask}
+                            deleteTask={this._deleteTask}
                         />
                         {/* <TaskBar tasks={this.state.tasks} updateTask={this._updateTask}/> */}
                     </div>
