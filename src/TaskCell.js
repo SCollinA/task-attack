@@ -9,19 +9,34 @@ export default class TaskCell extends React.Component {
         }
     }
 
+    componentDidUpdate() {
+        // task times are updated after initial set state
+        if (typeof this.state.task.time_start === 'string') {
+            this.setState({
+                task: this.props.task
+            })
+        }
+    }
+
     _updateTaskForm = (task) => this.setState({ task: {...this.state.task, ...task }})
     
     render() {
         const { task, selectTask, selectedTask, updateTask, deleteTask } = this.props
         const isSelected = selectedTask && selectedTask.id === task.id
+        console.log(task.time_end, this.state.task.time_end)
         return (
-            <div className='TaskCellWrapper'>
+            <div className='TaskCellWrapper'
+                style={{
+                    // height: `${task.time_end - task.time_start}px`
+                    height: `100px`
+                }}
+            >
                 <div className={`TaskCell${isSelected ? ' selectedTask' : ''}${task.active ? ' activeTask' : ''}`} 
                     onClick={() => selectTask(task)}
                 >
                     <h4>{this.state.task.name}</h4>
-                    <h6>{this.state.task.time_start}</h6>
-                    <h6>{this.state.task.time_end}</h6>
+                    <h6>{this.state.task.time_start.join(':')}</h6>
+                    <h6>{this.state.task.time_end.join(':')}</h6>
                 </div>
                 {isSelected && 
                     <UpdateTask 
