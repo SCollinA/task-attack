@@ -12,13 +12,14 @@ html, body, #root, #TaskAttack {
   border-radius: 10px;
 }
 
-/* #TaskAttack {
+#TaskAttack {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-} */
+}
 
 .TaskHeader {
+  height: 10%;
   width: 100%;
   display: flex;
   justify-content: space-around;
@@ -60,6 +61,7 @@ html, body, #root, #TaskAttack {
 
 .TaskAttack {
   overflow-y: auto;
+  height: 90%;
   width: 100%;
 }
 
@@ -139,5 +141,5 @@ html, body, #root, #TaskAttack {
 
 .modal-hidden {
   position: absolute;
-  visibility: hidden; 
+  visibility: hidden;
 } 
