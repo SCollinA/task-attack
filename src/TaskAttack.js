@@ -1,10 +1,10 @@
 import React from 'react'
 import './TaskAttack.css'
-import TaskHeader, { toggleUserModal } from './TaskHeader'
+import TaskHeader from './TaskHeader'
 import Login from './TaskLogin';
-import TaskBar from './TaskBar';
+// import TaskBar from './TaskBar';
 import TaskDisplay from './TaskDisplay';
-import UpdateUser from './UpdateUser';
+import UpdateUser, { toggleUserModal } from './UpdateUser';
 import UpdateTask from './UpdateTask';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -59,6 +59,12 @@ export default class TaskAttack extends React.Component {
         .then(data => this.setState({ ...data }))
     }
 
+    _selectTask = (selectedTask) => {
+        !this.state.selectedTask || this.state.selectedTask.id !== selectedTask.id ?
+        this.setState({ selectedTask }) :
+        this.setState({ selectedTask: null })
+    }
+
     // UPDATE
     _updateUser = (updatedUser) => {
         fetch('updateUser', {
@@ -81,7 +87,14 @@ export default class TaskAttack extends React.Component {
             body: JSON.stringify(updatedTask)
         })
         .then(res => res.json())
-        .then(task => this.setState({ tasks: [ ...this.state.tasks.filter(oldTask => oldTask.id !== task.id), task ] }))
+        .then(task => this.setState({ 
+            tasks: [ 
+                ...this.state.tasks.filter(oldTask => oldTask.id !== task.id),
+                 task 
+                ],
+            selectedTask: null
+            })
+        )
     }
 
     // DELETE
@@ -103,14 +116,32 @@ export default class TaskAttack extends React.Component {
         const isLoggedIn = this.state.user && true
         return (
             <div id='TaskAttack'>
-                <TaskHeader isLoggedIn={isLoggedIn} updateUser={this._updateUser} logout={this._logout}/>
+                <TaskHeader 
+                    isLoggedIn={isLoggedIn} 
+                    updateUser={this._updateUser} 
+                    logout={this._logout}
+                />
                 {/* show login form if not logged in */}
-                {(!isLoggedIn && <Login login={this._submitLogin} register={this._register}/>) || (
+                {(!isLoggedIn && 
+                    <Login login={this._submitLogin} register={this._register}/>) 
+                || (
                     <div className='TaskAttack'>
-                    <UpdateUser user={this.state.user} updateUser={this._updateUser} />
-                    {this.state.selectedTask && <UpdateTask task={this.state.selectedTask} updateTask={this._updateTask} />}
-                        <TaskDisplay tasks={this.state.tasks}/>
-                        <TaskBar tasks={this.state.tasks} updateTask={this._updateTask}/>
+                        <UpdateUser 
+                            user={this.state.user} 
+                            updateUser={this._updateUser} 
+                        />
+                        <TaskDisplay 
+                            tasks={this.state.tasks} 
+                            selectTask={this._selectTask}
+                            selectedTask={this.state.selectedTask}
+                        >
+                            {this.state.selectedTask && 
+                                <UpdateTask 
+                                    task={this.state.selectedTask} 
+                                    updateTask={this._updateTask} 
+                                />}
+                        </TaskDisplay>
+                        {/* <TaskBar tasks={this.state.tasks} updateTask={this._updateTask}/> */}
                     </div>
                 )}
             </div>

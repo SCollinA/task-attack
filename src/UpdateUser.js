@@ -16,7 +16,7 @@ export default function UpdateUser({ user, updateUser }) {
             <label name='newPassword'>new password
                 <input type='password' name='newPassword' defaultValue={`${user.name}`}/>
             </label>
-            <label name='newPassword'>old password
+            <label name='oldPassword'>old password
                 <input type='password' name='oldPassword' defaultValue={`${user.name}`} required/>
             </label>
             <input type='submit' value='update'/>
@@ -24,3 +24,13 @@ export default function UpdateUser({ user, updateUser }) {
         </form>
     )
 } 
+
+export function toggleUserModal(logout=false) {
+    const updateUserForm = document.getElementById('UpdateUserForm')
+    // if form does not contain modal-hidden class or logging out
+    !updateUserForm.classList.contains('modal-hidden') || logout ?
+        // add the modal-hidden class
+        updateUserForm.classList.add('modal-hidden') :
+        // remove the modal hidden class
+        updateUserForm.classList.remove('modal-hidden')
+}
