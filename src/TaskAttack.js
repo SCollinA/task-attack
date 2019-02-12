@@ -33,8 +33,14 @@ export default class TaskAttack extends React.Component {
             tasks: data.tasks ? data.tasks.map(task => {
                 return {
                     ...task,
-                    time_start: task.time_start.split(':').map(number => parseInt(number)),
-                    time_end: task.time_end.split(':').map(number => parseInt(number)),
+                    time_start: task.time_start
+                    .split(':')
+                    .map(number => parseInt(number))
+                    .slice(0, 2),
+                    time_end: task.time_end
+                    .split(':')
+                    .map(number => parseInt(number))
+                    .slice(0, 2),
                 }
             }) : this.state.tasks
         })
