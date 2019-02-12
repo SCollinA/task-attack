@@ -21,6 +21,12 @@ export default class TaskAttack extends React.Component {
         }
     }
 
+    componentDidMount() {
+        fetch('/attack')
+        .then(res => res.json())
+        .then(data => this.setState({ ...data, username: data.user && data.user.name }))
+    }
+
     // CREATE
     _register = (newUser) => {
         fetch('signup', {
