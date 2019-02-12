@@ -1,4 +1,5 @@
 import React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function Login({ login, register }) {
     return (
@@ -9,7 +10,19 @@ export default function Login({ login, register }) {
             <input type='text' name='name'/>
             <input type='password' name='password'/>
             <input type='submit' value='login'/>
-            <input type='button' value='register' onClick={event => register({ name: event.target.form.name.value, password: event.target.form.password.value })}/>
+            <FontAwesomeIcon size='3x' icon={['fas', 'user-plus']}
+                onClick={() => {
+                    const registerButton = document.getElementById('registerButton')
+                    registerButton.click()
+                }}
+            />
+            <input type='button' value='register' id='registerButton'
+                onClick={event => register({ 
+                    name: event.target.form.name.value,
+                    password: event.target.form.password.value 
+                })}
+                style={{visibility: "hidden", position: "absolute"}}
+            />
         </form>
     )
 }
