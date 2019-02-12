@@ -3,7 +3,7 @@ import './TaskAttack.css'
 import TaskHeader from './TaskHeader'
 import Login from './TaskLogin';
 import TaskDisplay from './TaskDisplay';
-import UpdateUser, { toggleUserModal } from './UpdateUser';
+import UpdateUser from './UpdateUser';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserPlus, faUserAstronaut, faDoorClosed, faDoorOpen, faPlus, faTrashAlt, faBan } from '@fortawesome/free-solid-svg-icons'
@@ -15,7 +15,8 @@ export default class TaskAttack extends React.Component {
         this.state = {
             user: null,
             tasks: [],
-            selectedTask: null
+            selectedTask: null,
+            updatingUser: false
         }
     }
 
@@ -64,6 +65,8 @@ export default class TaskAttack extends React.Component {
         .then(data => this.setState({ ...data }))
     }
 
+    _selectUser = () => this.setState({ updatingUser: !this.state.updatingUser })
+
     _selectTask = (selectedTask) => {
         !this.state.selectedTask || this.state.selectedTask.id !== selectedTask.id ?
         this.setState({ selectedTask }) :
@@ -80,7 +83,7 @@ export default class TaskAttack extends React.Component {
             body: JSON.stringify(updatedUser)
         })
         .then(res => res.json())
-        .then(user => this.setState({ user }, toggleUserModal()))
+        .then(user => this.setState({ user, updatingUser: false }))
     }
 
     _updateTask = (updatedTask) => {
@@ -124,7 +127,8 @@ export default class TaskAttack extends React.Component {
             <div id='TaskAttack'>
                 <TaskHeader 
                     user={this.state.user}
-                    isLoggedIn={isLoggedIn} 
+                    isLoggedIn={isLoggedIn}
+                    selectUser={this._selectUser} 
                     logout={this._logout}
                 />
                 {/* show login form if not logged in */}
@@ -132,18 +136,20 @@ export default class TaskAttack extends React.Component {
                     <Login login={this._submitLogin} register={this._register}/>) 
                 || (
                     <div className='TaskAttack'>
-                        <UpdateUser 
-                            user={this.state.user} 
-                            updateUser={this._updateUser} 
-                        />
-                        <TaskDisplay 
-                            tasks={this.state.tasks} 
-                            selectTask={this._selectTask}
-                            selectedTask={this.state.selectedTask}
-                            updateTask={this._updateTask}
-                            addTask={this._addTask}
-                            deleteTask={this._deleteTask}
-                        />
+                        {this.state.updatingUser ?
+                            <UpdateUser 
+                                user={this.state.user} 
+                                updateUser={this._updateUser} 
+                            /> :
+                            <TaskDisplay 
+                                tasks={this.state.tasks} 
+                                selectTask={this._selectTask}
+                                selectedTask={this.state.selectedTask}
+                                updateTask={this._updateTask}
+                                addTask={this._addTask}
+                                deleteTask={this._deleteTask}
+                            />
+                        }
                         {/* <TaskBar tasks={this.state.tasks} updateTask={this._updateTask}/> */}
                     </div>
                 )}

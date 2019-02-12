@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function UpdateUser({ user, updateUser }) {
     return (
-        <form id='UpdateUserForm' className='modal-hidden' onSubmit={event => {
+        <form id='UpdateUserForm' onSubmit={event => {
             event.preventDefault()
             updateUser({
                 newName: event.target.newName.value,
@@ -26,13 +26,3 @@ export default function UpdateUser({ user, updateUser }) {
         </form>
     )
 } 
-
-export function toggleUserModal(logout=false) {
-    const updateUserForm = document.getElementById('UpdateUserForm')
-    // if form does not contain modal-hidden class or logging out
-    !updateUserForm.classList.contains('modal-hidden') || logout ?
-        // add the modal-hidden class
-        updateUserForm.classList.add('modal-hidden') :
-        // remove the modal hidden class
-        updateUserForm.classList.remove('modal-hidden')
-}

@@ -10,7 +10,7 @@ export default function TaskCell({ task, selectTask, selectedTask, updateTask, d
             >
                 <h4 >{task.name}</h4>
             </div>
-            {(selectedTask && task.id === selectedTask.id) && 
+            {isSelected && 
                 <UpdateTask 
                 task={selectedTask} 
                 selectTask={selectTask}

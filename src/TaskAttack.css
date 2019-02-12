@@ -88,6 +88,7 @@ html, body, #root, #TaskAttack {
 .UpdateTaskContainer {
   display: flex;
   width: 100%;
+  align-items: center;
 }
 
 .UpdateTaskContainer > * {
@@ -134,12 +135,3 @@ html, body, #root, #TaskAttack {
 .TaskAdd {
   padding: 2%;
 }
-
-/* ===================== */
-/*      Modal Forms      */
-/* ===================== */
-
-.modal-hidden {
-  position: absolute;
-  visibility: hidden;
-} 
