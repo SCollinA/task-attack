@@ -81,13 +81,11 @@ export default class TaskDisplay extends React.Component {
     }
 
     _timeIsTaken = (task) => {
-        console.log('checking time is taken')
         const { tasks } = this.state
         const taskTime = getTaskTime(task)
         for (let i = 0; i < tasks.length; i++) {
             if (task.id === tasks[i].id) { continue }
             const otherTaskTime = getTaskTime(tasks[i])
-            console.log(taskTime, otherTaskTime)
             // if task start time occurs during other task time
             const startsAfterOtherTaskStarts = taskTime.start.hour > otherTaskTime.start.hour ||
                 (taskTime.start.hour === otherTaskTime.start.hour &&
@@ -103,11 +101,9 @@ export default class TaskDisplay extends React.Component {
                 taskTime.end.minute < otherTaskTime.end.minute)
             if ((startsAfterOtherTaskStarts && startsBeforeOtherTaskEnds) ||
             (endsAfterOtherTaskStarts && endsBeforeOtherTaskEnds)) {
-                console.log('time taken')
                 return true
             }
         }
-        console.log('time available')
         return false
     }
 

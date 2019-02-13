@@ -5,7 +5,8 @@ export default class TaskCell extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            task: props.task
+            task: props.task,
+            clicked: false,
         }
     }
 
@@ -42,7 +43,13 @@ export default class TaskCell extends React.Component {
                             time_end: `${parseInt(task.time_start.slice(0, 2)) + Math.floor((parseInt(task.time_start.slice(3, 5)) + 15) / 60)}:${(parseInt(task.time_start.slice(3, 5)) + 15) % 60}`,
                             free: false
                         }) :
-                        this.setState({ task }, selectTask(this.state.task))
+                        this.setState({ clicked: !this.state.clicked }, () => {
+                            setTimeout(() => {
+                                (this.state.clicked &&
+                                    this.setState({ task }, selectTask(this.state.task))) ||
+                                        this.setState({ clicked: false })
+                            }, 500)
+                        })
                     }}
                     // double click toggles active status on task
                     onDoubleClick={() => !task.free && updateTask({ ...task, active: !task.active })}

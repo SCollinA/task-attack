@@ -56,7 +56,7 @@ html, body, #root, #TaskAttack {
   padding: 5% 0;
 }
 
-.registerButton:hover, .loginButton:hover, .updateUserIcon:hover, .loggedInHeader > h1:hover, .logoutIcon:hover, .TaskCell:hover, .TaskAdd:hover, .TaskDelete:hover, .TaskCancel:hover {
+.registerButton:hover, .loginButton:hover, .updateUserIcon:hover, .loggedInHeader > h1:hover, .logoutIcon:hover, .TaskDelete:hover, .TaskCancel:hover {
   background-color: rgba(0, 0, 0, .25);
   cursor: pointer;
 }
@@ -114,7 +114,6 @@ html, body, #root, #TaskAttack {
 }
 
 .taskHoursComplete {
-  opacity: 25%;
   background-color: rgba(0, 0, 0, 0.5);
   width: 100%;
   position: absolute;
@@ -128,6 +127,11 @@ html, body, #root, #TaskAttack {
 
 .TaskCell {
   background-color: rgba(255, 0, 0, 0.25);
+}
+
+.TaskCell:hover {
+  cursor: pointer;
+  opacity: .5;
 }
 
 .taskCellContent {
