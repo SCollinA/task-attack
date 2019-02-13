@@ -19,15 +19,15 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
             <form id='UpdateTaskForm' 
                 onSubmit={event => {
                     event.preventDefault()
-                    if (event.target.timeStart.value > event.target.timeEnd.value) {
+                    if (event.target.time_start.value > event.target.time_end.value) {
                         window.alert('time end must be after time start')
-                        updateTaskForm({time_start: event.target.timeEnd.value.split(':')})
+                        updateTaskForm({time_start: event.target.time_end.value.split(':')})
                     } else {
                         updateTask({
                             id: task.id,
                             name: event.target.name.value,
-                            timeStart: event.target.timeStart.value,
-                            timeEnd: event.target.timeEnd.value,
+                            time_start: event.target.time_start.value,
+                            time_end: event.target.time_end.value,
                             mandatory: event.target.mandatory.checked,
                             active: event.target.active.checked
                         })
@@ -38,24 +38,24 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
                 <label name='name'>new name
                     <input type='text' name='name' value={task.name} onChange={event => updateTaskForm({name: event.target.value})}/>
                 </label>
-                <label name='timeStart'>time start
-                    <input type='time' name='timeStart' 
+                <label name='time_start'>time start
+                    <input type='time' name='time_start' 
                         value={taskTimeStartString} 
                         max={taskTimeEndString} 
                         onChange={event => {
-                            event.target.value < event.target.form.timeEnd.value && 
+                            event.target.value < event.target.form.time_end.value && 
                                 updateTaskForm({
                                     time_start: event.target.value.split(':').map(number => parseInt(number))
                                 })
                         }}
                     />
                 </label>
-                <label name='timeEnd'>time end
-                    <input type='time' name='timeEnd' 
+                <label name='time_end'>time end
+                    <input type='time' name='time_end' 
                         value={taskTimeEndString}
                         min={taskTimeStartString}
                         onChange={event => {
-                            event.target.value > event.target.form.timeStart.value && 
+                            event.target.value > event.target.form.time_start.value && 
                                 updateTaskForm({
                                     time_end: event.target.value.split(':').map(number => parseInt(number))
                                 })

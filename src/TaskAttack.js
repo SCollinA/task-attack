@@ -61,14 +61,14 @@ export default class TaskAttack extends React.Component {
 
     _addTask = () => {
         const currentTime = new Date()
-        const timeStart = currentTime.toLocaleTimeString()
+        const time_start = currentTime.toLocaleTimeString()
         // min 15 minute tasks
         currentTime.setMinutes(currentTime.getMinutes() + 15)
-        const timeEnd = currentTime.toLocaleTimeString()
+        const time_end = currentTime.toLocaleTimeString()
         const newTask = {
             name: 'new task', 
-            timeStart,
-            timeEnd,
+            time_start,
+            time_end,
             mandatory: false,
             active: false
         }
