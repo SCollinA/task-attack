@@ -28,7 +28,7 @@ export default class TaskDisplay extends React.Component {
         const availableTask = {
             name: 'free time - click to add task',
             mandatory: false,
-            active: false,
+            active: true,
             free: true,
         }
         if (tasks.length !== 0) {
@@ -137,7 +137,6 @@ export default class TaskDisplay extends React.Component {
                     ))}
                 </div>
                 <div className='TaskHours'>
-                    <div className='taskHour'><h1>24:00</h1></div>
                     <div className='taskHour'><h1>23:00</h1></div>
                     <div className='taskHour'><h1>22:00</h1></div>
                     <div className='taskHour'><h1>21:00</h1></div>
@@ -165,7 +164,7 @@ export default class TaskDisplay extends React.Component {
                 </div>
                 <div className='taskHoursComplete'
                     style={{
-                        height: "25%",
+                        height: `${(new Date().getHours() / 24) * 100}%`,
                     }}
                 >
                 </div>
