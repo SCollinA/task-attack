@@ -9,35 +9,39 @@ export default class TaskCell extends React.Component {
         }
     }
 
-    componentDidUpdate() {
-        // task times are updated after initial set state
-        if (typeof this.state.task.time_start === 'string') {
-            this.setState({
-                task: this.props.task
-            })
-        }
-    }
+    // componentDidUpdate() {
+    //     // task times are updated after initial set state
+    //     if (typeof this.state.task.time_start === 'string') {
+    //         this.setState({
+    //             task: this.props.task
+    //         })
+    //     }
+    // }
 
+    // control the form values by updating state
     _updateTaskForm = (task) => this.setState({ task: {...this.state.task, ...task }})
     
     render() {
         const { task, selectTask, selectedTask, updateTask, deleteTask } = this.props
         const isSelected = selectedTask && selectedTask.id === task.id
-        const taskTimeStart = this.state.task.time_start.map(time => time < 10 ? `0${time}` : time).join(':')
-        const taskTimeEnd = this.state.task.time_end.map(time => time < 10 ? `0${time}` : time).join(':')
         return (
             <div className='TaskCellWrapper'>
                 <div className={`TaskCell${isSelected ? ' selectedTask' : ''}${task.active ? ' activeTask' : ''}`} 
+                    // single click opens 
                     onClick={() => selectTask(this.state.task)}
-                    onDoubleClick={() => updateTask({})}
+                    // double click toggles active status on task
+                    onDoubleClick={() => updateTask({ ...task, active: !task.active })}
                     style={{
-                        height: `${(task.time_end[0] * 60 + task.time_end[1]) - (task.time_start[0] * 60 + task.time_start[1])}px`,
-                        minHeight: `40px`,
+                        // height: `
+                        //     ${(task.time_end.slice(0, 2) * 60 + task.time_end.slice(2, 4)) - 
+                        //         (task.time_start.slice(0, 2) * 60 + task.time_start.slice(2, 4))}px
+                        // `,
+                        // minHeight: `40px`,
                     }}
                 >
+                    <h6>{this.state.task.time_start}</h6>
                     <h4>{this.state.task.name}</h4>
-                    <h6>{taskTimeStart}</h6>
-                    <h6>{taskTimeEnd}</h6>
+                    <h6>{this.state.task.time_end}</h6>
                 </div>
                 {isSelected && 
                     <UpdateTask 
