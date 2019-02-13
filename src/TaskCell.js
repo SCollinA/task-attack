@@ -9,35 +9,10 @@ export default class TaskCell extends React.Component {
         }
     }
 
-    // componentDidUpdate() {
-    //     // task times are updated after initial set state
-    //     if (typeof this.state.task.time_start === 'string') {
-    //         this.setState({
-    //             task: this.props.task
-    //         })
-    //     }
-    // }
-
-    getTaskTime(task) {
-        let start = task.time_start
-            .split(':').map(number => {
-                return number === '12' ?
-                0 :
-                parseInt(number)
-            })
-        let end = task.time_end
-            .split(':').map(number => {
-                return number === '12' ?
-                0 :
-                parseInt(number)
-            })
-        return { start, end }
-    }
-
     // control the form values by updating state
     _updateTaskForm = (task) => {
         const updatingTask = { ...this.state.task, ...task }
-        const taskTime = this.getTaskTime(updatingTask)
+        const taskTime = getTaskTime(updatingTask)
         if (
             taskTime.start[0] < taskTime.end[0] || // if hours are less
                 (taskTime.start[0] === taskTime.end[0] && // if hours are same
@@ -51,7 +26,7 @@ export default class TaskCell extends React.Component {
     render() {
         const { task, selectTask, selectedTask, updateTask, deleteTask } = this.props
         const isSelected = selectedTask && selectedTask.id === task.id
-        const taskTime = this.getTaskTime(task)
+        const taskTime = getTaskTime(task)
         const cellHeight = (taskTime.end[0] * 60 + taskTime.end[1]) - 
                                 (taskTime.start[0] * 60 + taskTime.start[1])
         return (
@@ -83,4 +58,20 @@ export default class TaskCell extends React.Component {
             </div>
         )
     }
+}
+
+export const getTaskTime = (task) => {
+    let start = task.time_start
+        .split(':').map(number => {
+            return number === '12' ?
+            0 :
+            parseInt(number)
+        })
+    let end = task.time_end
+        .split(':').map(number => {
+            return number === '12' ?
+            0 :
+            parseInt(number)
+        })
+    return { start, end }
 }
