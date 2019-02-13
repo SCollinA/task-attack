@@ -7,25 +7,43 @@ export default class TaskDisplay extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            isFull: false,
             availableTimes: [], // array of arrays of [start, end] times
         }
     }
 
+    componentDidMount() {
+        
+        // !this.state.isFull && this.state.availableTimes.length === 0 &&
+            this.findAvailableTimes(this.props.tasks)
+    }
+
     componentDidUpdate() {
-        this.findAvailableTimes(this.props.tasks)
+        // if day is not full
+        // and available times is empty
+        (!this.state.isFull && this.state.availableTimes.length === 0) && 
+            true &&
+            this.findAvailableTimes(this.props.tasks)
     }
 
     findAvailableTimes(tasks) {
+        console.log(tasks)
         const availableTimes = []
         for (let i = 0; i < tasks.length; i++) {
-            const task = getTaskTime(tasks[i])
+            const task = tasks[i]
+            const taskTimeEnd = getTaskTime(task).end
+            console.log('task is', taskTimeEnd)
             // come back to first task for last task's comparison
-            const nextTask = getTaskTime(tasks[i + 1] || tasks[0])
-            if (task.end < nextTask.start) {
-                availableTimes.push([task.end, nextTask.start])
+            const nextTask = tasks[i + 1] || tasks[0]
+            const nextTaskTimeStart = getTaskTime(nextTask).start
+            console.log('nextTask is', nextTaskTimeStart)
+            if (taskTimesDoNotOverlap(taskTimeEnd, nextTaskTimeStart)) {
+                availableTimes.push({time_start: taskTimeEnd, time_end: nextTaskTimeStart})
             }
         }
-        this.setState({ availableTimes })
+        availableTimes.length > 0 ?
+        this.setState({ availableTimes, isFull: false }) :
+        this.setState({ availableTimes, isFull: true })
     }
 
     render() {
@@ -45,4 +63,11 @@ export default class TaskDisplay extends React.Component {
             </div>
         )
     }
+}
+
+export const taskTimesDoNotOverlap = (taskEnd, nextTaskStart) => {
+    const nextTaskStartHour = nextTaskStart.hour || 24
+    return taskEnd.hour < nextTaskStartHour ||
+    (taskEnd.hour === nextTaskStartHour &&
+        taskEnd.minute <= nextTaskStart.minute)
 }
