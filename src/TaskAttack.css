@@ -19,6 +19,7 @@ html, body, #root, #TaskAttack {
 }
 
 .TaskHeader {
+  /* height: 10%; */
   width: 100%;
   display: flex;
   justify-content: space-around;
@@ -26,14 +27,15 @@ html, body, #root, #TaskAttack {
 
 .TaskHeader > * {
   padding: 2% 0;
-}
-
-.updateUserIcon, .logoutIcon {
   flex: 1;
 }
 
+/* .updateUserIcon, .logoutIcon {
+  flex: 1;
+} */
+
 .updatingUser {
-  background-color: lightgrey;
+  background-color: rgba(0, 0, 0, .25);
 }
 
 .loginButtons, .userInputs {
@@ -54,35 +56,100 @@ html, body, #root, #TaskAttack {
   padding: 5% 0;
 }
 
-.registerButton:hover, .loginButton:hover, .updateUserIcon:hover, .loggedInHeader > h1:hover, .logoutIcon:hover, .TaskCell:hover, .TaskAdd:hover, .TaskDelete:hover, .TaskCancel:hover {
-  background-color: lightgrey;
+.registerButton:hover, .loginButton:hover, .updateUserIcon:hover, .loggedInHeader > h1:hover, .logoutIcon:hover, .TaskDelete:hover, .TaskCancel:hover {
+  background-color: rgba(0, 0, 0, .25);
   cursor: pointer;
 }
 
 .TaskAttack {
+  /* height: 90%; */
   flex: 1;
   overflow-y: auto;
+  /* width: calc(100% + 15px); */
+}
+
+.TaskDisplayContainer {
+  position: relative;
+}
+
+.TaskDisplay {
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 100%;
   width: 100%;
 }
 
-/* .TaskDisplay {
-} */
+.TaskHours {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: -2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.taskHour {
+  height: 100%;
+  width: 75%;
+  margin: auto;
+  /* padding-left: 10%; */
+  color: rgba(0, 0, 0, .25);
+  border-top: dashed 1px rgba(0, 0, 0, .25);
+  border-radius: unset;
+  display: flex;
+  align-items: center;
+}
+
+.taskHour:first-child {
+  border: none;
+}
+
+.taskHour > h1 {
+  margin: 0;
+  width: fit-content;
+}
+
+.taskHoursComplete {
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  z-index: -1;
+}
 
 .TaskCell {
+  background-color: rgba(255, 0, 0, 0.25);
+}
+
+.TaskCell:hover {
+  cursor: pointer;
+  opacity: .5;
+}
+
+.taskCellContent {
+  position: sticky;
+  top: 0;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   padding: 2%;
-  background-color: lightpink;
 }
 
 .activeTask {
-  background-color: lightgreen;
+  background-color: rgba(60, 255, 0, 0.25);
 }
 
 .selectedTask {
-  background-color: lightgrey;
+  background-color: rgba(0, 0, 0, .25);
 }
 
 .UpdateTaskContainer {
@@ -100,7 +167,7 @@ html, body, #root, #TaskAttack {
 }
 
 .TaskDelete:hover, .TaskCancel:hover {
-  background-color: lightgrey;
+  background-color: rgba(0, 0, 0, .25);
 }
 
 #UpdateUserForm, #UpdateTaskForm {
@@ -108,7 +175,7 @@ html, body, #root, #TaskAttack {
   /* width: 90%; */
   display: flex;
   flex-direction: column;
-  background-color: lightgrey;
+  background-color: rgba(0, 0, 0, .25);
   padding: 2% 5%;
 }
 
@@ -130,9 +197,5 @@ html, body, #root, #TaskAttack {
 .updateTaskButtons > *, .updateUserButtons > * {
   flex: 1;
   max-width: 100px;
-  padding: 2%;
-}
-
-.TaskAdd {
   padding: 2%;
 }

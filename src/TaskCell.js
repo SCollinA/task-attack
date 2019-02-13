@@ -5,7 +5,8 @@ export default class TaskCell extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            task: props.task
+            task: props.task,
+            clicked: false,
         }
     }
 
@@ -42,7 +43,13 @@ export default class TaskCell extends React.Component {
                             time_end: `${parseInt(task.time_start.slice(0, 2)) + Math.floor((parseInt(task.time_start.slice(3, 5)) + 15) / 60)}:${(parseInt(task.time_start.slice(3, 5)) + 15) % 60}`,
                             free: false
                         }) :
-                        this.setState({ task }, selectTask(this.state.task))
+                        this.setState({ clicked: !this.state.clicked }, () => {
+                            setTimeout(() => {
+                                (this.state.clicked &&
+                                    this.setState({ task }, selectTask(this.state.task))) ||
+                                        this.setState({ clicked: false })
+                            }, 500)
+                        })
                     }}
                     // double click toggles active status on task
                     onDoubleClick={() => !task.free && updateTask({ ...task, active: !task.active })}
@@ -52,17 +59,19 @@ export default class TaskCell extends React.Component {
                         `,
                     }}
                 >
-                    <h6>
-                        {this.state.task.free ?
-                        this.props.task.time_start :
-                        this.state.task.time_start}
-                    </h6>
-                    <h4>{this.state.task.name}</h4>
-                    <h6>
-                        {this.state.task.free ?
-                        this.props.task.time_end :
-                        this.state.task.time_end}
-                    </h6>
+                    <div className='taskCellContent'>
+                        <h6>
+                            {this.state.task.free ?
+                            this.props.task.time_start :
+                            this.state.task.time_start}
+                        </h6>
+                        <h4>{this.state.task.name}</h4>
+                        <h6>
+                            {this.state.task.free ?
+                            this.props.task.time_end :
+                            this.state.task.time_end}
+                        </h6>
+                    </div>
                 </div>
                 {isSelected && 
                     <UpdateTask 
@@ -101,7 +110,6 @@ export const getTaskTime = (task) => {
 }
 
 export const taskTimeIsValid = (taskTime) => {
-    console.log('checking time valid')
     return taskTime.start.hour < taskTime.end.hour || // if hours are less
         (taskTime.start.hour === taskTime.end.hour && // if hours are same
             taskTime.start.minute < taskTime.end.minute) // if minutes are less
