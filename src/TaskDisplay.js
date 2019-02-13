@@ -1,6 +1,5 @@
 import React from 'react'
 import TaskCell from './TaskCell'
-// import TaskAdd from './TaskAdd'
 import { getTaskTime } from './TaskCell'
 
 export default class TaskDisplay extends React.Component {
@@ -25,7 +24,6 @@ export default class TaskDisplay extends React.Component {
     }
 
     findAvailableTimes(tasks) {
-        console.log('finding availability')
         const availableTimes = []
         const availableTask = {
             name: 'free time - click to add task',
@@ -39,17 +37,14 @@ export default class TaskDisplay extends React.Component {
                 const taskTimeStart = getTaskTime(task).start
                 // come back to first task for last task's comparison
                 const prevTask = tasks[i + 1] || tasks[0]
-                console.log(task, prevTask)
-                const nextTaskTimeEnd = getTaskTime(prevTask).end
-                console.log(taskTimeStart, nextTaskTimeEnd)
-                if (taskTimeStart.hour !== nextTaskTimeEnd.hour || 
-                taskTimeStart.minute !== nextTaskTimeEnd.minute) {
+                const prevTaskTimeEnd = getTaskTime(prevTask).end
+                if (taskTimeStart.hour !== prevTaskTimeEnd.hour || 
+                taskTimeStart.minute !== prevTaskTimeEnd.minute) {
                     availableTimes.push({
                         ...availableTask,
-                        time_start: getTaskTimeString(nextTaskTimeEnd),
+                        time_start: getTaskTimeString(prevTaskTimeEnd),
                         time_end: getTaskTimeString(taskTimeStart),
                     })
-                    console.log('found available time', availableTimes[availableTimes.length - 1])
                 }
             }
         } else { 
@@ -62,6 +57,37 @@ export default class TaskDisplay extends React.Component {
         (availableTimes.length > 0 ?
         this.setState({ availableTimes, isFull: false }) :
         this.setState({ availableTimes, isFull: true }))
+    }
+
+    _timeIsTaken = (task) => {
+        console.log('checking time is taken')
+        const { tasks } = this.state
+        const taskTime = getTaskTime(task)
+        for (let i = 0; i < tasks.length; i++) {
+            if (task.id === tasks[i].id) { continue }
+            const otherTaskTime = getTaskTime(tasks[i])
+            console.log(taskTime, otherTaskTime)
+            // if task start time occurs during other task time
+            const startsAfterOtherTaskStarts = taskTime.start.hour > otherTaskTime.start.hour ||
+                (taskTime.start.hour === otherTaskTime.start.hour &&
+                    taskTime.start.minute > otherTaskTime.start.minute)
+            const startsBeforeOtherTaskEnds = taskTime.start.hour < otherTaskTime.end.hour ||
+            (taskTime.start.hour === otherTaskTime.end.hour &&
+                taskTime.start.minute < otherTaskTime.end.minute)
+            const endsAfterOtherTaskStarts = taskTime.end.hour > otherTaskTime.start.hour ||
+            (taskTime.end.hour === otherTaskTime.start.hour &&
+                taskTime.end.minute > otherTaskTime.start.minute)
+            const endsBeforeOtherTaskEnds = taskTime.end.hour < otherTaskTime.end.hour ||
+            (taskTime.end.hour === otherTaskTime.end.hour &&
+                taskTime.end.minute < otherTaskTime.end.minute)
+            if ((startsAfterOtherTaskStarts && startsBeforeOtherTaskEnds) ||
+            (endsAfterOtherTaskStarts && endsBeforeOtherTaskEnds)) {
+                console.log('time taken')
+                return true
+            }
+        }
+        console.log('time available')
+        return false
     }
 
     render() {
@@ -82,10 +108,10 @@ export default class TaskDisplay extends React.Component {
                         selectedTask={selectedTask}
                         addTask={addTask}
                         updateTask={updateTask}
+                        timeIsTaken={this._timeIsTaken}
                         deleteTask={deleteTask}
                     />
                 ))}
-                {/* <TaskAdd addTask={addTask} /> */}
             </div>
         )
     }

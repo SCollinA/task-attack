@@ -11,9 +11,12 @@ export default class TaskCell extends React.Component {
 
     // control the form values by updating state
     _updateTaskForm = (task) => {
+        const { timeIsTaken } = this.props
         const updatingTask = { ...this.state.task, ...task }
         const taskTime = getTaskTime(updatingTask)
-        if (taskTimeIsValid(taskTime)) {
+        console.log('checking update')
+        if (taskTimeIsValid(taskTime) && !timeIsTaken({...this.state.task, ...task})) {
+            console.log('update good')
             this.setState({ task: {...this.state.task, ...task } })
         } 
     }
@@ -98,6 +101,7 @@ export const getTaskTime = (task) => {
 }
 
 export const taskTimeIsValid = (taskTime) => {
+    console.log('checking time valid')
     return taskTime.start.hour < taskTime.end.hour || // if hours are less
         (taskTime.start.hour === taskTime.end.hour && // if hours are same
             taskTime.start.minute < taskTime.end.minute) // if minutes are less
