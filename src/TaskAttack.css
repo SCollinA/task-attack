@@ -33,7 +33,7 @@ html, body, #root, #TaskAttack {
 }
 
 .updatingUser {
-  background-color: lightgrey;
+  background-color: rgba(0, 0, 0, .25);
 }
 
 .loginButtons, .userInputs {
@@ -55,7 +55,7 @@ html, body, #root, #TaskAttack {
 }
 
 .registerButton:hover, .loginButton:hover, .updateUserIcon:hover, .loggedInHeader > h1:hover, .logoutIcon:hover, .TaskCell:hover, .TaskAdd:hover, .TaskDelete:hover, .TaskCancel:hover {
-  background-color: lightgrey;
+  background-color: rgba(0, 0, 0, .25);
   cursor: pointer;
 }
 
@@ -65,8 +65,10 @@ html, body, #root, #TaskAttack {
   width: 100%;
 }
 
-/* .TaskDisplay {
-} */
+.TaskDisplay {
+  background-image: url('./logo.svg');
+  background-attachment: fixed;
+}
 
 .TaskCell {
   display: flex;
@@ -74,15 +76,15 @@ html, body, #root, #TaskAttack {
   align-items: center;
   flex-wrap: wrap;
   padding: 2%;
-  background-color: lightpink;
+  background-color: rgba(255, 0, 0, 0.25);
 }
 
 .activeTask {
-  background-color: lightgreen;
+  background-color: rgba(60, 255, 0, 0.25);
 }
 
 .selectedTask {
-  background-color: lightgrey;
+  background-color: rgba(0, 0, 0, .25);
 }
 
 .UpdateTaskContainer {
@@ -100,7 +102,7 @@ html, body, #root, #TaskAttack {
 }
 
 .TaskDelete:hover, .TaskCancel:hover {
-  background-color: lightgrey;
+  background-color: rgba(0, 0, 0, .25);
 }
 
 #UpdateUserForm, #UpdateTaskForm {
@@ -108,7 +110,7 @@ html, body, #root, #TaskAttack {
   /* width: 90%; */
   display: flex;
   flex-direction: column;
-  background-color: lightgrey;
+  background-color: rgba(0, 0, 0, .25);
   padding: 2% 5%;
 }
 
