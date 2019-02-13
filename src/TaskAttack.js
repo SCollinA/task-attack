@@ -97,7 +97,10 @@ export default class TaskAttack extends React.Component {
         .then(data => this.scrubData({ ...data, username: data.user.name }))
     }
 
-    _selectUser = () => this.setState({ updatingUser: !this.state.updatingUser, selectedTask: null })
+    _selectUser = () => this.setState({ 
+        updatingUser: !this.state.updatingUser,
+        // selectedTask: null
+    })
 
     _selectTask = (selectedTask) => {
         !this.state.selectedTask || this.state.selectedTask.id !== selectedTask.id ?
