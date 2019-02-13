@@ -7,7 +7,7 @@ export default class TaskDisplay extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            taskCount: 0,
+            tasks: [],
             isFull: false,
             availableTimes: [], // array of arrays of [start, end] times
         }
@@ -15,14 +15,13 @@ export default class TaskDisplay extends React.Component {
 
     componentDidMount() {
         // !this.state.isFull && this.state.availableTimes.length === 0 &&
-        this.setState({ taskCount: this.props.tasks.length },
+        this.setState({ tasks: this.props.tasks },
             () => this.findAvailableTimes(this.props.tasks))
     }
 
     componentDidUpdate() {
-        // timesHaveChanged(this.props.tasks, this.state.availableTimes) &&    
-        this.props.tasks.length !== this.state.taskCount &&
-            this.setState({ taskCount: this.props.tasks.length },
+        timesHaveChanged(this.props.tasks, this.state.tasks) &&    
+            this.setState({ tasks: this.props.tasks },
                 () => this.findAvailableTimes(this.props.tasks))
     }
 
@@ -81,11 +80,11 @@ export const taskTimesDoNotOverlap = (taskEnd, nextTaskStart) => {
         taskEnd.minute < nextTaskStart.minute)
 }
 
-export const timesHaveChanged = (times, oldTimes) => {
-    if (times.length !== oldTimes.length) { return true }
-    for (let i = 0; i < times.length; i++) {
-        if (times[i].time_start !== oldTimes[i].time_start ||
-        times[i].time_end !== oldTimes[i].time_start) {
+export const timesHaveChanged = (tasks, oldTasks) => {
+    if (tasks.length !== oldTasks.length) { return true }
+    for (let i = 0; i < tasks.length; i++) {
+        if (tasks[i].time_start !== oldTasks[i].time_start ||
+        tasks[i].time_end !== oldTasks[i].time_end) {
             return true
         }
     }
