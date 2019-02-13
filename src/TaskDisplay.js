@@ -9,12 +9,11 @@ export default class TaskDisplay extends React.Component {
         this.state = {
             tasks: [],
             isFull: false,
-            availableTimes: [], // array of arrays of [start, end] times
+            availableTimes: [], // array of objects of start, end times
         }
     }
 
     componentDidMount() {
-        // !this.state.isFull && this.state.availableTimes.length === 0 &&
         this.setState({ tasks: this.props.tasks },
             () => this.findAvailableTimes(this.props.tasks))
     }
@@ -26,7 +25,7 @@ export default class TaskDisplay extends React.Component {
     }
 
     findAvailableTimes(tasks) {
-        // console.log('finding availability')
+        console.log('finding availability')
         const availableTimes = []
         const availableTask = {
             name: 'free time - click to add task',
@@ -37,19 +36,20 @@ export default class TaskDisplay extends React.Component {
         if (tasks.length !== 0) {
             for (let i = 0; i < tasks.length; i++) {
                 const task = tasks[i]
-                const taskTimeEnd = getTaskTime(task).end
+                const taskTimeStart = getTaskTime(task).start
                 // come back to first task for last task's comparison
-                const nextTask = tasks[i + 1] || tasks[0]
-                const nextTaskTimeStart = getTaskTime(nextTask).start
-                // console.log(taskTimeEnd, nextTaskTimeStart)
-                if (taskTimeEnd.hour !== nextTaskTimeStart.hour || 
-                taskTimeEnd.minute !== nextTaskTimeStart.minute) {
-                    // console.log('found available time')
+                const prevTask = tasks[i + 1] || tasks[0]
+                console.log(task, prevTask)
+                const nextTaskTimeEnd = getTaskTime(prevTask).end
+                console.log(taskTimeStart, nextTaskTimeEnd)
+                if (taskTimeStart.hour !== nextTaskTimeEnd.hour || 
+                taskTimeStart.minute !== nextTaskTimeEnd.minute) {
                     availableTimes.push({
                         ...availableTask,
-                        time_start: getTaskTimeString(taskTimeEnd),
-                        time_end: getTaskTimeString(nextTaskTimeStart),
+                        time_start: getTaskTimeString(nextTaskTimeEnd),
+                        time_end: getTaskTimeString(taskTimeStart),
                     })
+                    console.log('found available time', availableTimes[availableTimes.length - 1])
                 }
             }
         } else { 
