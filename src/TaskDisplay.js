@@ -36,8 +36,12 @@ export default class TaskDisplay extends React.Component {
             tasks.length === 1) {
                 console.log('found available time')
                 availableTimes.push({
+                    name: 'free time - click to add task',
                     time_start: `${taskTimeEnd.hour}:${taskTimeEnd.minute}`,
-                    time_end: `${nextTaskTimeStart.hour}:${nextTaskTimeStart.minute}`
+                    time_end: `${nextTaskTimeStart.hour}:${nextTaskTimeStart.minute}`,
+                    mandatory: false,
+                    active: false,
+                    free: true,
                 })
             }
         }
@@ -49,18 +53,20 @@ export default class TaskDisplay extends React.Component {
 
     render() {
         const { tasks, selectTask, selectedTask, updateTask, addTask, deleteTask } = this.props
+        const cells = [...tasks, ...this.state.availableTimes]
         return ( 
             <div className='TaskDisplay'>
-                {tasks.map(task => (
-                    <TaskCell key={task.id}
+                {cells.map((task, index) => (
+                    <TaskCell key={task.id || index}
                         task={task} 
                         selectTask={selectTask} 
                         selectedTask={selectedTask}
+                        addTask={addTask}
                         updateTask={updateTask}
                         deleteTask={deleteTask}
                     />
                 ))}
-                <TaskAdd addTask={addTask} />
+                {/* <TaskAdd addTask={addTask} /> */}
             </div>
         )
     }

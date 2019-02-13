@@ -19,7 +19,7 @@ export default class TaskCell extends React.Component {
     }
     
     render() {
-        const { task, selectTask, selectedTask, updateTask, deleteTask } = this.props
+        const { task, selectTask, selectedTask, addTask, updateTask, deleteTask } = this.props
         const isSelected = selectedTask && selectedTask.id === task.id
         const taskTime = getTaskTime(task)
         const cellHeight = (taskTime.end.hour * 60 + taskTime.end.minute) - 
@@ -28,7 +28,11 @@ export default class TaskCell extends React.Component {
             <div className='TaskCellWrapper'>
                 <div className={`TaskCell${isSelected ? ' selectedTask' : ''}${task.active ? ' activeTask' : ''}`} 
                     // single click opens 
-                    onClick={() => this.setState({ task }, selectTask(this.state.task))}
+                    onClick={() => {
+                        task.free ?
+                        addTask() :
+                        this.setState({ task }, selectTask(this.state.task))
+                    }}
                     // double click toggles active status on task
                     onDoubleClick={() => updateTask({ ...task, active: !task.active })}
                     style={{
