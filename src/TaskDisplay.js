@@ -38,13 +38,30 @@ export default class TaskDisplay extends React.Component {
                 // come back to first task for last task's comparison
                 const prevTask = tasks[i + 1] || tasks[0]
                 const prevTaskTimeEnd = getTaskTime(prevTask).end
+                // if start hour is not prev end hour or start minute is not prev end minute
                 if (taskTimeStart.hour !== prevTaskTimeEnd.hour || 
                 taskTimeStart.minute !== prevTaskTimeEnd.minute) {
-                    availableTimes.push({
-                        ...availableTask,
-                        time_start: getTaskTimeString(prevTaskTimeEnd),
-                        time_end: getTaskTimeString(taskTimeStart),
-                    })
+                    // if this was last task of day
+                    if (taskTimeStart.hour < prevTaskTimeEnd.hour ||
+                        (taskTimeStart.hour === prevTaskTimeEnd.hour &&
+                            taskTimeStart.minute < prevTaskTimeEnd.minute)) {
+                        availableTimes.push({
+                            ...availableTask,
+                            time_start: getTaskTimeString(prevTaskTimeEnd),
+                            time_end: '00:00',
+                        })
+                        availableTimes.push({
+                            ...availableTask,
+                            time_start: '00:00',
+                            time_end: getTaskTimeString(taskTimeStart),
+                        })
+                    } else {
+                        availableTimes.push({
+                            ...availableTask,
+                            time_start: getTaskTimeString(prevTaskTimeEnd),
+                            time_end: getTaskTimeString(taskTimeStart),
+                        })
+                    }
                 }
             }
         } else { 
