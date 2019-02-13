@@ -163,6 +163,7 @@ export default class TaskDisplay extends React.Component {
                         height: `${(new Date().getHours() / 24) * 100}%`,
                     }}
                 >
+                    <h1>you are here</h1>
                 </div>
             </div>
         )

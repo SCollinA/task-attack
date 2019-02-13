@@ -8,6 +8,7 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
             <form id='UpdateTaskForm' 
                 onSubmit={event => {
                     event.preventDefault()
+                    event.stopPropagation()
                     updateTask({
                         id: task.id,
                         name: event.target.name.value,
