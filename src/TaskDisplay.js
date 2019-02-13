@@ -67,13 +67,13 @@ export default class TaskDisplay extends React.Component {
     render() {
         const { tasks, selectTask, selectedTask, updateTask, addTask, deleteTask } = this.props
         const cells = [...tasks, ...this.state.availableTimes]
-        // console.log(cells)
         return ( 
             <div className='TaskDisplay'>
                 {cells.sort((taskA, taskB) => {
-                    console.log(getTaskTime(taskA), getTaskTime(taskB))
-                    return getTaskTime(taskB).hour - getTaskTime(taskA).hour ||
-                    getTaskTime(taskB).minute - getTaskTime(taskA).minute
+                    const taskAStart = getTaskTime(taskA).start
+                    const taskBStart = getTaskTime(taskB).start
+                    return taskBStart.hour - taskAStart.hour ||
+                    taskBStart.minute - taskAStart.minute
                 }).map(task => (
                     <TaskCell key={task.id || 
                             Math.floor(Math.random() * Math.pow(tasks.length, 10))}
