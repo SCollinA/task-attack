@@ -113,39 +113,48 @@ export default class TaskDisplay extends React.Component {
 
     render() {
         const { tasks, selectTask, selectedTask, updateTask, addTask, deleteTask } = this.props
+        // combine tasks and available times for display
         const cells = [...tasks, ...this.state.availableTimes]
         return ( 
-            <div className='TaskDisplay'>
-                {cells.sort((taskA, taskB) => {
-                    const taskAStart = getTaskTime(taskA).start
-                    const taskBStart = getTaskTime(taskB).start
-                    return taskBStart.hour - taskAStart.hour ||
-                    taskBStart.minute - taskAStart.minute
-                }).map(task => (
-                    <TaskCell key={task.id || 
-                            Math.floor(Math.random() * Math.pow(tasks.length, 10))}
-                        task={task} 
-                        selectTask={selectTask} 
-                        selectedTask={selectedTask}
-                        addTask={addTask}
-                        updateTask={updateTask}
-                        timeIsTaken={this._timeIsTaken}
-                        deleteTask={deleteTask}
-                    />
-                ))}
+            <div className='TaskDisplayContainer'>
+                <div className='TaskDisplay'>
+                    {cells.sort((taskA, taskB) => {
+                        const taskAStart = getTaskTime(taskA).start
+                        const taskBStart = getTaskTime(taskB).start
+                        return taskBStart.hour - taskAStart.hour ||
+                        taskBStart.minute - taskAStart.minute
+                    }).map(task => (
+                        <TaskCell key={task.id || 
+                                Math.floor(Math.random() * Math.pow(tasks.length, 10))}
+                            task={task} 
+                            selectTask={selectTask} 
+                            selectedTask={selectedTask}
+                            addTask={addTask}
+                            updateTask={updateTask}
+                            timeIsTaken={this._timeIsTaken}
+                            deleteTask={deleteTask}
+                        />
+                    ))}
+                </div>
+                <div className='TaskHours'>
+                <h1>-</h1>
+                <h1>-</h1>
+                <h1>-</h1>
+                <h1>-</h1>
+                <h1>-</h1>
+                <h1>-</h1>
+                <h1>-</h1>
+                <h1>-</h1>
+                <h1>-</h1>
+                <h1>-</h1>
+                <h1>-</h1>
+                <h1>-</h1>
+                <h1>-</h1>
+                </div>
             </div>
         )
     }
 }
-
-// export const taskTimesDoNotOverlap = (taskEnd, nextTaskStart) => {
-//     console.log('checking overlap')
-//     // change hour 0 to hour 24
-//     const nextTaskStartHour = nextTaskStart.hour || 24
-//     return taskEnd.hour < nextTaskStartHour ||
-//     (taskEnd.hour === nextTaskStartHour &&
-//         taskEnd.minute < nextTaskStart.minute)
-// }
 
 export const getTaskTimeString = (taskTime) => {
     const taskTimeArray = [taskTime.hour, taskTime.minute]

@@ -19,6 +19,7 @@ html, body, #root, #TaskAttack {
 }
 
 .TaskHeader {
+  height: 10%;
   width: 100%;
   display: flex;
   justify-content: space-around;
@@ -61,14 +62,32 @@ html, body, #root, #TaskAttack {
 }
 
 .TaskAttack {
-  flex: 1;
+  height: 90%;
+  /* flex: 1; */
   overflow-y: auto;
   /* width: calc(100% + 15px); */
 }
 
+.TaskDisplayContainer {
+  position: relative;
+}
+
 .TaskDisplay {
-  background-image: url('./logo.svg');
-  background-attachment: fixed;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.TaskHours {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: aliceblue;
+  z-index: -1;
 }
 
 .TaskCell {
@@ -138,9 +157,5 @@ html, body, #root, #TaskAttack {
 .updateTaskButtons > *, .updateUserButtons > * {
   flex: 1;
   max-width: 100px;
-  padding: 2%;
-}
-
-.TaskAdd {
   padding: 2%;
 }

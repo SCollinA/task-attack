@@ -103,7 +103,6 @@ export const getTaskTime = (task) => {
 }
 
 export const taskTimeIsValid = (taskTime) => {
-    console.log('checking time valid')
     return taskTime.start.hour < taskTime.end.hour || // if hours are less
         (taskTime.start.hour === taskTime.end.hour && // if hours are same
             taskTime.start.minute < taskTime.end.minute) // if minutes are less
