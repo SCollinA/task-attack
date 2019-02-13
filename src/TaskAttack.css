@@ -158,13 +158,24 @@ html, body, #root, #TaskAttack {
 .UpdateTaskContainer {
   position: sticky;
   top: 0;
+  z-index: 1;
+  padding: 5%;
+  background-color: rgba(0, 0, 0, .25);
   display: flex;
+  justify-content: space-around;
   width: 100%;
   align-items: center;
 }
 
 .UpdateTaskContainer > * {
   flex: 1;
+}
+
+.taskUpdateIcons {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
 }
 
 .TaskDelete, .TaskCancel {

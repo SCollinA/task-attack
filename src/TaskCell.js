@@ -46,16 +46,16 @@ export default class TaskCell extends React.Component {
                         this.setState({ clicked: !this.state.clicked }, () => {
                             setTimeout(() => {
                                 (this.state.clicked &&
-                                    this.setState({ task }, selectTask(this.state.task))) ||
+                                    this.setState({ task, clicked: false }, selectTask(this.state.task))) ||
                                         this.setState({ clicked: false })
-                            }, 500)
+                            }, 250)
                         })
                     }}
                     // double click toggles active status on task
                     onDoubleClick={() => !task.free && updateTask({ ...task, active: !task.active })}
-                    style={{
+                    style={isSelected ? {} : {
                         height: `
-                            ${cellHeight > 60 ? cellHeight : 60}px
+                            ${cellHeight}px
                         `,
                     }}
                 >
