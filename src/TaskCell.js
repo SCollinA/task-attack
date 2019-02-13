@@ -30,7 +30,12 @@ export default class TaskCell extends React.Component {
                     // single click opens 
                     onClick={() => {
                         task.free ?
-                        addTask() :
+                        addTask({
+                            ...task,
+                            name: 'new task',
+                            time_end: `${parseInt(task.time_start.slice(0, 2)) + Math.floor((parseInt(task.time_start.slice(3, 5)) + 15) / 60)}:${(parseInt(task.time_start.slice(3, 5)) + 15) % 60}`,
+                            free: false
+                        }) :
                         this.setState({ task }, selectTask(this.state.task))
                     }}
                     // double click toggles active status on task

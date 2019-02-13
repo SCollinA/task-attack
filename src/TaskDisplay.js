@@ -1,6 +1,6 @@
 import React from 'react'
 import TaskCell from './TaskCell'
-import TaskAdd from './TaskAdd'
+// import TaskAdd from './TaskAdd'
 import { getTaskTime } from './TaskCell'
 
 export default class TaskDisplay extends React.Component {
