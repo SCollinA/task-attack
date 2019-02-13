@@ -26,7 +26,7 @@ export default class TaskDisplay extends React.Component {
     }
 
     findAvailableTimes(tasks) {
-        console.log('finding availability')
+        // console.log('finding availability')
         const availableTimes = []
         const availableTask = {
             name: 'free time - click to add task',
@@ -41,10 +41,10 @@ export default class TaskDisplay extends React.Component {
                 // come back to first task for last task's comparison
                 const nextTask = tasks[i + 1] || tasks[0]
                 const nextTaskTimeStart = getTaskTime(nextTask).start
-                console.log(taskTimeEnd, nextTaskTimeStart)
+                // console.log(taskTimeEnd, nextTaskTimeStart)
                 if (taskTimeEnd.hour !== nextTaskTimeStart.hour || 
                 taskTimeEnd.minute !== nextTaskTimeStart.minute) {
-                    console.log('found available time')
+                    // console.log('found available time')
                     availableTimes.push({
                         ...availableTask,
                         time_start: getTaskTimeString(taskTimeEnd),
@@ -67,14 +67,16 @@ export default class TaskDisplay extends React.Component {
     render() {
         const { tasks, selectTask, selectedTask, updateTask, addTask, deleteTask } = this.props
         const cells = [...tasks, ...this.state.availableTimes]
-        console.log(cells)
+        // console.log(cells)
         return ( 
             <div className='TaskDisplay'>
                 {cells.sort((taskA, taskB) => {
+                    console.log(getTaskTime(taskA), getTaskTime(taskB))
                     return getTaskTime(taskB).hour - getTaskTime(taskA).hour ||
-                    getTaskTime(taskA).minute - getTaskTime(taskB).minute
-                }).map((task, index) => (
-                    <TaskCell key={task.id || index}
+                    getTaskTime(taskB).minute - getTaskTime(taskA).minute
+                }).map(task => (
+                    <TaskCell key={task.id || 
+                            Math.floor(Math.random() * Math.pow(tasks.length, 10))}
                         task={task} 
                         selectTask={selectTask} 
                         selectedTask={selectedTask}
