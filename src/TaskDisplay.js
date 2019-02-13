@@ -18,6 +18,7 @@ export default class TaskDisplay extends React.Component {
     }
 
     componentDidUpdate() {
+        console.log('updated')
         // timesHaveChanged(this.props.tasks, this.state.availableTimes) &&    
         // this.findAvailableTimes(this.props.tasks)
     }
@@ -76,7 +77,7 @@ export const taskTimesDoNotOverlap = (taskEnd, nextTaskStart) => {
     const nextTaskStartHour = nextTaskStart.hour || 24
     return taskEnd.hour < nextTaskStartHour ||
     (taskEnd.hour === nextTaskStartHour &&
-        taskEnd.minute <= nextTaskStart.minute)
+        taskEnd.minute < nextTaskStart.minute)
 }
 
 export const timesHaveChanged = (times, oldTimes) => {
