@@ -52,17 +52,19 @@ export default class TaskCell extends React.Component {
                         `,
                     }}
                 >
-                    <h6>
-                        {this.state.task.free ?
-                        this.props.task.time_start :
-                        this.state.task.time_start}
-                    </h6>
-                    <h4>{this.state.task.name}</h4>
-                    <h6>
-                        {this.state.task.free ?
-                        this.props.task.time_end :
-                        this.state.task.time_end}
-                    </h6>
+                    <div className='taskCellContent'>
+                        <h6>
+                            {this.state.task.free ?
+                            this.props.task.time_start :
+                            this.state.task.time_start}
+                        </h6>
+                        <h4>{this.state.task.name}</h4>
+                        <h6>
+                            {this.state.task.free ?
+                            this.props.task.time_end :
+                            this.state.task.time_end}
+                        </h6>
+                    </div>
                 </div>
                 {isSelected && 
                     <UpdateTask 
