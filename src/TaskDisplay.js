@@ -151,6 +151,8 @@ export default class TaskDisplay extends React.Component {
                 <h1>-</h1>
                 <h1>-</h1>
                 </div>
+                <div className='taskHoursComplete'>
+                </div>
             </div>
         )
     }
