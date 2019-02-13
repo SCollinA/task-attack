@@ -30,19 +30,19 @@ export default class TaskAttack extends React.Component {
     scrubData(data) {
         this.setState({
             ...data,
-            tasks: data.tasks ? data.tasks.map(task => {
-                return {
-                    ...task,
-                    time_start: task.time_start
-                    .split(':')
-                    .map(number => parseInt(number))
-                    .slice(0, 2),
-                    time_end: task.time_end
-                    .split(':')
-                    .map(number => parseInt(number))
-                    .slice(0, 2),
-                }
-            }) : this.state.tasks
+            // tasks: data.tasks ? data.tasks.map(task => {
+            //     return {
+            //         ...task,
+            //         time_start: task.time_start
+            //             .split(':')
+            //             .map(number => parseInt(number))
+            //             .slice(0, 2),
+            //         time_end: task.time_end
+            //             .split(':')
+            //             .map(number => parseInt(number))
+            //             .slice(0, 2),
+            //     }
+            // }) : this.state.tasks
         })
     }
 
