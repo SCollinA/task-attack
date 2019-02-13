@@ -18,8 +18,27 @@ export default class TaskCell extends React.Component {
     //     }
     // }
 
+    getTaskTime(task) {
+        let start = task.time_start
+            .split(':').map(number => parseInt(number))
+        let end = task.time_end
+            .split(':').map(number => parseInt(number))
+        return { start, end }
+    }
+
     // control the form values by updating state
-    _updateTaskForm = (task) => this.setState({ task: {...this.state.task, ...task }})
+    _updateTaskForm = (task) => {
+        const updatingTask = { ...this.state.task, ...task }
+        const taskTime = this.getTaskTime(updatingTask)
+        if (
+            taskTime.start[0] < taskTime.end[0] || // if hours are less
+                (taskTime.start[0] === taskTime.end[0] && // if hours are same
+                    taskTime.start[1] < taskTime.end[1]) // if minutes are less
+        ) {
+            this.setState({ task: {...this.state.task, ...task } })
+        } 
+
+    }
     
     render() {
         const { task, selectTask, selectedTask, updateTask, deleteTask } = this.props

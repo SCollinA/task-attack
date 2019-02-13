@@ -9,19 +9,14 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
             <form id='UpdateTaskForm' 
                 onSubmit={event => {
                     event.preventDefault()
-                    if (event.target.time_start.value > event.target.time_end.value) {
-                        window.alert('time end must be after time start')
-                        updateTaskForm({time_start: event.target.time_end.value})
-                    } else {
-                        updateTask({
-                            id: task.id,
-                            name: event.target.name.value,
-                            time_start: event.target.time_start.value,
-                            time_end: event.target.time_end.value,
-                            mandatory: event.target.mandatory.checked,
-                            active: event.target.active.checked
-                        })
-                    }
+                    updateTask({
+                        id: task.id,
+                        name: event.target.name.value,
+                        time_start: event.target.time_start.value,
+                        time_end: event.target.time_end.value,
+                        mandatory: event.target.mandatory.checked,
+                        active: event.target.active.checked
+                    })
                 }}
                 onReset={() => updateTaskForm(selectedTask)}
             >
@@ -34,28 +29,28 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
                     <input type='time' name='time_start' 
                         value={task.time_start} 
                         max={task.time_end} 
-                        onChange={event => {
-                            event.target.value < event.target.form.time_end.value && 
-                                updateTaskForm({ time_start: event.target.value })
-                        }}
+                        onChange={event => updateTaskForm({ time_start: event.target.value })}
                     />
                 </label>
                 <label name='time_end'>time end
                     <input type='time' name='time_end' 
                         value={task.time_end}
                         min={task.time_start}
-                        onChange={event => {
-                            event.target.value > event.target.form.time_start.value && 
-                                updateTaskForm({ time_end: event.target.value })
-                        }}
+                        onChange={event => updateTaskForm({ time_end: event.target.value })}
                     />
                 </label>
                 <div className='updateTaskChecks'>
                     <label name='mandatory'>mandatory
-                        <input type='checkbox' name='mandatory' checked={task.mandatory} onChange={event => updateTaskForm({mandatory: event.target.checked})}/>
+                        <input type='checkbox' name='mandatory' 
+                            checked={task.mandatory} 
+                            onChange={event => updateTaskForm({mandatory: event.target.checked})}
+                        />
                     </label>
                     <label name='active'>active
-                        <input type='checkbox' name='active' checked={task.active} onChange={event => updateTaskForm({active: event.target.checked})}/>
+                        <input type='checkbox' name='active' 
+                            checked={task.active} 
+                            onChange={event => updateTaskForm({active: event.target.checked})}
+                        />
                     </label>
                 </div>
                 <div className='updateTaskButtons'>
@@ -63,7 +58,10 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
                     <input type='submit' value='update'/>
                 </div>
             </form>
-            <TaskCancel task={selectedTask} selectTask={selectTask} updateTaskForm={updateTaskForm}/>
+            <TaskCancel task={selectedTask} 
+                selectTask={selectTask} 
+                updateTaskForm={updateTaskForm}
+            />
         </div>
     )
 } 
