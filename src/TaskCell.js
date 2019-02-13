@@ -72,16 +72,16 @@ export default class TaskCell extends React.Component {
                             this.state.task.time_end}
                         </h6>
                     </div>
+                    {isSelected && 
+                        <UpdateTask 
+                            task={this.state.task}
+                            updateTaskForm={this._updateTaskForm}
+                            selectedTask={selectedTask} 
+                            selectTask={selectTask}
+                            updateTask={updateTask} 
+                            deleteTask={deleteTask}
+                        />}
                 </div>
-                {isSelected && 
-                    <UpdateTask 
-                        task={this.state.task}
-                        updateTaskForm={this._updateTaskForm}
-                        selectedTask={selectedTask} 
-                        selectTask={selectTask}
-                        updateTask={updateTask} 
-                        deleteTask={deleteTask}
-                    />}
             </div>
         )
     }
