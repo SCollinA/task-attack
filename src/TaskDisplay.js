@@ -45,17 +45,20 @@ export default class TaskDisplay extends React.Component {
                     if (taskTimeStart.hour < prevTaskTimeEnd.hour ||
                         (taskTimeStart.hour === prevTaskTimeEnd.hour &&
                             taskTimeStart.minute < prevTaskTimeEnd.minute)) {
-                        (prevTaskTimeEnd.hour < 23 || prevTaskTimeEnd.minute < 59) && 
-                        availableTimes.push({
-                            ...availableTask,
-                            time_start: getTaskTimeString(prevTaskTimeEnd),
-                            time_end: '23:59',
-                        })
-                        availableTimes.push({
-                            ...availableTask,
-                            time_start: '00:00',
-                            time_end: getTaskTimeString(taskTimeStart),
-                        })
+                        if (prevTaskTimeEnd.hour < 23 || prevTaskTimeEnd.minute < 59) {
+                            availableTimes.push({
+                                ...availableTask,
+                                time_start: getTaskTimeString(prevTaskTimeEnd),
+                                time_end: '23:59',
+                            })
+                        }
+                        if (taskTimeStart.hour > 0 || taskTimeStart.minute > 0) {
+                            availableTimes.push({
+                                ...availableTask,
+                                time_start: '00:00',
+                                time_end: getTaskTimeString(taskTimeStart),
+                            })
+                        }
                     } else {
                         availableTimes.push({
                             ...availableTask,
