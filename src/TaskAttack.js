@@ -24,7 +24,26 @@ export default class TaskAttack extends React.Component {
     componentDidMount() {
         fetch('/attack')
         .then(res => res.json())
-        .then(data => this.setState({ ...data, username: data.user && data.user.name }))
+        .then(data => this.scrubData({ ...data, username: data.user && data.user.name }))
+    }
+
+    scrubData(data) {
+        this.setState({
+            ...data,
+            tasks: data.tasks ? data.tasks.map(task => {
+                return {
+                    ...task,
+                    time_start: task.time_start
+                    .split(':')
+                    .map(number => parseInt(number))
+                    .slice(0, 2),
+                    time_end: task.time_end
+                    .split(':')
+                    .map(number => parseInt(number))
+                    .slice(0, 2),
+                }
+            }) : this.state.tasks
+        })
     }
 
     // CREATE
@@ -41,10 +60,15 @@ export default class TaskAttack extends React.Component {
     }
 
     _addTask = () => {
+        const currentTime = new Date()
+        const timeStart = currentTime.toLocaleTimeString()
+        // min 15 minute tasks
+        currentTime.setMinutes(currentTime.getMinutes() + 15)
+        const timeEnd = currentTime.toLocaleTimeString()
         const newTask = {
             name: 'new task', 
-            timeStart: new Date().toLocaleTimeString(),
-            timeEnd: new Date().toLocaleTimeString(),
+            timeStart,
+            timeEnd,
             mandatory: false,
             active: false
         }
@@ -57,7 +81,7 @@ export default class TaskAttack extends React.Component {
         })
         .then(res => res.json())
         // will need to receive all tasks here
-        .then(tasks => this.setState({ tasks, selectedTask: newTask }))
+        .then(tasks => this.scrubData({ tasks, selectedTask: tasks[tasks.length - 1] }))
     }
 
     // RETRIEVE
@@ -70,7 +94,7 @@ export default class TaskAttack extends React.Component {
             body: JSON.stringify(loginAttempt)
         })
         .then(res => res.json())
-        .then(data => this.setState({ ...data, username: data.user.name }))
+        .then(data => this.scrubData({ ...data, username: data.user.name }))
     }
 
     _selectUser = () => this.setState({ updatingUser: !this.state.updatingUser, selectedTask: null })
@@ -108,7 +132,7 @@ export default class TaskAttack extends React.Component {
         })
         .then(res => res.json())
         // will need to receive all tasks here
-        .then(tasks => this.setState({ 
+        .then(tasks => this.scrubData({ 
             tasks,
             selectedTask: null
         }))
@@ -163,7 +187,6 @@ export default class TaskAttack extends React.Component {
                                 deleteTask={this._deleteTask}
                             />
                         }
-                        {/* <TaskBar tasks={this.state.tasks} updateTask={this._updateTask}/> */}
                     </div>
                 )}
             </div>

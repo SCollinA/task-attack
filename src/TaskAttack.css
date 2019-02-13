@@ -19,7 +19,6 @@ html, body, #root, #TaskAttack {
 }
 
 .TaskHeader {
-  height: 10%;
   width: 100%;
   display: flex;
   justify-content: space-around;
@@ -61,14 +60,13 @@ html, body, #root, #TaskAttack {
 }
 
 .TaskAttack {
+  flex: 1;
   overflow-y: auto;
-  height: 90%;
   width: 100%;
 }
 
-.TaskDisplay {
-  flex: 1;
-}
+/* .TaskDisplay {
+} */
 
 .TaskCell {
   display: flex;
