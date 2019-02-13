@@ -67,15 +67,15 @@ export default class TaskCell extends React.Component {
 export const getTaskTime = (task) => {
     let start = task.time_start
         .split(':').map(number => {
-            return number === '12' ?
-            0 :
-            parseInt(number)
+            // return number === '12' ?
+            // 0 :
+            return parseInt(number)
         })
     let end = task.time_end
         .split(':').map(number => {
-            return number === '12' ?
-            0 :
-            parseInt(number)
+            // return number === '12' ?
+            // 0 :
+            return parseInt(number)
         })
     return { start: {
         hour: start[0],
