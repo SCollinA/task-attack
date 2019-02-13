@@ -59,19 +59,19 @@ export default class TaskAttack extends React.Component {
         .then(user => this.setState({ user, username: user.name }))
     }
 
-    _addTask = () => {
-        const currentTime = new Date()
-        const time_start = currentTime.toLocaleTimeString()
-        // min 15 minute tasks
-        currentTime.setMinutes(currentTime.getMinutes() + 15)
-        const time_end = currentTime.toLocaleTimeString()
-        const newTask = {
-            name: 'new task', 
-            time_start,
-            time_end,
-            mandatory: false,
-            active: false
-        }
+    _addTask = (newTask) => {
+        // const currentTime = new Date()
+        // const time_start = currentTime.toLocaleTimeString()
+        // // min 15 minute tasks
+        // currentTime.setMinutes(currentTime.getMinutes() + 15)
+        // const time_end = currentTime.toLocaleTimeString()
+        // const newTask = {
+        //     name: 'new task', 
+        //     time_start,
+        //     time_end,
+        //     mandatory: false,
+        //     active: false
+        // }
         fetch('addTask', {
             method: 'post',
             headers: {
@@ -81,7 +81,7 @@ export default class TaskAttack extends React.Component {
         })
         .then(res => res.json())
         // will need to receive all tasks here
-        .then(tasks => this.scrubData({ tasks, selectedTask: tasks[tasks.length - 1] }))
+        .then(tasks => this.scrubData({ tasks, selectedTask: tasks[0] }))
     }
 
     // RETRIEVE

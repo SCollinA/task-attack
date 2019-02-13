@@ -9,59 +9,60 @@ export default class TaskCell extends React.Component {
         }
     }
 
-    // componentDidUpdate() {
-    //     // task times are updated after initial set state
-    //     if (typeof this.state.task.time_start === 'string') {
-    //         this.setState({
-    //             task: this.props.task
-    //         })
-    //     }
-    // }
-
-    getTaskTime(task) {
-        let start = task.time_start
-            .split(':').map(number => parseInt(number))
-        let end = task.time_end
-            .split(':').map(number => parseInt(number))
-        return { start, end }
-    }
-
     // control the form values by updating state
     _updateTaskForm = (task) => {
+        const { timeIsTaken } = this.props
         const updatingTask = { ...this.state.task, ...task }
-        const taskTime = this.getTaskTime(updatingTask)
-        if (
-            taskTime.start[0] < taskTime.end[0] || // if hours are less
-                (taskTime.start[0] === taskTime.end[0] && // if hours are same
-                    taskTime.start[1] < taskTime.end[1]) // if minutes are less
-        ) {
+        const taskTime = getTaskTime(updatingTask)
+        console.log('checking update')
+        if (taskTimeIsValid(taskTime) && !timeIsTaken({...this.state.task, ...task})) {
+            console.log('update good')
             this.setState({ task: {...this.state.task, ...task } })
         } 
-
     }
     
     render() {
-        const { task, selectTask, selectedTask, updateTask, deleteTask } = this.props
+        const { task, selectTask, selectedTask, addTask, updateTask, deleteTask } = this.props
         const isSelected = selectedTask && selectedTask.id === task.id
-        const taskTime = this.getTaskTime(task)
+        const taskTime = getTaskTime(task)
+        const cellHeight = (taskTimeIsValid(taskTime)) ?
+        (taskTime.end.hour * 60 + taskTime.end.minute) - 
+            (taskTime.start.hour * 60 + taskTime.start.minute) :
+        ((24 * 60) - (taskTime.start.hour * 60 + taskTime.start.minute)) +
+            (taskTime.end.hour * 60 + taskTime.end.minute)
         return (
             <div className='TaskCellWrapper'>
                 <div className={`TaskCell${isSelected ? ' selectedTask' : ''}${task.active ? ' activeTask' : ''}`} 
                     // single click opens 
-                    onClick={() => selectTask(this.state.task)}
+                    onClick={() => {
+                        task.free ?
+                        addTask({
+                            ...task,
+                            name: 'new task',
+                            time_end: `${parseInt(task.time_start.slice(0, 2)) + Math.floor((parseInt(task.time_start.slice(3, 5)) + 15) / 60)}:${(parseInt(task.time_start.slice(3, 5)) + 15) % 60}`,
+                            free: false
+                        }) :
+                        this.setState({ task }, selectTask(this.state.task))
+                    }}
                     // double click toggles active status on task
-                    onDoubleClick={() => updateTask({ ...task, active: !task.active })}
+                    onDoubleClick={() => !task.free && updateTask({ ...task, active: !task.active })}
                     style={{
                         height: `
-                            ${(taskTime.end[0] * 60 + taskTime.end[1]) - 
-                                (taskTime.start[0] * 60 + taskTime.start[1])}px
+                            ${cellHeight > 60 ? cellHeight : 60}px
                         `,
-                        minHeight: `40px`,
                     }}
                 >
-                    <h6>{this.state.task.time_start}</h6>
+                    <h6>
+                        {this.state.task.free ?
+                        this.props.task.time_start :
+                        this.state.task.time_start}
+                    </h6>
                     <h4>{this.state.task.name}</h4>
-                    <h6>{this.state.task.time_end}</h6>
+                    <h6>
+                        {this.state.task.free ?
+                        this.props.task.time_end :
+                        this.state.task.time_end}
+                    </h6>
                 </div>
                 {isSelected && 
                     <UpdateTask 
@@ -75,4 +76,33 @@ export default class TaskCell extends React.Component {
             </div>
         )
     }
+}
+
+export const getTaskTime = (task) => {
+    let start = task.time_start
+        .split(':').map(number => {
+            // return number === '12' ?
+            // 0 :
+            return parseInt(number)
+        })
+    let end = task.time_end
+        .split(':').map(number => {
+            // return number === '12' ?
+            // 0 :
+            return parseInt(number)
+        })
+    return { start: {
+        hour: start[0],
+        minute: start[1],
+    }, end: {
+        hour: end[0],
+        minute: end[1],
+    } }
+}
+
+export const taskTimeIsValid = (taskTime) => {
+    console.log('checking time valid')
+    return taskTime.start.hour < taskTime.end.hour || // if hours are less
+        (taskTime.start.hour === taskTime.end.hour && // if hours are same
+            taskTime.start.minute < taskTime.end.minute) // if minutes are less
 }
