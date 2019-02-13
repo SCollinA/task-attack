@@ -13,20 +13,17 @@ export default class TaskDisplay extends React.Component {
     }
 
     componentDidMount() {
-        
         // !this.state.isFull && this.state.availableTimes.length === 0 &&
-            this.findAvailableTimes(this.props.tasks)
+        this.findAvailableTimes(this.props.tasks)
     }
 
     componentDidUpdate() {
-        // if day is not full
-        // and available times is empty
-        (timesHaveChanged(this.props.tasks, this.state.availableTimes)) &&
-            this.findAvailableTimes(this.props.tasks)
+        // timesHaveChanged(this.props.tasks, this.state.availableTimes) &&    
+        // this.findAvailableTimes(this.props.tasks)
     }
 
     findAvailableTimes(tasks) {
-        console.log(`${this.props.tasks.length}, ${this.state.taskCount}`)
+        console.log('finding available times')
         const availableTimes = []
         for (let i = 0; i < tasks.length; i++) {
             const task = tasks[i]
@@ -34,13 +31,20 @@ export default class TaskDisplay extends React.Component {
             // come back to first task for last task's comparison
             const nextTask = tasks[i + 1] || tasks[0]
             const nextTaskTimeStart = getTaskTime(nextTask).start
-            if (taskTimesDoNotOverlap(taskTimeEnd, nextTaskTimeStart)) {
-                availableTimes.push({time_start: taskTimeEnd, time_end: nextTaskTimeStart})
+            console.log(taskTimeEnd, nextTaskTimeStart)
+            if (taskTimesDoNotOverlap(taskTimeEnd, nextTaskTimeStart) || 
+            tasks.length === 1) {
+                console.log('found available time')
+                availableTimes.push({
+                    time_start: `${taskTimeEnd.hour}:${taskTimeEnd.minute}`,
+                    time_end: `${nextTaskTimeStart.hour}:${nextTaskTimeStart.minute}`
+                })
             }
         }
-        availableTimes.length > 0 ?
-        this.setState({ availableTimes, isFull: false }) :
-        this.setState({ availableTimes, isFull: true })
+        // timesHaveChanged(availableTimes, this.state.availableTimes) &&
+            (availableTimes.length > 0 ?
+            this.setState({ availableTimes, isFull: false }) :
+            this.setState({ availableTimes, isFull: true }))
     }
 
     render() {
@@ -69,7 +73,13 @@ export const taskTimesDoNotOverlap = (taskEnd, nextTaskStart) => {
         taskEnd.minute <= nextTaskStart.minute)
 }
 
-export const timesHaveChanged = (tasks, availableTimes) => {
-    
+export const timesHaveChanged = (times, oldTimes) => {
+    if (times.length !== oldTimes.length) { return true }
+    for (let i = 0; i < times.length; i++) {
+        if (times[i].time_start !== oldTimes[i].time_start ||
+            times[i].time_end !== oldTimes[i].time_start) {
+                return true
+            }
+    }
     return false
 }
