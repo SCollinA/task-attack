@@ -21,22 +21,19 @@ export default class TaskDisplay extends React.Component {
     componentDidUpdate() {
         // if day is not full
         // and available times is empty
-        (!this.state.isFull && this.state.availableTimes.length === 0) && 
-            true &&
+        (timesHaveChanged(this.props.tasks, this.state.availableTimes)) &&
             this.findAvailableTimes(this.props.tasks)
     }
 
     findAvailableTimes(tasks) {
-        console.log(tasks)
+        console.log(`${this.props.tasks.length}, ${this.state.taskCount}`)
         const availableTimes = []
         for (let i = 0; i < tasks.length; i++) {
             const task = tasks[i]
             const taskTimeEnd = getTaskTime(task).end
-            console.log('task is', taskTimeEnd)
             // come back to first task for last task's comparison
             const nextTask = tasks[i + 1] || tasks[0]
             const nextTaskTimeStart = getTaskTime(nextTask).start
-            console.log('nextTask is', nextTaskTimeStart)
             if (taskTimesDoNotOverlap(taskTimeEnd, nextTaskTimeStart)) {
                 availableTimes.push({time_start: taskTimeEnd, time_end: nextTaskTimeStart})
             }
@@ -70,4 +67,9 @@ export const taskTimesDoNotOverlap = (taskEnd, nextTaskStart) => {
     return taskEnd.hour < nextTaskStartHour ||
     (taskEnd.hour === nextTaskStartHour &&
         taskEnd.minute <= nextTaskStart.minute)
+}
+
+export const timesHaveChanged = (tasks, availableTimes) => {
+    
+    return false
 }
