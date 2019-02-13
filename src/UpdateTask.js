@@ -3,12 +3,16 @@ import TaskDelete from './TaskDelete'
 import TaskCancel from './TaskCancel'
 
 export default function UpdateTask({ task, updateTaskForm, selectedTask, selectTask, updateTask, deleteTask }) {
-    if (task.time_start[1] < 10) {
-        task.time_start[1] = `0${task.time_start}`
-    }
-    if (task.time_end[1] < 10) {
-        task.time_end[1] = `0${task.time_end}`
-    }
+    let taskTimeStartString = task.time_start.map(number => {
+        return number < 10 ?
+        `0${number}` :
+        number.toString()
+    }).join(':')
+    let taskTimeEndString = task.time_end.map(number => {
+        return number < 10 ?
+        `0${number}` :
+        number.toString()
+    }).join(':')
     return (
         <div className='UpdateTaskContainer'>
             <TaskDelete task={task} deleteTask={deleteTask}/>
@@ -36,16 +40,26 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
                 </label>
                 <label name='timeStart'>time start
                     <input type='time' name='timeStart' 
-                        value={task.time_start.join(':')} 
-                        max={task.time_end.join(':')} 
-                        onChange={event => event.target.value < event.target.form.timeEnd.value && updateTaskForm({time_start: event.target.value.split(':')})}
+                        value={taskTimeStartString} 
+                        max={taskTimeEndString} 
+                        onChange={event => {
+                            event.target.value < event.target.form.timeEnd.value && 
+                                updateTaskForm({
+                                    time_start: event.target.value.split(':').map(number => parseInt(number))
+                                })
+                        }}
                     />
                 </label>
                 <label name='timeEnd'>time end
                     <input type='time' name='timeEnd' 
-                        value={task.time_end.join(':')}
-                        min={task.time_start.join(':')}
-                        onChange={event => event.target.value > event.target.form.timeStart.value && updateTaskForm({time_end: event.target.value.split(':')})}
+                        value={taskTimeEndString}
+                        min={taskTimeStartString}
+                        onChange={event => {
+                            event.target.value > event.target.form.timeStart.value && 
+                                updateTaskForm({
+                                    time_end: event.target.value.split(':').map(number => parseInt(number))
+                                })
+                        }}
                     />
                 </label>
                 <div className='updateTaskChecks'>
