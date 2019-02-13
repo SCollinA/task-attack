@@ -89,12 +89,32 @@ html, body, #root, #TaskAttack {
   z-index: -1;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-between;
+}
+
+.taskHour {
+  height: 100%;
+  width: 90%;
+  margin: auto;
+  padding-left: 10%;
+  color: rgba(0, 0, 0, .25);
+  border-top: dashed 1px rgba(0, 0, 0, .25);
+  border-radius: unset;
+  display: flex;
+  align-items: center;
+}
+
+.taskHour:first-child {
+  border: none;
+}
+
+.taskHour > h1 {
+  margin: 0;
+  width: fit-content;
 }
 
 .taskHoursComplete {
   background-color: rgba(0, 0, 0, 0.25);
-  height: 25%;
   width: 100%;
   position: absolute;
   bottom: 0;

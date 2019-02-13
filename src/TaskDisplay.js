@@ -137,21 +137,37 @@ export default class TaskDisplay extends React.Component {
                     ))}
                 </div>
                 <div className='TaskHours'>
-                <h1>-</h1>
-                <h1>-</h1>
-                <h1>-</h1>
-                <h1>-</h1>
-                <h1>-</h1>
-                <h1>-</h1>
-                <h1>-</h1>
-                <h1>-</h1>
-                <h1>-</h1>
-                <h1>-</h1>
-                <h1>-</h1>
-                <h1>-</h1>
-                <h1>-</h1>
+                    <div className='taskHour'><h1>24:00</h1></div>
+                    <div className='taskHour'><h1>23:00</h1></div>
+                    <div className='taskHour'><h1>22:00</h1></div>
+                    <div className='taskHour'><h1>21:00</h1></div>
+                    <div className='taskHour'><h1>20:00</h1></div>
+                    <div className='taskHour'><h1>19:00</h1></div>
+                    <div className='taskHour'><h1>18:00</h1></div>
+                    <div className='taskHour'><h1>17:00</h1></div>
+                    <div className='taskHour'><h1>16:00</h1></div>
+                    <div className='taskHour'><h1>15:00</h1></div>
+                    <div className='taskHour'><h1>14:00</h1></div>
+                    <div className='taskHour'><h1>13:00</h1></div>
+                    <div className='taskHour'><h1>12:00</h1></div>
+                    <div className='taskHour'><h1>11:00</h1></div>
+                    <div className='taskHour'><h1>10:00</h1></div>
+                    <div className='taskHour'><h1>09:00</h1></div>
+                    <div className='taskHour'><h1>08:00</h1></div>
+                    <div className='taskHour'><h1>07:00</h1></div>
+                    <div className='taskHour'><h1>06:00</h1></div>
+                    <div className='taskHour'><h1>05:00</h1></div>
+                    <div className='taskHour'><h1>04:00</h1></div>
+                    <div className='taskHour'><h1>03:00</h1></div>
+                    <div className='taskHour'><h1>02:00</h1></div>
+                    <div className='taskHour'><h1>01:00</h1></div>
+                    <div className='taskHour'><h1>00:00</h1></div>
                 </div>
-                <div className='taskHoursComplete'>
+                <div className='taskHoursComplete'
+                    style={{
+                        height: "25%",
+                    }}
+                >
                 </div>
             </div>
         )
