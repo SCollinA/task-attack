@@ -52,6 +52,8 @@ export default class TaskCell extends React.Component {
         const { task, selectTask, selectedTask, updateTask, deleteTask } = this.props
         const isSelected = selectedTask && selectedTask.id === task.id
         const taskTime = this.getTaskTime(task)
+        const cellHeight = (taskTime.end[0] * 60 + taskTime.end[1]) - 
+                                (taskTime.start[0] * 60 + taskTime.start[1])
         return (
             <div className='TaskCellWrapper'>
                 <div className={`TaskCell${isSelected ? ' selectedTask' : ''}${task.active ? ' activeTask' : ''}`} 
@@ -61,10 +63,8 @@ export default class TaskCell extends React.Component {
                     onDoubleClick={() => updateTask({ ...task, active: !task.active })}
                     style={{
                         height: `
-                            ${(taskTime.end[0] * 60 + taskTime.end[1]) - 
-                                (taskTime.start[0] * 60 + taskTime.start[1])}px
+                            ${cellHeight > 60 ? cellHeight : 60}px
                         `,
-                        minHeight: `40px`,
                     }}
                 >
                     <h6>{this.state.task.time_start}</h6>

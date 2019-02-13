@@ -71,6 +71,7 @@ html, body, #root, #TaskAttack {
 .TaskCell {
   display: flex;
   justify-content: space-around;
+  align-items: center;
   flex-wrap: wrap;
   padding: 2%;
   background-color: lightpink;
@@ -78,11 +79,6 @@ html, body, #root, #TaskAttack {
 
 .activeTask {
   background-color: lightgreen;
-}
-
-.TaskCell > h4 {
-  margin: 0;
-  width: 100%;
 }
 
 .selectedTask {
