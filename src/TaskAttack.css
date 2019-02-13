@@ -19,7 +19,7 @@ html, body, #root, #TaskAttack {
 }
 
 .TaskHeader {
-  height: 10%;
+  /* height: 10%; */
   width: 100%;
   display: flex;
   justify-content: space-around;
@@ -62,8 +62,8 @@ html, body, #root, #TaskAttack {
 }
 
 .TaskAttack {
-  height: 90%;
-  /* flex: 1; */
+  /* height: 90%; */
+  flex: 1;
   overflow-y: auto;
   /* width: calc(100% + 15px); */
 }
