@@ -7,6 +7,7 @@ export default class TaskDisplay extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            taskCount: 0,
             isFull: false,
             availableTimes: [], // array of arrays of [start, end] times
         }
@@ -14,15 +15,19 @@ export default class TaskDisplay extends React.Component {
 
     componentDidMount() {
         // !this.state.isFull && this.state.availableTimes.length === 0 &&
-        this.findAvailableTimes(this.props.tasks)
+        this.setState({ taskCount: this.props.tasks.length },
+            () => this.findAvailableTimes(this.props.tasks))
     }
 
     componentDidUpdate() {
         // timesHaveChanged(this.props.tasks, this.state.availableTimes) &&    
-        // this.findAvailableTimes(this.props.tasks)
+        this.props.tasks.length !== this.state.taskCount &&
+            this.setState({ taskCount: this.props.tasks.length },
+                () => this.findAvailableTimes(this.props.tasks))
     }
 
     findAvailableTimes(tasks) {
+        console.log('finding availability')
         const availableTimes = []
         for (let i = 0; i < tasks.length; i++) {
             const task = tasks[i]

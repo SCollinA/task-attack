@@ -22,13 +22,11 @@ export default class TaskCell extends React.Component {
         const { task, selectTask, selectedTask, addTask, updateTask, deleteTask } = this.props
         const isSelected = selectedTask && selectedTask.id === task.id
         const taskTime = getTaskTime(task)
-        console.log(taskTime)
         const cellHeight = (taskTimeIsValid(taskTime)) ?
         (taskTime.end.hour * 60 + taskTime.end.minute) - 
             (taskTime.start.hour * 60 + taskTime.start.minute) :
         ((24 * 60) - (taskTime.start.hour * 60 + taskTime.start.minute)) +
             (taskTime.end.hour * 60 + taskTime.end.minute)
-        console.log(taskTimeIsValid(taskTime))
         return (
             <div className='TaskCellWrapper'>
                 <div className={`TaskCell${isSelected ? ' selectedTask' : ''}${task.active ? ' activeTask' : ''}`} 
