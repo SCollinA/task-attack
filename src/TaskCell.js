@@ -20,9 +20,17 @@ export default class TaskCell extends React.Component {
 
     getTaskTime(task) {
         let start = task.time_start
-            .split(':').map(number => parseInt(number))
+            .split(':').map(number => {
+                return number === '12' ?
+                0 :
+                parseInt(number)
+            })
         let end = task.time_end
-            .split(':').map(number => parseInt(number))
+            .split(':').map(number => {
+                return number === '12' ?
+                0 :
+                parseInt(number)
+            })
         return { start, end }
     }
 
@@ -48,7 +56,7 @@ export default class TaskCell extends React.Component {
             <div className='TaskCellWrapper'>
                 <div className={`TaskCell${isSelected ? ' selectedTask' : ''}${task.active ? ' activeTask' : ''}`} 
                     // single click opens 
-                    onClick={() => selectTask(this.state.task)}
+                    onClick={() => this.setState({ task }, selectTask(this.state.task))}
                     // double click toggles active status on task
                     onDoubleClick={() => updateTask({ ...task, active: !task.active })}
                     style={{
