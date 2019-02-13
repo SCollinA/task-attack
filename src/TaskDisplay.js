@@ -47,8 +47,8 @@ export default class TaskDisplay extends React.Component {
                     console.log('found available time')
                     availableTimes.push({
                         ...availableTask,
-                        time_start: `${taskTimeEnd.hour}:${taskTimeEnd.minute}`,
-                        time_end: `${nextTaskTimeStart.hour}:${nextTaskTimeStart.minute}`,
+                        time_start: getTaskTimeString(taskTimeEnd),
+                        time_end: getTaskTimeString(nextTaskTimeStart),
                     })
                 }
             }
@@ -67,6 +67,7 @@ export default class TaskDisplay extends React.Component {
     render() {
         const { tasks, selectTask, selectedTask, updateTask, addTask, deleteTask } = this.props
         const cells = [...tasks, ...this.state.availableTimes]
+        console.log(cells)
         return ( 
             <div className='TaskDisplay'>
                 {cells.sort((taskA, taskB) => {
@@ -96,6 +97,11 @@ export default class TaskDisplay extends React.Component {
 //     (taskEnd.hour === nextTaskStartHour &&
 //         taskEnd.minute < nextTaskStart.minute)
 // }
+
+export const getTaskTimeString = (taskTime) => {
+    const taskTimeArray = [taskTime.hour, taskTime.minute]
+    return taskTimeArray.map(time => time > 9 ? `${time}` : `0${time}`).join(':')
+}
 
 export const timesHaveChanged = (tasks, oldTasks) => {
     if (tasks.length !== oldTasks.length) { return true }
