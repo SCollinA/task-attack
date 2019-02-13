@@ -77,9 +77,9 @@ export const timesHaveChanged = (times, oldTimes) => {
     if (times.length !== oldTimes.length) { return true }
     for (let i = 0; i < times.length; i++) {
         if (times[i].time_start !== oldTimes[i].time_start ||
-            times[i].time_end !== oldTimes[i].time_start) {
-                return true
-            }
+        times[i].time_end !== oldTimes[i].time_start) {
+            return true
+        }
     }
     return false
 }
