@@ -10,10 +10,6 @@ export default class TaskDisplay extends React.Component {
             isFull: false,
             availableTimes: [], // array of objects of start, end times
         }
-        this.autoScroll = setInterval(() => {
-            const taskHourPadding = document.getElementsByClassName('taskHourPadding')[0]
-            !this.props.selectedTask && taskHourPadding.scrollIntoView()
-        }, 30 * 1000)  // 30 seconds
     }
 
     componentDidMount() {
@@ -28,10 +24,6 @@ export default class TaskDisplay extends React.Component {
                 () => this.findAvailableTimes(this.props.tasks))
         const selectedTask = document.getElementsByClassName('selectedTask')[0]
         selectedTask && selectedTask.scrollIntoView()
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.autoScroll)
     }
 
     findAvailableTimes(tasks) {
@@ -123,15 +115,7 @@ export default class TaskDisplay extends React.Component {
         // combine tasks and available times for display
         const cells = [...tasks, ...this.state.availableTimes]
         return ( 
-            <div className='TaskDisplayContainer'
-                onScroll={() => { // reset auto scroll after user scrolls
-                    clearInterval(this.autoScroll)
-                    this.autoScroll = setInterval(() => {
-                        const taskHourPadding = document.getElementsByClassName('taskHourPadding')[0]
-                        !this.props.selectedTask && taskHourPadding.scrollIntoView()
-                    }, 30 * 1000)  // 30 seconds
-                }}
-            >
+            <div className='TaskDisplayContainer'>
                 <div className='TaskDisplay'>
                     {cells.sort((taskA, taskB) => {
                         const taskAStart = getTaskTime(taskA).start

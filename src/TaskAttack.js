@@ -19,12 +19,20 @@ export default class TaskAttack extends React.Component {
             selectedTask: null,
             updatingUser: false
         }
+        this.autoScroll = setInterval(() => {
+            const taskHourPadding = document.getElementsByClassName('taskHourPadding')[0]
+            !this.props.selectedTask && taskHourPadding.scrollIntoView()
+        }, 30 * 1000)  // 30 seconds
     }
 
     componentDidMount() {
         fetch('/attack')
         .then(res => res.json())
         .then(data => this.scrubData({ ...data, username: data.user && data.user.name }))
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.autoScroll)
     }
 
     scrubData(data) {
@@ -163,6 +171,14 @@ export default class TaskAttack extends React.Component {
                 || (
                     <div className='TaskAttack'
                         onClick={() => this.setState({ updatingUser: false })}
+                        onScroll={() => { // reset auto scroll after user scrolls
+                            console.log('herro')
+                            clearInterval(this.autoScroll)
+                            this.autoScroll = setInterval(() => {
+                                const taskHourPadding = document.getElementsByClassName('taskHourPadding')[0]
+                                !this.props.selectedTask && taskHourPadding.scrollIntoView()
+                            }, 1 * 1000)  // 30 seconds
+                        }}
                     >
                         {this.state.updatingUser &&
                             <UpdateUser 
