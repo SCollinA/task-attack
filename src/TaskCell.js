@@ -1,5 +1,5 @@
 import React from 'react'
-import UpdateTask from './UpdateTask';
+import UpdateTask from './UpdateTask'
 
 export default class TaskCell extends React.Component {
     constructor(props) {

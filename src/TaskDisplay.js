@@ -1,5 +1,5 @@
 import React from 'react'
-import TaskCell from './TaskCell'
+import TaskHour from './TaskHour'
 import { getTaskTime } from './TaskCell'
 
 export default class TaskDisplay extends React.Component {
@@ -120,11 +120,21 @@ export default class TaskDisplay extends React.Component {
                                 return taskBStart.hour - taskAStart.hour ||
                                 taskBStart.minute - taskAStart.minute
                             })
-        const taskHours = 
+        const taskHours = []
+        cellsSorted.forEach(cell => console.log(cell))
         return ( 
             <div className='TaskDisplayContainer'>
                 <div className='TaskDisplay'>
-                    {taskHours.map((tasks, hour) => <TaskHour tasks={tasks} hour={hour}/>)}
+                    {taskHours.map((tasks, hour) => (
+                    <TaskHour tasks={tasks} hour={hour}
+                        selectTask={selectTask} 
+                        selectedTask={selectedTask}
+                        addTask={addTask}
+                        updateTask={updateTask}
+                        timeIsTaken={this._timeIsTaken}
+                        deleteTask={deleteTask}
+                    />
+                    ))}
                 </div>
                 <div className='taskHoursCompleteWrapper'>
                     <div className='taskHourPadding'
