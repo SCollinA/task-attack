@@ -148,11 +148,7 @@ export default class TaskDisplay extends React.Component {
                     )).reverse()}
                 </div>
                 <div className='taskHoursCompleteWrapper'>
-                    <div className='taskHourPadding'
-                        style={{
-                            height: `${((new Date().getHours() / 24) * 100) + 5}%`,
-                        }}
-                    ></div>
+                    <div className='taskHourPadding'></div>
                     <div className='taskHoursComplete'
                         style={{
                             height: `${(new Date().getHours() / 24) * 100}%`,
