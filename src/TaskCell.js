@@ -18,7 +18,9 @@ export default class TaskCell extends React.Component {
         console.log('checking update')
         if (taskTimeIsValid(taskTime) && !timeIsTaken({...this.state.task, ...task})) {
             console.log('update good')
-            this.setState({ task: {...this.state.task, ...task } })
+            this.setState({ 
+                task: {...this.state.task, ...task },
+            }, this.props.updateTask({ ...this.state.task, ...task }))
         } 
     }
     
@@ -53,11 +55,17 @@ export default class TaskCell extends React.Component {
                     }}
                     // double click toggles active status on task
                     onDoubleClick={() => (!task.free && !isSelected) && updateTask({ ...task, active: !task.active })}
-                    style={isSelected ? {} : {
-                        height: `
-                            ${cellHeight * (2)}px
-                        `,
-                    }}
+                    style={isSelected ?
+                        {
+                            minHeight: `
+                                ${cellHeight * 2}px
+                            `
+                        } : {
+                            height: `
+                                ${cellHeight * 2}px
+                            `,
+                        }
+                    }
                 >
                     <div className='taskCellContent'>
                         <h4>{this.state.task.name}</h4>

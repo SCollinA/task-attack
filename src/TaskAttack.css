@@ -114,6 +114,13 @@ html, body, #root, #TaskAttack {
   width: fit-content;
 }
 
+.taskHoursCompleteWrapper {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+}
+
 .taskHoursComplete {
   background-color: rgba(0, 0, 0, 0.5);
   width: 100%;
@@ -140,7 +147,7 @@ html, body, #root, #TaskAttack {
   cursor: pointer;
   /* background-color: rgba(0, 0, 0, .25); */
   /* transition: .5s background-color ease-in-out; */
-  animation: cellHover .5s 1;
+  animation: cellHover 1s 1;
 }
 
 @keyframes cellHover {

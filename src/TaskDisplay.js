@@ -10,17 +10,30 @@ export default class TaskDisplay extends React.Component {
             isFull: false,
             availableTimes: [], // array of objects of start, end times
         }
+        this.autoScroll = setInterval(() => {
+            const taskHourPadding = document.getElementsByClassName('taskHourPadding')[0]
+            !this.props.selectedTask && taskHourPadding.scrollIntoView()
+        }, 10000)
     }
 
     componentDidMount() {
-        this.setState({ tasks: this.props.tasks },
-            () => this.findAvailableTimes(this.props.tasks))
+        this.setState({ 
+            tasks: this.props.tasks,
+         }, () => this.findAvailableTimes(this.props.tasks))
     }
 
     componentDidUpdate() {
         timesHaveChanged(this.props.tasks, this.state.tasks) &&    
             this.setState({ tasks: this.props.tasks },
                 () => this.findAvailableTimes(this.props.tasks))
+        const selectedTask = document.getElementsByClassName('selectedTask')[0]
+        console.log(selectedTask)
+        selectedTask && selectedTask.scrollIntoView()
+        // (0, 1000)
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.autoScroll)
     }
 
     findAvailableTimes(tasks) {
@@ -158,12 +171,19 @@ export default class TaskDisplay extends React.Component {
                     <div className='taskHour'><h1>01:00</h1></div>
                     <div className='taskHour'><h1>00:00</h1></div>
                 </div>
-                <div className='taskHoursComplete'
-                    style={{
-                        height: `${(new Date().getHours() / 24) * 100}%`,
-                    }}
-                >
-                    <h1>you are here</h1>
+                <div className='taskHoursCompleteWrapper'>
+                    <div className='taskHourPadding'
+                        style={{
+                            height: `${((new Date().getHours() / 24) * 100) + 5}%`,
+                        }}
+                    ></div>
+                    <div className='taskHoursComplete'
+                        style={{
+                            height: `${(new Date().getHours() / 24) * 100}%`,
+                        }}
+                        >
+                        <h1>you are here</h1>
+                    </div>
                 </div>
             </div>
         )

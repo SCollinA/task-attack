@@ -24,6 +24,7 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
                         mandatory: event.target.mandatory.checked,
                         active: event.target.active.checked
                     })
+                    selectTask(selectedTask)
                 }}
                 onReset={() => updateTaskForm(selectedTask)}
                 onClick={event => event.stopPropagation()}

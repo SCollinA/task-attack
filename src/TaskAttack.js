@@ -60,18 +60,6 @@ export default class TaskAttack extends React.Component {
     }
 
     _addTask = (newTask) => {
-        // const currentTime = new Date()
-        // const time_start = currentTime.toLocaleTimeString()
-        // // min 15 minute tasks
-        // currentTime.setMinutes(currentTime.getMinutes() + 15)
-        // const time_end = currentTime.toLocaleTimeString()
-        // const newTask = {
-        //     name: 'new task', 
-        //     time_start,
-        //     time_end,
-        //     mandatory: false,
-        //     active: false
-        // }
         fetch('addTask', {
             method: 'post',
             headers: {
@@ -137,7 +125,7 @@ export default class TaskAttack extends React.Component {
         // will need to receive all tasks here
         .then(tasks => this.scrubData({ 
             tasks,
-            selectedTask: null
+            // selectedTask: null
         }))
     }
 
