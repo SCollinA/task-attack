@@ -123,7 +123,10 @@ html, body, #root, #TaskAttack {
 
 .taskHoursComplete > h1 {
   position: sticky;
-  top: 10px;
+  top: 0;
+  left: 10%;
+  padding-left: 8%;
+  text-align: left;
 }
 
 .TaskCell {
@@ -142,7 +145,19 @@ html, body, #root, #TaskAttack {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+  padding: 2%;
+}
+
+.taskCellContent > h4 {
   padding: 0 2%;
+  flex: 1;
+  text-align: right;
+}
+
+.taskTimes {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .activeTask {
