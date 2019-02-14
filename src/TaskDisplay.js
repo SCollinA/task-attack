@@ -121,7 +121,13 @@ export default class TaskDisplay extends React.Component {
                                 taskBStart.minute - taskAStart.minute
                             })
         const taskHours = []
-        cellsSorted.forEach(cell => console.log(cell))
+        cellsSorted.forEach(cell => {
+            console.log(cell)
+            const hour = parseInt(cell.time_start.slice(0, 2))
+            taskHours[hour] = taskHours[hour] ? 
+                                [...taskHours[hour], cell] :
+                                [cell]
+        })
         return ( 
             <div className='TaskDisplayContainer'>
                 <div className='TaskDisplay'>
