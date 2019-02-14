@@ -99,7 +99,7 @@ export default class TaskAttack extends React.Component {
 
     _selectUser = () => this.setState({ 
         updatingUser: !this.state.updatingUser,
-        // selectedTask: null
+        selectedTask: null
     })
 
     _selectTask = (selectedTask) => {
@@ -173,23 +173,24 @@ export default class TaskAttack extends React.Component {
                 {(!isLoggedIn && 
                     <Login login={this._login} register={this._register}/>) 
                 || (
-                    <div className='TaskAttack'>
-                        {this.state.updatingUser ?
+                    <div className='TaskAttack'
+                        onClick={() => this.setState({ updatingUser: false })}
+                    >
+                        {this.state.updatingUser &&
                             <UpdateUser 
                                 user={this.state.user} 
                                 username={this.state.username}
                                 updateUser={this._updateUser}
                                 updateUsername={this._updateUsername}
-                            /> :
-                            <TaskDisplay 
-                                tasks={this.state.tasks} 
-                                selectTask={this._selectTask}
-                                selectedTask={this.state.selectedTask}
-                                updateTask={this._updateTask}
-                                addTask={this._addTask}
-                                deleteTask={this._deleteTask}
-                            />
-                        }
+                            />}
+                        <TaskDisplay 
+                            tasks={this.state.tasks} 
+                            selectTask={this._selectTask}
+                            selectedTask={this.state.selectedTask}
+                            updateTask={this._updateTask}
+                            addTask={this._addTask}
+                            deleteTask={this._deleteTask}
+                        />
                     </div>
                 )}
             </div>

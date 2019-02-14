@@ -46,42 +46,39 @@ export default class TaskCell extends React.Component {
                         this.setState({ clicked: !this.state.clicked }, () => {
                             setTimeout(() => {
                                 (this.state.clicked &&
-                                    this.setState({ task }, selectTask(this.state.task))) ||
+                                    this.setState({ task, clicked: false }, selectTask(this.state.task))) ||
                                         this.setState({ clicked: false })
-                            }, 500)
+                            }, 250)
                         })
                     }}
                     // double click toggles active status on task
-                    onDoubleClick={() => !task.free && updateTask({ ...task, active: !task.active })}
-                    style={{
+                    onDoubleClick={() => (!task.free && !isSelected) && updateTask({ ...task, active: !task.active })}
+                    style={isSelected ? {} : {
                         height: `
-                            ${cellHeight > 60 ? cellHeight : 60}px
+                            ${cellHeight * (2)}px
                         `,
                     }}
                 >
                     <div className='taskCellContent'>
-                        <h6>
-                            {this.state.task.free ?
-                            this.props.task.time_start :
-                            this.state.task.time_start}
-                        </h6>
                         <h4>{this.state.task.name}</h4>
-                        <h6>
-                            {this.state.task.free ?
-                            this.props.task.time_end :
-                            this.state.task.time_end}
-                        </h6>
+                        <div className='taskTimes'>
+                            <h6>
+                                {this.state.task.free ?
+                                this.props.task.time_start :
+                                this.state.task.time_start}
+                            </h6>
+                        </div>
                     </div>
+                    {isSelected && 
+                        <UpdateTask 
+                            task={this.state.task}
+                            updateTaskForm={this._updateTaskForm}
+                            selectedTask={selectedTask} 
+                            selectTask={selectTask}
+                            updateTask={updateTask} 
+                            deleteTask={deleteTask}
+                        />}
                 </div>
-                {isSelected && 
-                    <UpdateTask 
-                        task={this.state.task}
-                        updateTaskForm={this._updateTaskForm}
-                        selectedTask={selectedTask} 
-                        selectTask={selectTask}
-                        updateTask={updateTask} 
-                        deleteTask={deleteTask}
-                    />}
             </div>
         )
     }

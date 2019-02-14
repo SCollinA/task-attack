@@ -23,6 +23,7 @@ html, body, #root, #TaskAttack {
   width: 100%;
   display: flex;
   justify-content: space-around;
+  align-items: center;
 }
 
 .TaskHeader > * {
@@ -63,6 +64,7 @@ html, body, #root, #TaskAttack {
 
 .TaskAttack {
   /* height: 90%; */
+  position: relative;
   flex: 1;
   overflow-y: auto;
   /* width: calc(100% + 15px); */
@@ -96,7 +98,6 @@ html, body, #root, #TaskAttack {
   height: 100%;
   width: 75%;
   margin: auto;
-  /* padding-left: 10%; */
   color: rgba(0, 0, 0, .25);
   border-top: dashed 1px rgba(0, 0, 0, .25);
   border-radius: unset;
@@ -109,7 +110,7 @@ html, body, #root, #TaskAttack {
 }
 
 .taskHour > h1 {
-  margin: 0;
+  margin: auto 0 0 0;
   width: fit-content;
 }
 
@@ -119,11 +120,17 @@ html, body, #root, #TaskAttack {
   position: absolute;
   bottom: 0;
   left: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
   z-index: -1;
 }
+
+.taskHoursComplete > h1 {
+  position: sticky;
+  top: 5%;
+  left: 10%;
+  padding-left: 1%;
+  text-align: left;
+}
+
 
 .TaskCell {
   background-color: rgba(255, 0, 0, 0.25);
@@ -131,17 +138,43 @@ html, body, #root, #TaskAttack {
 
 .TaskCell:hover {
   cursor: pointer;
-  opacity: .5;
+  /* background-color: rgba(0, 0, 0, .25); */
+  /* transition: .5s background-color ease-in-out; */
+  animation: cellHover .5s 1;
+}
+
+@keyframes cellHover {
+  0% {
+    background-color: none;
+  }
+  50% {
+    background-color: rgba(0, 0, 0, .25);
+  }
+  100% {
+    background-color: none;
+  }
 }
 
 .taskCellContent {
   position: sticky;
-  top: 0;
+  top: 0; 
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  padding: 2%;
+  padding: 1%;
+}
+
+.taskCellContent > h4 {
+  padding: 0 2%;
+  flex: 1;
+  text-align: right;
+}
+
+.taskTimes {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .activeTask {
@@ -149,12 +182,19 @@ html, body, #root, #TaskAttack {
 }
 
 .selectedTask {
-  background-color: rgba(0, 0, 0, .25);
+  background-color: rgba(255, 200, 0, 0.25);
 }
 
+
 .UpdateTaskContainer {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  margin: 5% 5% 0;
+  padding: 5%;
+  background-color: rgba(0, 0, 0, .25);
   display: flex;
-  width: 100%;
+  justify-content: space-around;
   align-items: center;
 }
 
@@ -162,8 +202,16 @@ html, body, #root, #TaskAttack {
   flex: 1;
 }
 
+.taskUpdateIcons {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+}
+
 .TaskDelete, .TaskCancel {
   padding: 10% 0;
+  margin: 10%;
 }
 
 .TaskDelete:hover, .TaskCancel:hover {
@@ -175,12 +223,19 @@ html, body, #root, #TaskAttack {
   /* width: 90%; */
   display: flex;
   flex-direction: column;
-  background-color: rgba(0, 0, 0, .25);
-  padding: 2% 5%;
+  background-color: rgba(0, 255, 255, 0.75);
+  padding: 5%;
+  z-index: 2;
+}
+
+#UpdateUserForm {
+  position: fixed;
+  margin: 5% 50% 5% 5%;
 }
 
 #UpdateUserForm > label, #UpdateTaskForm > label, .updateTaskChecks {
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
   flex-wrap: wrap;
   white-space: nowrap;
@@ -198,4 +253,14 @@ html, body, #root, #TaskAttack {
   flex: 1;
   max-width: 100px;
   padding: 2%;
+}
+
+@media (max-width: 500px) {
+  #TaskAttack {
+    display: block;
+    overflow-y: auto;
+  }
+  .TaskAttack {
+    overflow: visible;
+  }
 }

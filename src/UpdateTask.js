@@ -5,10 +5,17 @@ import TaskCancel from './TaskCancel'
 export default function UpdateTask({ task, updateTaskForm, selectedTask, selectTask, updateTask, deleteTask }) {
     return (
         <div className='UpdateTaskContainer'>
-            <TaskDelete task={task} deleteTask={deleteTask}/>
+            <div className='taskUpdateIcons'>
+                <TaskDelete task={task} deleteTask={deleteTask}/>
+                <TaskCancel task={selectedTask} 
+                    selectTask={selectTask} 
+                    updateTaskForm={updateTaskForm}
+                />
+            </div>
             <form id='UpdateTaskForm' 
                 onSubmit={event => {
                     event.preventDefault()
+                    event.stopPropagation()
                     updateTask({
                         id: task.id,
                         name: event.target.name.value,
@@ -19,8 +26,9 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
                     })
                 }}
                 onReset={() => updateTaskForm(selectedTask)}
+                onClick={event => event.stopPropagation()}
             >
-                <label name='name'>new name
+                <label name='name'>task name
                     <input type='text' name='name' value={task.name} 
                         onChange={event => updateTaskForm({name: event.target.value})}
                     />
@@ -58,10 +66,6 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
                     <input type='submit' value='update'/>
                 </div>
             </form>
-            <TaskCancel task={selectedTask} 
-                selectTask={selectTask} 
-                updateTaskForm={updateTaskForm}
-            />
         </div>
     )
 } 

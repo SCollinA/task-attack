@@ -12,14 +12,15 @@ export default function UpdateUser({ user, username, updateUser, updateUsername 
                 })
             }}
             onReset={() => updateUsername(user.name)}
+            onClick={event => event.stopPropagation()}
         >
-            <label name='newName'>new name
+            <label name='newName'>change name:
                 <input type='text' name='newName' value={username} onChange={event => updateUsername(event.target.value)}/>
             </label>
-            <label name='newPassword'>new password
+            <label name='newPassword'>change password:
                 <input type='password' name='newPassword' placeholder='new password'/>
             </label>
-            <label name='oldPassword'>old password
+            <label name='oldPassword'>current password:
                 <input type='password' name='oldPassword' placeholder='old password' required/>
             </label>
             <div className='updateUserButtons'>
