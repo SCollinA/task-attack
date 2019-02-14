@@ -17,7 +17,8 @@ export default class TaskAttack extends React.Component {
             username: '',
             tasks: [],
             selectedTask: null,
-            updatingUser: false
+            selectedHour: null,
+            updatingUser: false,
         }
         // this.autoScroll = setInterval(() => {
         //     const taskHourPadding = document.getElementsByClassName('taskHourPadding')[0]
@@ -81,7 +82,7 @@ export default class TaskAttack extends React.Component {
         })
         .then(res => res.json())
         // will need to receive all tasks here
-        .then(tasks => this.scrubData({ tasks, selectedTask: tasks.find(task => task.name === 'new task') }))
+        .then(({tasks, newTask}) => this.scrubData({ tasks, selectedTask: newTask }))
     }
 
     // RETRIEVE
@@ -102,10 +103,13 @@ export default class TaskAttack extends React.Component {
         selectedTask: null
     })
 
-    _selectTask = (selectedTask) => {
+    _selectTask = ({ selectedTask, selectedHour }) => {
         !this.state.selectedTask || this.state.selectedTask.id !== selectedTask.id ?
-        this.setState({ selectedTask }) :
-        this.setState({ selectedTask: null })
+        this.setState({ selectedTask, selectedHour }, () => {
+            const updateTaskForm = document.getElementById('UpdateTaskForm')
+            updateTaskForm.scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"})
+        }) :
+        this.setState({ selectedTask: null, selectedHour: null })
     }
 
     _goHome = () => this.setState({ updatingUser: false, selectedTask: null })
@@ -195,6 +199,7 @@ export default class TaskAttack extends React.Component {
                             tasks={this.state.tasks} 
                             selectTask={this._selectTask}
                             selectedTask={this.state.selectedTask}
+                            selectedHour={this.state.selectedHour}
                             updateTask={this._updateTask}
                             addTask={this._addTask}
                             deleteTask={this._deleteTask}

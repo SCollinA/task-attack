@@ -261,11 +261,12 @@ html, body, #root, #TaskAttack {
 .taskUpdateIcons {
   display: flex;
   /* flex-direction: column; */
-  justify-content: space-around;
+  /* justify-content: space-around; */
 }
 
 .TaskDelete, .TaskCancel {
   padding: 10%;
+  flex: 1;
 }
 
 .TaskDelete:hover, .TaskCancel:hover {
