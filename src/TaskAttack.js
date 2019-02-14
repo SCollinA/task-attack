@@ -172,7 +172,6 @@ export default class TaskAttack extends React.Component {
                     <div className='TaskAttack'
                         onClick={() => this.setState({ updatingUser: false })}
                         onScroll={() => { // reset auto scroll after user scrolls
-                            console.log('herro')
                             clearInterval(this.autoScroll)
                             this.autoScroll = setInterval(() => {
                                 const taskHourPadding = document.getElementsByClassName('taskHourPadding')[0]

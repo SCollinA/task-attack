@@ -1,5 +1,5 @@
 import React from 'react'
-import TaskCell from './TaskCell'
+import TaskHour from './TaskHour'
 import { getTaskTime } from './TaskCell'
 
 export default class TaskDisplay extends React.Component {
@@ -114,18 +114,30 @@ export default class TaskDisplay extends React.Component {
         const { tasks, selectTask, selectedTask, updateTask, addTask, deleteTask } = this.props
         // combine tasks and available times for display
         const cells = [...tasks, ...this.state.availableTimes]
-        return ( 
+        const cellsSorted = cells.sort((taskA, taskB) => {
+                                const taskAStart = getTaskTime(taskA).start
+                                const taskBStart = getTaskTime(taskB).start
+                                return taskBStart.hour - taskAStart.hour ||
+                                taskBStart.minute - taskAStart.minute
+                            })
+        const taskHours = []
+        cellsSorted.forEach(cell => {
+            const hourStart = parseInt(cell.time_start.slice(0, 2))
+            const hourEnd = parseInt(cell.time_end.slice(0, 2))
+            const minuteEnd = parseInt(cell.time_end.slice(3, 5))
+            for (let i = hourStart; i <= hourEnd; i++) {
+                if (i !== hourEnd || minuteEnd) { // do not add task if ending 'on the hour'
+                    taskHours[i] = taskHours[i] ? 
+                    [...taskHours[i], cell] :
+                    [cell]
+                }
+            }
+        })
+        return (
             <div className='TaskDisplayContainer'>
                 <div className='TaskDisplay'>
-                    {cells.sort((taskA, taskB) => {
-                        const taskAStart = getTaskTime(taskA).start
-                        const taskBStart = getTaskTime(taskB).start
-                        return taskBStart.hour - taskAStart.hour ||
-                        taskBStart.minute - taskAStart.minute
-                    }).map(task => (
-                        <TaskCell key={task.id || 
-                                Math.floor(Math.random() * Math.pow(tasks.length, 10))}
-                            task={task} 
+                    {taskHours.map((tasks, hour) => (
+                        <TaskHour key={hour} tasks={tasks} hour={hour}
                             selectTask={selectTask} 
                             selectedTask={selectedTask}
                             addTask={addTask}
@@ -133,33 +145,7 @@ export default class TaskDisplay extends React.Component {
                             timeIsTaken={this._timeIsTaken}
                             deleteTask={deleteTask}
                         />
-                    ))}
-                </div>
-                <div className='TaskHours'>
-                    <div className='taskHour'><h1>23:00</h1></div>
-                    <div className='taskHour'><h1>22:00</h1></div>
-                    <div className='taskHour'><h1>21:00</h1></div>
-                    <div className='taskHour'><h1>20:00</h1></div>
-                    <div className='taskHour'><h1>19:00</h1></div>
-                    <div className='taskHour'><h1>18:00</h1></div>
-                    <div className='taskHour'><h1>17:00</h1></div>
-                    <div className='taskHour'><h1>16:00</h1></div>
-                    <div className='taskHour'><h1>15:00</h1></div>
-                    <div className='taskHour'><h1>14:00</h1></div>
-                    <div className='taskHour'><h1>13:00</h1></div>
-                    <div className='taskHour'><h1>12:00</h1></div>
-                    <div className='taskHour'><h1>11:00</h1></div>
-                    <div className='taskHour'><h1>10:00</h1></div>
-                    <div className='taskHour'><h1>09:00</h1></div>
-                    <div className='taskHour'><h1>08:00</h1></div>
-                    <div className='taskHour'><h1>07:00</h1></div>
-                    <div className='taskHour'><h1>06:00</h1></div>
-                    <div className='taskHour'><h1>05:00</h1></div>
-                    <div className='taskHour'><h1>04:00</h1></div>
-                    <div className='taskHour'><h1>03:00</h1></div>
-                    <div className='taskHour'><h1>02:00</h1></div>
-                    <div className='taskHour'><h1>01:00</h1></div>
-                    <div className='taskHour'><h1>00:00</h1></div>
+                    )).reverse()}
                 </div>
                 <div className='taskHoursCompleteWrapper'>
                     <div className='taskHourPadding'
