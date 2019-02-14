@@ -22,7 +22,7 @@ export default class TaskAttack extends React.Component {
         this.autoScroll = setInterval(() => {
             const taskHourPadding = document.getElementsByClassName('taskHourPadding')[0]
             !this.props.selectedTask && taskHourPadding.scrollIntoView()
-        }, 10* 1000)  // 30 seconds
+        }, 30 * 1000)  // 30 seconds
     }
 
     componentDidMount() {
@@ -177,7 +177,7 @@ export default class TaskAttack extends React.Component {
                             this.autoScroll = setInterval(() => {
                                 const taskHourPadding = document.getElementsByClassName('taskHourPadding')[0]
                                 !this.props.selectedTask && taskHourPadding.scrollIntoView()
-                            }, 1 * 1000)  // 30 seconds
+                            }, 30 * 1000)  // 30 seconds
                         }}
                     >
                         {this.state.updatingUser &&
