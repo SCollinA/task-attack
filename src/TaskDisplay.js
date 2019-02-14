@@ -10,10 +10,6 @@ export default class TaskDisplay extends React.Component {
             isFull: false,
             availableTimes: [], // array of objects of start, end times
         }
-        this.autoScroll = setInterval(() => {
-            const taskHourPadding = document.getElementsByClassName('taskHourPadding')[0]
-            !this.props.selectedTask && taskHourPadding.scrollIntoView()
-        }, 10000)
     }
 
     componentDidMount() {
@@ -28,10 +24,6 @@ export default class TaskDisplay extends React.Component {
                 () => this.findAvailableTimes(this.props.tasks))
         const selectedTask = document.getElementsByClassName('selectedTask')[0]
         selectedTask && selectedTask.scrollIntoView()
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.autoScroll)
     }
 
     findAvailableTimes(tasks) {
