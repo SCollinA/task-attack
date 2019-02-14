@@ -29,6 +29,10 @@ export default class TaskDisplay extends React.Component {
         timesHaveChanged(this.props.tasks, this.state.tasks) &&    
             this.setState({ tasks: this.props.tasks },
                 () => this.findAvailableTimes(this.props.tasks))
+        const selectedTask = document.getElementsByClassName('selectedTask')[0]
+        console.log(selectedTask)
+        selectedTask && selectedTask.scrollIntoView()
+        // (0, 1000)
     }
 
     componentWillUnmount() {
