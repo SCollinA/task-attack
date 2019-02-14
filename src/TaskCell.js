@@ -25,9 +25,10 @@ export default class TaskCell extends React.Component {
     }
     
     render() {
-        const { task, selectTask, selectedTask, addTask, updateTask, deleteTask } = this.props
+        const { hour, task, selectTask, selectedTask, addTask, updateTask, deleteTask } = this.props
         const isSelected = selectedTask && selectedTask.id === task.id
         const taskTime = getTaskTime(task)
+        // cell height is 1 px per min (start time - end time)
         const cellHeight = (taskTimeIsValid(taskTime)) ?
         (taskTime.end.hour * 60 + taskTime.end.minute) - 
             (taskTime.start.hour * 60 + taskTime.start.minute) :
@@ -56,13 +57,9 @@ export default class TaskCell extends React.Component {
                     // double click toggles active status on task
                     onDoubleClick={() => (!task.free && !isSelected) && updateTask({ ...task, active: !task.active })}
                     style={isSelected ?
-                        {
-                            minHeight: `
-                                ${cellHeight * 2}px
-                            `
-                        } : {
-                            height: `
-                                ${cellHeight * 2}px
+                        {} : { // width is percent of task time remaining that hour
+                            width: `
+                                ${(cellHeight % (hour * 60)) / 60}%
                             `,
                         }
                     }

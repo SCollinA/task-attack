@@ -122,25 +122,27 @@ export default class TaskDisplay extends React.Component {
                             })
         const taskHours = []
         cellsSorted.forEach(cell => {
-            console.log(cell)
-            const hour = parseInt(cell.time_start.slice(0, 2))
-            taskHours[hour] = taskHours[hour] ? 
-                                [...taskHours[hour], cell] :
-                                [cell]
+            const hourStart = parseInt(cell.time_start.slice(0, 2))
+            const hourEnd = parseInt(cell.time_end.slice(0, 2))
+            for (let i = hourStart; i <= hourEnd; i++) {
+                taskHours[i] = taskHours[i] ? 
+                    [...taskHours[i], cell] :
+                    [cell]
+            }
         })
-        return ( 
+        return (
             <div className='TaskDisplayContainer'>
                 <div className='TaskDisplay'>
                     {taskHours.map((tasks, hour) => (
-                    <TaskHour tasks={tasks} hour={hour}
-                        selectTask={selectTask} 
-                        selectedTask={selectedTask}
-                        addTask={addTask}
-                        updateTask={updateTask}
-                        timeIsTaken={this._timeIsTaken}
-                        deleteTask={deleteTask}
-                    />
-                    ))}
+                        <TaskHour key={hour} tasks={tasks} hour={hour}
+                            selectTask={selectTask} 
+                            selectedTask={selectedTask}
+                            addTask={addTask}
+                            updateTask={updateTask}
+                            timeIsTaken={this._timeIsTaken}
+                            deleteTask={deleteTask}
+                        />
+                    )).reverse()}
                 </div>
                 <div className='taskHoursCompleteWrapper'>
                     <div className='taskHourPadding'
