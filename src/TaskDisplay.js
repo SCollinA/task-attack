@@ -155,7 +155,8 @@ export default class TaskDisplay extends React.Component {
                             height: `
                             ${(((currentTime.getHours() * 60) + 
                                     currentTime.getMinutes()) 
-                                    / (24 * 60)) * 100}%
+                                    / (24 * 60)) 
+                                * 100}%
                             `,
                         }}
                         >
