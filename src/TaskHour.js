@@ -2,7 +2,7 @@ import React from 'react'
 import TaskCell from './TaskCell'
 // import UpdateTask from './UpdateTask'
 
-export default function TaskHour({ tasks, hour, selectTask, selectedTask, addTask, updateTask, timeIsTaken, deleteTask }) {
+export default function TaskHour({ tasks, hour, selectTask, selectedTask, selectedHour, addTask, updateTask, timeIsTaken, deleteTask }) {
     const zoomLevel = 1
     return (
         <div className='taskHour'
@@ -24,6 +24,7 @@ export default function TaskHour({ tasks, hour, selectTask, selectedTask, addTas
                     task={task} 
                     selectTask={selectTask} 
                     selectedTask={selectedTask}
+                    selectedHour={selectedHour}
                     addTask={addTask}
                     updateTask={updateTask}
                     timeIsTaken={timeIsTaken}

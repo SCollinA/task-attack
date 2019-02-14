@@ -7,7 +7,7 @@ export default function TaskCancel({ task, selectTask, updateTaskForm }) {
             onClick={event => {
                 event.stopPropagation()
                 updateTaskForm(task)
-                selectTask(task)
+                selectTask({selectedTask: task, selectedHour: null})
             }}
         >
             <FontAwesomeIcon size='2x' icon={['fas', 'ban']}/>

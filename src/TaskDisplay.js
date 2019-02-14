@@ -16,14 +16,14 @@ export default class TaskDisplay extends React.Component {
         this.setState({ 
             tasks: this.props.tasks,
          }, () => this.findAvailableTimes(this.props.tasks))
+         const selectedTask = document.getElementsByClassName('selectedTask')[0]
+         selectedTask && selectedTask.scrollIntoView()
     }
 
     componentDidUpdate() {
         timesHaveChanged(this.props.tasks, this.state.tasks) &&    
             this.setState({ tasks: this.props.tasks },
                 () => this.findAvailableTimes(this.props.tasks))
-        // const selectedTask = document.getElementsByClassName('selectedTask')[0]
-        // selectedTask && selectedTask.scrollIntoView()
     }
 
     findAvailableTimes(tasks) {
@@ -111,7 +111,7 @@ export default class TaskDisplay extends React.Component {
     }
 
     render() {
-        const { tasks, selectTask, selectedTask, updateTask, addTask, deleteTask } = this.props
+        const { tasks, selectTask, selectedTask, selectedHour, updateTask, addTask, deleteTask } = this.props
         // combine tasks and available times for display
         const cells = [...tasks, ...this.state.availableTimes]
         const cellsSorted = cells.sort((taskA, taskB) => {
@@ -141,6 +141,7 @@ export default class TaskDisplay extends React.Component {
                         <TaskHour key={hour} tasks={tasks} hour={hour}
                             selectTask={selectTask} 
                             selectedTask={selectedTask}
+                            selectedHour={selectedHour}
                             addTask={addTask}
                             updateTask={updateTask}
                             timeIsTaken={this._timeIsTaken}

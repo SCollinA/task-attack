@@ -7,7 +7,7 @@ export default class TaskCell extends React.Component {
         this.state = {
             task: props.task,
             clicked: false,
-            hour: props.hour
+            hour: props.hour,
         }
     }
 
@@ -24,7 +24,7 @@ export default class TaskCell extends React.Component {
     }
     
     render() {
-        const {task, selectTask, selectedTask, addTask, updateTask, deleteTask } = this.props
+        const {task, selectTask, selectedTask, selectedHour, addTask, updateTask, deleteTask } = this.props
         const isSelected = selectedTask && selectedTask.id === task.id
         const { hour } = this.state
         // const taskTime = getTaskTime(task)
@@ -50,7 +50,10 @@ export default class TaskCell extends React.Component {
                         this.setState({ clicked: !this.state.clicked }, () => {
                             setTimeout(() => {
                                 (this.state.clicked &&
-                                    this.setState({ task, clicked: false }, selectTask(this.state.task))) ||
+                                    this.setState({ task, clicked: false }, selectTask({
+                                        selectedTask: this.state.task,
+                                        selectedHour: this.state.hour,
+                                    }))) ||
                                         this.setState({ clicked: false })
                             }, 250)
                         })
@@ -81,7 +84,7 @@ export default class TaskCell extends React.Component {
                         </h6>)}
                     </div>
                     {/* {children} */}
-                    {(isSelected && hour === parseInt(task.time_start.slice(0, 2))) && 
+                    {(isSelected && this.state.hour === selectedHour) && 
                         <UpdateTask 
                             task={this.state.task}
                             updateTaskForm={this._updateTaskForm}
