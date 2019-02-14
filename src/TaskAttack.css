@@ -63,6 +63,7 @@ html, body, #root, #TaskAttack {
 
 .TaskAttack {
   /* height: 90%; */
+  position: relative;
   flex: 1;
   overflow-y: auto;
   /* width: calc(100% + 15px); */
@@ -81,7 +82,6 @@ html, body, #root, #TaskAttack {
 }
 
 .TaskHours {
-  background-image: url('./logo.svg');
   height: 100%;
   width: 100%;
   position: absolute;
@@ -124,7 +124,7 @@ html, body, #root, #TaskAttack {
 
 .taskHoursComplete > h1 {
   position: sticky;
-  top: 0;
+  top: 5%;
   left: 10%;
   padding-left: 1%;
   text-align: left;
@@ -209,8 +209,14 @@ html, body, #root, #TaskAttack {
   /* width: 90%; */
   display: flex;
   flex-direction: column;
-  background-color: aliceblue;
+  background-color: rgba(0, 255, 255, 0.75);
   padding: 2% 5%;
+}
+
+#UpdateUserForm {
+  position: fixed;
+  margin: auto;
+  z-index: 2;
 }
 
 #UpdateUserForm > label, #UpdateTaskForm > label, .updateTaskChecks {
