@@ -14,7 +14,7 @@ export default function TaskHeader({ username, isLoggedIn, goHome, selectUser, i
                     <h6>{username}</h6>
                 </div>
             )}
-            <h1 onClick={isLoggedIn && goHome}>TaskAttack</h1>
+            <h1 onClick={isLoggedIn ? goHome : undefined}>TaskAttack</h1>
             {isLoggedIn && (
                 <div className='logoutIcon'
                     onClick={() => isLoggedIn && logout()}

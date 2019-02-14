@@ -210,17 +210,18 @@ html, body, #root, #TaskAttack {
   display: flex;
   flex-direction: column;
   background-color: rgba(0, 255, 255, 0.75);
-  padding: 2% 5%;
+  padding: 5%;
+  z-index: 2;
 }
 
 #UpdateUserForm {
   position: fixed;
-  margin: auto;
-  z-index: 2;
+  margin: 5% 50% 5% 5%;
 }
 
 #UpdateUserForm > label, #UpdateTaskForm > label, .updateTaskChecks {
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
   flex-wrap: wrap;
   white-space: nowrap;

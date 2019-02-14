@@ -27,7 +27,7 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
                 }}
                 onReset={() => updateTaskForm(selectedTask)}
             >
-                <label name='name'>new name
+                <label name='name'>task name
                     <input type='text' name='name' value={task.name} 
                         onChange={event => updateTaskForm({name: event.target.value})}
                     />
