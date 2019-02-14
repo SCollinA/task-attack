@@ -114,6 +114,13 @@ html, body, #root, #TaskAttack {
   width: fit-content;
 }
 
+.taskHoursCompleteWrapper {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+}
+
 .taskHoursComplete {
   background-color: rgba(0, 0, 0, 0.5);
   width: 100%;

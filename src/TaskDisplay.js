@@ -10,13 +10,10 @@ export default class TaskDisplay extends React.Component {
             isFull: false,
             availableTimes: [], // array of objects of start, end times
         }
-        // this.autoScroll = setInterval(() => {
-        //     const taskHoursComplete = document.getElementsByClassName('taskHoursComplete')[0]
-        //     const TaskDisplayContainer = document.getElementsByClassName('TaskDisplayContainer')[0]
-        //     console.log(TaskDisplayContainer)
-        //     TaskDisplayContainer.scrollTop = 1000
-        //     // (0, 1000)
-        // }, 1000)
+        this.autoScroll = setInterval(() => {
+            const taskHourPadding = document.getElementsByClassName('taskHourPadding')[0]
+            !this.props.selectedTask && taskHourPadding.scrollIntoView()
+        }, 10000)
     }
 
     componentDidMount() {
@@ -174,12 +171,19 @@ export default class TaskDisplay extends React.Component {
                     <div className='taskHour'><h1>01:00</h1></div>
                     <div className='taskHour'><h1>00:00</h1></div>
                 </div>
-                <div className='taskHoursComplete'
-                    style={{
-                        height: `${(new Date().getHours() / 24) * 100}%`,
-                    }}
-                >
-                    <h1>you are here</h1>
+                <div className='taskHoursCompleteWrapper'>
+                    <div className='taskHourPadding'
+                        style={{
+                            height: `${((new Date().getHours() / 24) * 100) + 5}%`,
+                        }}
+                    ></div>
+                    <div className='taskHoursComplete'
+                        style={{
+                            height: `${(new Date().getHours() / 24) * 100}%`,
+                        }}
+                        >
+                        <h1>you are here</h1>
+                    </div>
                 </div>
             </div>
         )
