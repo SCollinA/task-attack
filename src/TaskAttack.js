@@ -105,7 +105,10 @@ export default class TaskAttack extends React.Component {
 
     _selectTask = ({ selectedTask, selectedHour }) => {
         !this.state.selectedTask || this.state.selectedTask.id !== selectedTask.id ?
-        this.setState({ selectedTask, selectedHour }) :
+        this.setState({ selectedTask, selectedHour }, () => {
+            const updateTaskForm = document.getElementById('UpdateTaskForm')
+            updateTaskForm.scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"})
+        }) :
         this.setState({ selectedTask: null, selectedHour: null })
     }
 
