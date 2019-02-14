@@ -26,6 +26,7 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
                     })
                 }}
                 onReset={() => updateTaskForm(selectedTask)}
+                onClick={event => event.stopPropagation()}
             >
                 <label name='name'>task name
                     <input type='text' name='name' value={task.name} 
