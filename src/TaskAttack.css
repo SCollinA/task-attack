@@ -24,6 +24,7 @@ html, body, #root, #TaskAttack {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  position: relative;
 }
 
 .TaskHeader > * {
@@ -31,6 +32,23 @@ html, body, #root, #TaskAttack {
   flex: 1;
 }
 
+.TaskTitle {
+  margin: auto;
+}
+
+.TaskTime {
+  position: fixed;
+  top: 20%;
+  width: 100%;
+  font-size: 2em;
+  z-index: -1;
+  padding: 0 5%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  font-size: 6em;
+  color: rgba(0, 0, 0, .05);
+}
 /* .updateUserIcon, .logoutIcon {
   flex: 1;
 } */
@@ -57,7 +75,7 @@ html, body, #root, #TaskAttack {
   padding: 5% 0;
 }
 
-.registerButton:hover, .loginButton:hover, .updateUserIcon:hover, .loggedInHeader > h1:hover, .logoutIcon:hover, .TaskDelete:hover, .TaskCancel:hover {
+.registerButton:hover, .loginButton:hover, .updateUserIcon:hover, .loggedInHeader > .TaskTitle:hover, .logoutIcon:hover, .TaskDelete:hover, .TaskCancel:hover {
   background-color: rgba(0, 0, 0, .25);
   cursor: pointer;
 }
