@@ -81,6 +81,7 @@ html, body, #root, #TaskAttack {
 }
 
 .TaskHours {
+  background-image: url('./logo.svg');
   height: 100%;
   width: 100%;
   position: absolute;
@@ -125,7 +126,7 @@ html, body, #root, #TaskAttack {
   position: sticky;
   top: 0;
   left: 10%;
-  padding-left: 8%;
+  padding-left: 1%;
   text-align: left;
 }
 
@@ -145,7 +146,7 @@ html, body, #root, #TaskAttack {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  padding: 2%;
+  padding: 1%;
 }
 
 .taskCellContent > h4 {
