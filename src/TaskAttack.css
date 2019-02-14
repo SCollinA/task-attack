@@ -75,13 +75,13 @@ html, body, #root, #TaskAttack {
 }
 
 .TaskDisplay {
-  position: relative;
+  /* position: relative;
   top: 0;
   left: 0;
   height: 100%;
-  width: 100%;
+  width: 100%; */
 }
-
+/* 
 .TaskHours {
   height: 100%;
   width: 100%;
@@ -92,16 +92,17 @@ html, body, #root, #TaskAttack {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-}
+} */
 
 .taskHour {
-  height: 100%;
+  /* height: 100%;
   width: 75%;
-  margin: auto;
+  margin: auto; */
   color: rgba(0, 0, 0, .25);
   border-top: dashed 1px rgba(0, 0, 0, .25);
   border-radius: unset;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   z-index: -1;
 }
@@ -110,9 +111,11 @@ html, body, #root, #TaskAttack {
   border: none;
 }
 
-.taskHour > h1 {
+.taskHourTime {
+  position: absolute;
+  left: 1%;
   margin: auto 0 0 0;
-  width: fit-content;
+  /* width: fit-content; */
   z-index: -1;
 }
 
@@ -142,10 +145,14 @@ html, body, #root, #TaskAttack {
   z-index: -1;
 }
 
-
+.TaskCellWrapper {
+  flex: 1;
+  height: 100%;
+}
 
 .TaskCell {
   background-color: rgba(255, 0, 0, 0.25);
+  height: 100%;
 }
 
 .TaskCell:hover {
@@ -174,7 +181,7 @@ html, body, #root, #TaskAttack {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  padding: 1%;
+  padding: 10% 1% 10% 25%;
 }
 
 .taskCellContent > h4 {
@@ -274,5 +281,12 @@ html, body, #root, #TaskAttack {
   }
   .TaskAttack {
     overflow: visible;
+  }
+  .taskHourTime {
+    font-size: .75em;
+  }
+  .TaskCellWrapper {
+    flex: unset;
+    width: 100%;
   }
 }

@@ -124,10 +124,13 @@ export default class TaskDisplay extends React.Component {
         cellsSorted.forEach(cell => {
             const hourStart = parseInt(cell.time_start.slice(0, 2))
             const hourEnd = parseInt(cell.time_end.slice(0, 2))
+            const minuteEnd = parseInt(cell.time_end.slice(3, 5))
             for (let i = hourStart; i <= hourEnd; i++) {
-                taskHours[i] = taskHours[i] ? 
+                if (i !== hourEnd || minuteEnd) { // do not add task if ending 'on the hour'
+                    taskHours[i] = taskHours[i] ? 
                     [...taskHours[i], cell] :
                     [cell]
+                }
             }
         })
         return (
