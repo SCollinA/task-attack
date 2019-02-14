@@ -10,17 +10,29 @@ export default class TaskDisplay extends React.Component {
             isFull: false,
             availableTimes: [], // array of objects of start, end times
         }
+        // this.autoScroll = setInterval(() => {
+        //     const taskHoursComplete = document.getElementsByClassName('taskHoursComplete')[0]
+        //     const TaskDisplayContainer = document.getElementsByClassName('TaskDisplayContainer')[0]
+        //     console.log(TaskDisplayContainer)
+        //     TaskDisplayContainer.scrollTop = 1000
+        //     // (0, 1000)
+        // }, 1000)
     }
 
     componentDidMount() {
-        this.setState({ tasks: this.props.tasks },
-            () => this.findAvailableTimes(this.props.tasks))
+        this.setState({ 
+            tasks: this.props.tasks,
+         }, () => this.findAvailableTimes(this.props.tasks))
     }
 
     componentDidUpdate() {
         timesHaveChanged(this.props.tasks, this.state.tasks) &&    
             this.setState({ tasks: this.props.tasks },
                 () => this.findAvailableTimes(this.props.tasks))
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.autoScroll)
     }
 
     findAvailableTimes(tasks) {
