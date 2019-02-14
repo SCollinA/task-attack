@@ -42,7 +42,7 @@ export default class TaskCell extends React.Component {
                         task.free ?
                         addTask({
                             ...task,
-                            name: 'new task',
+                            name: `new task - ${hour > 9 ? hour : `0${hour}`}:${task.time_start.slice(3, 5)}`,
                             time_start: `${hour > 9 ? hour : `0${hour}`}:${task.time_start.slice(3, 5)}`,
                             time_end: `${task.time_end.slice(0, 2)}:${task.time_end.slice(3, 5)}`,
                             free: false
