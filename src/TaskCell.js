@@ -27,13 +27,13 @@ export default class TaskCell extends React.Component {
     render() {
         const { hour, task, selectTask, selectedTask, addTask, updateTask, deleteTask } = this.props
         const isSelected = selectedTask && selectedTask.id === task.id
-        const taskTime = getTaskTime(task)
+        // const taskTime = getTaskTime(task)
         // cell height is 1 px per min (start time - end time)
-        const cellHeight = (taskTimeIsValid(taskTime)) ?
-        (taskTime.end.hour * 60 + taskTime.end.minute) - 
-            (taskTime.start.hour * 60 + taskTime.start.minute) :
-        ((24 * 60) - (taskTime.start.hour * 60 + taskTime.start.minute)) +
-            (taskTime.end.hour * 60 + taskTime.end.minute)
+        // const cellHeight = (taskTimeIsValid(taskTime)) ?
+        // (taskTime.end.hour * 60 + taskTime.end.minute) - 
+        //     (taskTime.start.hour * 60 + taskTime.start.minute) :
+        // ((24 * 60) - (taskTime.start.hour * 60 + taskTime.start.minute)) +
+        //     (taskTime.end.hour * 60 + taskTime.end.minute)
         return (
             <div className='TaskCellWrapper'>
                 <div className={`TaskCell${isSelected ? ' selectedTask' : ''}${task.active ? ' activeTask' : ''}`} 
@@ -43,6 +43,7 @@ export default class TaskCell extends React.Component {
                         addTask({
                             ...task,
                             name: 'new task',
+                            time_start: `${hour > 9 ? hour : `0${hour}`}:${task.time_start.slice(3, 5)}`,
                             time_end: `${parseInt(task.time_start.slice(0, 2)) + Math.floor((parseInt(task.time_start.slice(3, 5)) + 15) / 60)}:${(parseInt(task.time_start.slice(3, 5)) + 15) % 60}`,
                             free: false
                         }) :
@@ -79,7 +80,8 @@ export default class TaskCell extends React.Component {
                             this.state.task.time_end}
                         </h6>)}
                     </div>
-                    {isSelected && 
+                    {/* {children} */}
+                    {(isSelected && hour === parseInt(task.time_start.slice(0, 2))) && 
                         <UpdateTask 
                             task={this.state.task}
                             updateTaskForm={this._updateTaskForm}

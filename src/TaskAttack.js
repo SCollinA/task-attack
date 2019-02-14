@@ -159,6 +159,7 @@ export default class TaskAttack extends React.Component {
     
     render() {
         const isLoggedIn = this.state.user && true
+        const currentTime = new Date()
         return (
             <div id='TaskAttack'>
                 <TaskHeader 
@@ -198,6 +199,19 @@ export default class TaskAttack extends React.Component {
                             addTask={this._addTask}
                             deleteTask={this._deleteTask}
                         />
+                        <div className='TaskTime'>
+                            <h1>
+                                {`${currentTime.getHours() > 9 ?
+                                currentTime.getHours() :
+                                `0${currentTime.getHours()}`}`}
+                            </h1>
+                            {/* <h1> : </h1> */}
+                            <h1>
+                                {`${currentTime.getMinutes() > 9 ?
+                                currentTime.getMinutes() :
+                                `0${currentTime.getMinutes()}`}`}
+                            </h1>
+                        </div>
                     </div>
                 )}
             </div>

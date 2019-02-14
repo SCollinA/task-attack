@@ -22,8 +22,8 @@ export default class TaskDisplay extends React.Component {
         timesHaveChanged(this.props.tasks, this.state.tasks) &&    
             this.setState({ tasks: this.props.tasks },
                 () => this.findAvailableTimes(this.props.tasks))
-        const selectedTask = document.getElementsByClassName('selectedTask')[0]
-        selectedTask && selectedTask.scrollIntoView()
+        // const selectedTask = document.getElementsByClassName('selectedTask')[0]
+        // selectedTask && selectedTask.scrollIntoView()
     }
 
     findAvailableTimes(tasks) {
@@ -133,6 +133,7 @@ export default class TaskDisplay extends React.Component {
                 }
             }
         })
+        const currentTime = new Date()
         return (
             <div className='TaskDisplayContainer'>
                 <div className='TaskDisplay'>
@@ -151,7 +152,12 @@ export default class TaskDisplay extends React.Component {
                     <div className='taskHourPadding'></div>
                     <div className='taskHoursComplete'
                         style={{
-                            height: `${(new Date().getHours() / 24) * 100}%`,
+                            height: `
+                            ${(((currentTime.getHours() * 60) + 
+                                    currentTime.getMinutes()) 
+                                    / (24 * 60)) 
+                                * 100}%
+                            `,
                         }}
                         >
                         <h1>you are here</h1>
