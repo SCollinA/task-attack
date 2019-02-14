@@ -39,10 +39,12 @@ export default class TaskCell extends React.Component {
                 <div className={`TaskCell${isSelected ? ' selectedTask' : ''}${task.active ? ' activeTask' : ''}`} 
                     // single click opens 
                     onClick={() => {
+                        console.log('herro')
                         task.free ?
                         addTask({
                             ...task,
                             name: 'new task',
+                            time_start: `${hour > 9 ? hour : `0${hour}`}:${task.time_start.slice(3, 5)}`,
                             time_end: `${parseInt(task.time_start.slice(0, 2)) + Math.floor((parseInt(task.time_start.slice(3, 5)) + 15) / 60)}:${(parseInt(task.time_start.slice(3, 5)) + 15) % 60}`,
                             free: false
                         }) :
