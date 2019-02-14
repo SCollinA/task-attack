@@ -23,6 +23,7 @@ html, body, #root, #TaskAttack {
   width: 100%;
   display: flex;
   justify-content: space-around;
+  align-items: center;
 }
 
 .TaskHeader > * {
@@ -109,7 +110,7 @@ html, body, #root, #TaskAttack {
 }
 
 .taskHour > h1 {
-  margin: 0;
+  margin: auto 0 0 0;
   width: fit-content;
 }
 
@@ -144,19 +145,19 @@ html, body, #root, #TaskAttack {
 
 @keyframes cellHover {
   0% {
-    background-color: rgba(255, 0, 0, 0.25);
+    background-color: none;
   }
   50% {
     background-color: rgba(0, 0, 0, .25);
   }
   100% {
-    background-color: rgba(255, 0, 0, 0.25);
+    background-color: none;
   }
 }
 
 .taskCellContent {
   position: sticky;
-  top: 0;
+  top: 0; 
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -184,9 +185,6 @@ html, body, #root, #TaskAttack {
   background-color: rgba(255, 200, 0, 0.25);
 }
 
-.selectedTask:hover {
-  background-color: rgba(255, 200, 0, .1);
-}
 
 .UpdateTaskContainer {
   position: sticky;
@@ -213,6 +211,7 @@ html, body, #root, #TaskAttack {
 
 .TaskDelete, .TaskCancel {
   padding: 10% 0;
+  margin: 10%;
 }
 
 .TaskDelete:hover, .TaskCancel:hover {
@@ -254,4 +253,14 @@ html, body, #root, #TaskAttack {
   flex: 1;
   max-width: 100px;
   padding: 2%;
+}
+
+@media (max-width: 500px) {
+  #TaskAttack {
+    display: block;
+    overflow-y: auto;
+  }
+  .TaskAttack {
+    overflow: visible;
+  }
 }

@@ -52,7 +52,7 @@ export default class TaskCell extends React.Component {
                         })
                     }}
                     // double click toggles active status on task
-                    onDoubleClick={() => !task.free && updateTask({ ...task, active: !task.active })}
+                    onDoubleClick={() => (!task.free && !isSelected) && updateTask({ ...task, active: !task.active })}
                     style={isSelected ? {} : {
                         height: `
                             ${cellHeight * (2)}px
