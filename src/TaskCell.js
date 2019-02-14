@@ -66,7 +66,7 @@ export default class TaskCell extends React.Component {
                             `,
                         }
                     }
-                >
+                >  
                     <div className='taskCellContent'>
                         <h4>{this.state.task.name}</h4>
                         <div className='taskTimes'>
