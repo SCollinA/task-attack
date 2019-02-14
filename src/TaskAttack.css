@@ -103,6 +103,7 @@ html, body, #root, #TaskAttack {
   border-radius: unset;
   display: flex;
   align-items: center;
+  z-index: -1;
 }
 
 .taskHour:first-child {
@@ -112,6 +113,7 @@ html, body, #root, #TaskAttack {
 .taskHour > h1 {
   margin: auto 0 0 0;
   width: fit-content;
+  z-index: -1;
 }
 
 .taskHoursCompleteWrapper {
@@ -119,6 +121,7 @@ html, body, #root, #TaskAttack {
   top: 0;
   height: 100%;
   width: 100%;
+  z-index: -1;
 }
 
 .taskHoursComplete {
@@ -136,6 +139,7 @@ html, body, #root, #TaskAttack {
   left: 10%;
   padding-left: 1%;
   text-align: left;
+  z-index: -1;
 }
 
 
