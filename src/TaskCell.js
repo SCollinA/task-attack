@@ -18,7 +18,9 @@ export default class TaskCell extends React.Component {
         console.log('checking update')
         if (taskTimeIsValid(taskTime) && !timeIsTaken({...this.state.task, ...task})) {
             console.log('update good')
-            this.setState({ task: {...this.state.task, ...task } })
+            this.setState({ 
+                task: {...this.state.task, ...task },
+            }, this.props.updateTask({ ...this.state.task, ...task }))
         } 
     }
     

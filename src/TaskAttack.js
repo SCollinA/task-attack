@@ -137,7 +137,7 @@ export default class TaskAttack extends React.Component {
         // will need to receive all tasks here
         .then(tasks => this.scrubData({ 
             tasks,
-            selectedTask: null
+            // selectedTask: null
         }))
     }
 
