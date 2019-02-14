@@ -29,6 +29,10 @@ export default class TaskAttack extends React.Component {
         fetch('/attack')
         .then(res => res.json())
         .then(data => this.scrubData({ ...data, username: data.user && data.user.name }))
+        .then(() => {
+            const taskHourPadding = document.getElementsByClassName('taskHourPadding')[0]
+            !this.props.selectedTask && taskHourPadding.scrollIntoView()
+        })
     }
 
     componentWillUnmount() {
