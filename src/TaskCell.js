@@ -17,12 +17,12 @@ export default class TaskCell extends React.Component {
         const updatingTask = { ...this.state.task, ...task }
         const taskTime = { 
             start: {
+                ...updatingTask.start,
                 ...task.start, 
-                ...updatingTask.start
             }, 
             end: {
+                ...updatingTask.end,
                 ...task.end,
-                ...updatingTask.end
             }
         }
         if (taskTimeIsValid(taskTime) && !timeIsTaken({...this.state.task, ...task})) {

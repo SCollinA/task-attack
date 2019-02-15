@@ -6,24 +6,29 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
     const availableHours = []
     const availableMinutesStart = []
     const availableMinutesEnd = []
-    availableTimes.forEach(time => { // for each available time
-        // for each hour of availability
-        for (let i = time.start.hour; i <= time.end.hour; i++) {
-            availableHours.push(i) // add that to available hours
-            // if this hour is the selected hour, find the minutes for this hour
-            if (i === task.start.hour) {
-                // for each minute starting from available or 0 if this is not first hour of availability
-                for (let j = i === time.start.hour ? time.start.minute : 0; j <= time.start.minute || j < 60; j++) {
-                    availableMinutesStart.push(j)
-                }
-            } else if (i === task.end.hour) {
-                // for each minute starting from available or 0 if this is not first hour of availability
-                for (let j = 0; j < 60 || (i === time.end.hour && j <= time.end.minute); j++) {
-                    availableMinutesEnd.push(j)
-                }
+    // loop through time of task adding to availability
+    for (let i = task.start.hour; i <= task.end.hour; i++) {
+        availableHours.includes(i) || availableHours.push(i)
+        if (i === task.start.hour && task.start.hour === task.end.hour) {
+            for (let j = task.start.minute; j <= task.end.minute; j++) {
+                availableMinutesStart.includes(j) || availableMinutesStart.push(j)
+                availableMinutesEnd.includes(j) || availableMinutesEnd.push(j)
+            }
+        } else if (i === task.start.hour) {
+            for (let j = task.start.minute; j < 60; j++) {
+                availableMinutesStart.includes(j) || availableMinutesStart.push(j)
+            }
+        } else if (i === task.end.hour) {
+            for (let j = 0; j <= task.end.minute; j++) {
+                console.log(j, task.end)
+                availableMinutesEnd.includes(j) || availableMinutesEnd.push(j)
             }
         }
-    })
+    }
+    availableHours.sort((a, b) => a - b)
+    availableMinutesEnd.sort((a, b) => a - b)
+    availableMinutesStart.sort((a, b) => a - b)
+    // console.log(availableHours, availableMinutesStart, availableMinutesEnd)
     return (
         <div className='UpdateTaskContainer'>
             <form id='UpdateTaskForm' 
@@ -80,8 +85,7 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
                             value={task.start.minute} 
                             onChange={event => updateTaskForm({ start: { minute: event.target.value }})}
                         >
-                            {availableMinutesStart.filter(minute => minute <= task.end.minute)
-                            .map(minute => {
+                            {availableMinutesStart.map(minute => {
                                 return (
                                     <option key={minute}
                                         value={minute}
@@ -99,7 +103,7 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
                             value={task.end.hour}
                             onChange={event => updateTaskForm({ end: { hour: event.target.value }})}
                             >
-                            {availableHours.filter(hour => hour >= task.start.hour)
+                            {availableHours.filter(hour => hour > task.start.hour)
                             .map(hour => {
                                 return (
                                     <option key={hour}
@@ -116,8 +120,7 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
                             value={task.end.minute}
                             onChange={event => updateTaskForm({ end: {minute: event.target.value }})}
                         >
-                            {availableMinutesEnd.filter(minute => minute > task.start.minute)
-                            .map(minute => {
+                            {availableMinutesEnd.map(minute => {
                                 return (
                                     <option key={minute}
                                         value={minute}
