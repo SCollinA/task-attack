@@ -38,11 +38,11 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
                         name: event.target.name.value,
                         start: { 
                             hour: parseInt(event.target.startHour.value),
-                            minute: parseInt(event.target.startMin.value) 
+                            minute: parseInt(event.target.startMinute.value) 
                         },
                         end: {
                             hour: parseInt(event.target.endHour.value),
-                            minute: parseInt(event.target.endMin.value),
+                            minute: parseInt(event.target.endMinute.value),
                         },
                         mandatory: event.target.mandatory.checked,
                         active: event.target.active.checked
@@ -77,8 +77,8 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
                             })}
                         </select>
                     </label>
-                    <label name='startMin'>start minutes
-                        <select name='startMin' 
+                    <label name='startMinute'>start minutes
+                        <select name='startMinute' 
                             value={task.start.minute} 
                             onChange={event => updateTaskForm({ start: { minute: parseInt(event.target.value) }})}
                         >
@@ -112,8 +112,8 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
                             })}
                         </select>
                     </label>
-                    <label name='endMinutes'>end minutes
-                        <select name='endMinutes' 
+                    <label name='endMinute'>end minutes
+                        <select name='endMinute' 
                             value={task.end.minute}
                             onChange={event => updateTaskForm({ end: {minute: parseInt(event.target.value) }})}
                         >
