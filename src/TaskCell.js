@@ -15,11 +15,20 @@ export default class TaskCell extends React.Component {
     _updateTaskForm = (task) => {
         const { timeIsTaken } = this.props
         const updatingTask = { ...this.state.task, ...task }
-        const taskTime = { start: updatingTask.start, end: updatingTask.end }
+        const taskTime = { 
+            start: {
+                ...task.start, 
+                ...updatingTask.start
+            }, 
+            end: {
+                ...task.end,
+                ...updatingTask.end
+            }
+        }
         if (taskTimeIsValid(taskTime) && !timeIsTaken({...this.state.task, ...task})) {
             this.setState({ 
-                task: {...this.state.task, ...task },
-            }, this.props.updateTask({ ...this.state.task, ...task }))
+                task: {...this.state.task, ...task, ...taskTime },
+            }, this.props.updateTask({ ...this.state.task, ...task, ...taskTime }))
         } 
     }
     

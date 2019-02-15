@@ -4,27 +4,26 @@ import TaskCancel from './TaskCancel'
 
 export default function UpdateTask({ task, updateTaskForm, selectedTask, selectTask, updateTask, availableTimes, deleteTask }) {
     const availableHours = []
-    const availableMinutes = []
-    availableTimes.forEach(time => {
-        for (let i = time.start.hour; i !== time.end.hour; i++) {
-            availableHours.push(i)
-            if (i === 24) { i = 0 }
-        }
-        for (let i = time.start.minute; i !== time.end.minute; i++) {
-            availableMinutes.push(i)
-            if (i === 59) { i = 0 }
+    const availableMinutesStart = []
+    const availableMinutesEnd = []
+    availableTimes.forEach(time => { // for each available time
+        // for each hour of availability
+        for (let i = time.start.hour; i <= time.end.hour; i++) {
+            availableHours.push(i) // add that to available hours
+            // if this hour is the selected hour, find the minutes for this hour
+            if (i === task.start.hour) {
+                // for each minute starting from available or 0 if this is not first hour of availability
+                for (let j = i === time.start.hour ? time.start.minute : 0; j <= time.start.minute || j < 60; j++) {
+                    availableMinutesStart.push(j)
+                }
+            } else if (i === task.end.hour) {
+                // for each minute starting from available or 0 if this is not first hour of availability
+                for (let j = 0; j < 60 || (i === time.end.hour && j <= time.end.minute); j++) {
+                    availableMinutesEnd.push(j)
+                }
+            }
         }
     })
-    for (let i = task.start.hour; i !== task.end.hour; i++) {
-        availableHours.includes(i) || availableHours.push(i)
-        if (i === 24) { i = 0 }
-    }
-    for (let i = task.start.minute; i !== task.end.minute; i++) {
-        availableMinutes.includes(i) || availableMinutes.push(i)
-        if (i === 59) { i = 0 }
-    }
-    availableHours.sort((hourA, hourB) => hourA - hourB)
-    availableMinutes.sort((minA, minB) => minA - minB)
     return (
         <div className='UpdateTaskContainer'>
             <form id='UpdateTaskForm' 
@@ -56,16 +55,18 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
                     />
                 </label>
                 <div className='timeStart'>
-                    <label name='startHour'>time start
+                    <label name='startHour'>start hour
                         <select name='startHour' 
                             value={task.start.hour} 
-                            onChange={event => updateTaskForm({ startHour: event.target.value })}
-                            >
-                            {/* max={task.endHour}  */}
-                            {availableHours.map(hour => {
+                            onChange={event => {
+                                console.log(event.target.value)
+                                updateTaskForm({ start: { hour: event.target.value }})
+                            }}
+                        >
+                            {availableHours.filter(hour => hour < task.end.hour)
+                            .map(hour => {
                                 return (
                                     <option key={hour}
-                                        selected={hour === task.start.hour} 
                                         value={hour}
                                     >
                                         {hour}
@@ -74,29 +75,60 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
                             })}
                         </select>
                     </label>
-                    <label name='startMin'>time start
-                        <input type='time' name='startMin' 
-                            value={task.startMin} 
-                            max={task.endMin} 
-                            onChange={event => updateTaskForm({ startMin: event.target.value })}
-                            />
+                    <label name='startMin'>start minutes
+                        <select name='startMin' 
+                            value={task.start.minute} 
+                            onChange={event => updateTaskForm({ start: { minute: event.target.value }})}
+                        >
+                            {availableMinutesStart.filter(minute => minute <= task.end.minute)
+                            .map(minute => {
+                                return (
+                                    <option key={minute}
+                                        value={minute}
+                                    >
+                                        {minute}
+                                    </option>
+                                )
+                            })}
+                        </select>
                     </label>
                 </div>
-                <div className='timeEnd'></div>
-                <label name='endHour'>time end
-                    <input type='time' name='endHour' 
-                        value={task.endHour}
-                        min={task.startHour}
-                        onChange={event => updateTaskForm({ endHour: event.target.value })}
-                    />
-                </label>
-                <label name='time_end'>time end
-                    <input type='time' name='time_end' 
-                        value={task.endMin}
-                        min={task.startMin}
-                        onChange={event => updateTaskForm({ endMin: event.target.value })}
-                    />
-                </label>
+                <div className='timeEnd'>
+                    <label name='endHour'>end hour
+                        <select name='endHour' 
+                            value={task.end.hour}
+                            onChange={event => updateTaskForm({ end: { hour: event.target.value }})}
+                            >
+                            {availableHours.filter(hour => hour >= task.start.hour)
+                            .map(hour => {
+                                return (
+                                    <option key={hour}
+                                        value={hour}
+                                    >
+                                        {hour}
+                                    </option>
+                                )
+                            })}
+                        </select>
+                    </label>
+                    <label name='endMinutes'>end minutes
+                        <select name='endMinutes' 
+                            value={task.end.minute}
+                            onChange={event => updateTaskForm({ end: {minute: event.target.value }})}
+                        >
+                            {availableMinutesEnd.filter(minute => minute > task.start.minute)
+                            .map(minute => {
+                                return (
+                                    <option key={minute}
+                                        value={minute}
+                                    >
+                                        {minute}
+                                    </option>
+                                )
+                            })}
+                        </select>
+                    </label>
+                </div>
                 <div className='updateTaskChecks'>
                     <label name='mandatory'>mandatory
                         <input type='checkbox' name='mandatory' 
