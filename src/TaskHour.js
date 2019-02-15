@@ -1,7 +1,7 @@
 import React from 'react'
 import TaskCell from './TaskCell'
 
-export default function TaskHour({ tasks, hour, selectTask, selectedTask, selectedHour, addTask, updateTask, timeIsTaken, deleteTask }) {
+export default function TaskHour({ tasks, hour, selectTask, selectedTask, selectedHour, addTask, updateTask, availableTimes, timeIsTaken, deleteTask }) {
     return (
         <div className='taskHour'>
             <div className='taskHourTime'>
@@ -17,6 +17,7 @@ export default function TaskHour({ tasks, hour, selectTask, selectedTask, select
                         selectedHour={selectedHour}
                         addTask={addTask}
                         updateTask={updateTask}
+                        availableTimes={availableTimes}
                         timeIsTaken={timeIsTaken}
                         deleteTask={deleteTask}
                     />

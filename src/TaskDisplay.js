@@ -34,10 +34,8 @@ export default class TaskDisplay extends React.Component {
         if (tasks.length !== 0) {
             for (let i = 0; i < tasks.length; i++) {
                 const task = tasks[i]
-                // const taskTimeStart = { hour: task.start.hour, minute: task.start.minute }
                 // come back to first task for last task's comparison
                 const prevTask = tasks[i + 1] || tasks[0]
-                // const prevTaskTimeEnd= { hour: prevTask.end.hour, minute: prevTask.end.minute }
                 // if start hour is not prev end hour or start minute is not prev end minute
                 if (task.start.hour !== prevTask.end.hour || 
                 task.start.minute !== prevTask.end.minute) {
@@ -145,6 +143,7 @@ export default class TaskDisplay extends React.Component {
                             selectedHour={selectedHour}
                             addTask={addTask}
                             updateTask={updateTask}
+                            availableTimes={this.state.availableTimes}
                             timeIsTaken={this._timeIsTaken}
                             deleteTask={deleteTask}
                         />

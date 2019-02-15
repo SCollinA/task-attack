@@ -24,7 +24,7 @@ export default class TaskCell extends React.Component {
     }
     
     render() {
-        const { task, selectTask, selectedTask, selectedHour, addTask, updateTask, deleteTask } = this.props
+        const { task, selectTask, selectedTask, selectedHour, addTask, updateTask, availableTimes, deleteTask } = this.props
         const isSelected = selectedTask && selectedTask.id === task.id
         const { hour } = this.state
         return (
@@ -76,7 +76,8 @@ export default class TaskCell extends React.Component {
                             updateTaskForm={this._updateTaskForm}
                             selectedTask={selectedTask} 
                             selectTask={selectTask}
-                            updateTask={updateTask} 
+                            updateTask={updateTask}
+                            availableTimes={availableTimes} 
                             deleteTask={deleteTask}
                         />}
                 </div>

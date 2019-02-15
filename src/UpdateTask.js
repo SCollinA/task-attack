@@ -2,7 +2,29 @@ import React from 'react'
 import TaskDelete from './TaskDelete'
 import TaskCancel from './TaskCancel'
 
-export default function UpdateTask({ task, updateTaskForm, selectedTask, selectTask, updateTask, deleteTask }) {
+export default function UpdateTask({ task, updateTaskForm, selectedTask, selectTask, updateTask, availableTimes, deleteTask }) {
+    const availableHours = []
+    const availableMinutes = []
+    availableTimes.forEach(time => {
+        for (let i = time.start.hour; i !== time.end.hour; i++) {
+            availableHours.push(i)
+            if (i === 24) { i = 0 }
+        }
+        for (let i = time.start.minute; i !== time.end.minute; i++) {
+            availableMinutes.push(i)
+            if (i === 59) { i = 0 }
+        }
+    })
+    for (let i = task.start.hour; i !== task.end.hour; i++) {
+        availableHours.includes(i) || availableHours.push(i)
+        if (i === 24) { i = 0 }
+    }
+    for (let i = task.start.minute; i !== task.end.minute; i++) {
+        availableMinutes.includes(i) || availableMinutes.push(i)
+        if (i === 59) { i = 0 }
+    }
+    availableHours.sort((hourA, hourB) => hourA - hourB)
+    availableMinutes.sort((minA, minB) => minA - minB)
     return (
         <div className='UpdateTaskContainer'>
             <form id='UpdateTaskForm' 
@@ -12,10 +34,14 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
                     updateTask({
                         id: task.id,
                         name: event.target.name.value,
-                        startHour: event.target.startHour.value,
-                        startMin: event.target.startMin.value,
-                        endHour: event.target.endHour.value,
-                        endMin: event.target.endMin.value,
+                        start: { 
+                            hour: event.target.startHour.value,
+                            minute: event.target.startMin.value 
+                        },
+                        end: {
+                            hour: event.target.endHour.value,
+                            minute: event.target.endMin.value
+                        },
                         mandatory: event.target.mandatory.checked,
                         active: event.target.active.checked
                     })
@@ -31,11 +57,22 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
                 </label>
                 <div className='timeStart'>
                     <label name='startHour'>time start
-                        <input type='select' name='startHour' 
-                            value={task.startHour} 
-                            max={task.endHour} 
+                        <select name='startHour' 
+                            value={task.start.hour} 
                             onChange={event => updateTaskForm({ startHour: event.target.value })}
-                            />
+                            >
+                            {/* max={task.endHour}  */}
+                            {availableHours.map(hour => {
+                                return (
+                                    <option key={hour}
+                                        selected={hour === task.start.hour} 
+                                        value={hour}
+                                    >
+                                        {hour}
+                                    </option>
+                                )
+                            })}
+                        </select>
                     </label>
                     <label name='startMin'>time start
                         <input type='time' name='startMin' 
