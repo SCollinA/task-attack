@@ -165,10 +165,11 @@ html, body, #root, #TaskAttack {
 
 .taskHoursComplete > h1 {
   position: sticky;
-  top: 5%;
-  left: 10%;
-  padding-left: 1%;
-  text-align: left;
+  top: 1%;
+  right: 10%;
+  margin: 0;
+  padding-right: 1%;
+  text-align: right;
   color: rgba(0, 0, 0, 0.5);
   z-index: -1;
 }
@@ -213,10 +214,11 @@ html, body, #root, #TaskAttack {
 }
 
 .taskCellContent > h4 {
-  padding: 0 2%;
+  padding: 0 2% 3em;
   flex: 1;
   text-align: center;
   color: darkslategrey;
+  margin: 0 auto auto;
 }
 
 .taskCellContent > h6 {
@@ -239,11 +241,7 @@ html, body, #root, #TaskAttack {
 
 
 .UpdateTaskContainer {
-  position: static;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  position: absolute;
   z-index: 1;
   margin: auto;
   padding: 5%;
