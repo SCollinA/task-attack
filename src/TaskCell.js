@@ -86,11 +86,7 @@ export default class TaskCell extends React.Component {
 }
 
 export const getTaskTimeString = (taskTime) => {
-    return `
-        ${taskTime.hour > 9 ? taskTime.hour : `0${taskTime.hour}`}
-        :
-        ${taskTime.minute > 9 ? taskTime.minute : `0${taskTime.minute}`}
-    `
+    return `${taskTime.hour > 9 ? taskTime.hour : `0${taskTime.hour}`}:${taskTime.minute > 9 ? taskTime.minute : `0${taskTime.minute}`}`
 }
 
 export const taskTimeIsValid = (taskTime) => {
