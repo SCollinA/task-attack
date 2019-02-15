@@ -109,7 +109,16 @@ export default class TaskDisplay extends React.Component {
     }
 
     render() {
-        const { tasks, selectTask, selectedTask, selectedHour, updateTask, addTask, deleteTask } = this.props
+        const { 
+            tasks,
+            selectTask, 
+            selectedTask, 
+            selectedHour, 
+            updateTask, 
+            addTask, 
+            deleteTask,
+            currentTime
+        } = this.props
         // combine tasks and available times for display
         const cells = [...tasks, ...this.state.availableTimes]
         const cellsSorted = cells.sort((taskA, taskB) => {
@@ -131,7 +140,6 @@ export default class TaskDisplay extends React.Component {
                 }
             }
         })
-        const currentTime = new Date()
         return (
             <div className='TaskDisplayContainer'>
                 <div className='TaskDisplay'>

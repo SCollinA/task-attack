@@ -19,7 +19,11 @@ export default class TaskAttack extends React.Component {
             selectedTask: null,
             selectedHour: null,
             updatingUser: false,
+            currentTime: new Date(),
         }
+        this.timeUpdate = setInterval(() => {
+            this.setState({ currentTime: new Date() })
+        }, 1000)
         // this.autoScroll = setInterval(() => {
         //     const taskHourPadding = document.getElementsByClassName('taskHourPadding')[0]
         //     !this.props.selectedTask && taskHourPadding.scrollIntoView()
@@ -37,7 +41,7 @@ export default class TaskAttack extends React.Component {
     }
 
     componentWillUnmount() {
-        clearInterval(this.autoScroll)
+        clearInterval(this.timeUpdate)
     }
 
     scrubData(data) {
@@ -163,7 +167,7 @@ export default class TaskAttack extends React.Component {
     
     render() {
         const isLoggedIn = this.state.user && true
-        const currentTime = new Date()
+        const { currentTime } = this.state
         return (
             <div id='TaskAttack'>
                 <TaskHeader 
@@ -203,6 +207,7 @@ export default class TaskAttack extends React.Component {
                             updateTask={this._updateTask}
                             addTask={this._addTask}
                             deleteTask={this._deleteTask}
+                            currentTime={currentTime}
                         />
                         <div className='TaskTime'>
                             <h1>
@@ -215,6 +220,11 @@ export default class TaskAttack extends React.Component {
                                 {`${currentTime.getMinutes() > 9 ?
                                 currentTime.getMinutes() :
                                 `0${currentTime.getMinutes()}`}`}
+                            </h1>
+                            <h1>
+                                {`${currentTime.getSeconds() > 9 ?
+                                currentTime.getSeconds() :
+                                `0${currentTime.getSeconds()}`}`}
                             </h1>
                         </div>
                     </div>
