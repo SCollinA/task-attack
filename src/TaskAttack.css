@@ -226,6 +226,10 @@ html, body, #root, #TaskAttack {
   color: darkslategrey;
 }
 
+.taskCellContent > h6 {
+  margin: 0 auto auto;
+}
+
 .taskTimes {
   display: flex;
   flex-direction: column;
