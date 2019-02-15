@@ -242,7 +242,6 @@ html, body, #root, #TaskAttack {
 
 .UpdateTaskContainer {
   position: absolute;
-  bottom: 0;
   z-index: 1;
   margin: auto;
   padding: 5%;
