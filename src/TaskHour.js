@@ -9,7 +9,7 @@ export default function TaskHour({ tasks, hour, selectTask, selectedTask, select
             </div>
             {tasks.reverse().map(task => {
                 return (
-                    <TaskCell key={parseInt(`${task.start.hour}${task.start.minute}`)}
+                    <TaskCell key={`${task.start.hour}${task.start.minute}`}
                         hour={hour}
                         task={task} 
                         selectTask={selectTask} 
