@@ -69,19 +69,19 @@ export default class TaskCell extends React.Component {
                     // }
                 >  
                     <div className='taskCellContent'>
-                        {/* {parseInt(this.state.task.time_start.slice(0, 2)) === hour && 
+                        {parseInt(this.state.task.time_start.slice(0, 2)) === hour && 
                         (<h6>
                             {this.state.task.free ?
                             this.props.task.time_start :
                             this.state.task.time_start}
-                        </h6>)} */}
+                        </h6>)}
                         <h4>{this.state.task.name}</h4>
-                        {parseInt(this.state.task.time_end.slice(0, 2)) === hour && 
+                        {/* {parseInt(this.state.task.time_end.slice(0, 2)) === hour && 
                         (<h6>
                             {this.state.task.free ?
                             this.props.task.time_end :
                             this.state.task.time_end}
-                        </h6>)}
+                        </h6>)} */}
                     </div>
                     {/* {children} */}
                     {(isSelected && this.state.hour === selectedHour) && 
