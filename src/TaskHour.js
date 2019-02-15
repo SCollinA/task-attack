@@ -3,7 +3,7 @@ import TaskCell from './TaskCell'
 // import UpdateTask from './UpdateTask'
 
 export default function TaskHour({ tasks, hour, selectTask, selectedTask, selectedHour, addTask, updateTask, timeIsTaken, deleteTask }) {
-    const zoomLevel = 1
+    // const zoomLevel = 1
     return (
         <div className='taskHour'
             // style={{
