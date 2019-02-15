@@ -70,7 +70,7 @@ export default class TaskDisplay extends React.Component {
             availableTimes.push({ 
                 ...availableTask,
                 start: { hour: 0, minute: 0 },
-                end: { hour: 0, minute: 0 },
+                end: { hour: 23, minute: 59 },
             })
         }
         (availableTimes.length > 0 ?
