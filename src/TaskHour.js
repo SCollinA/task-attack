@@ -6,11 +6,11 @@ export default function TaskHour({ tasks, hour, selectTask, selectedTask, select
     const zoomLevel = 1
     return (
         <div className='taskHour'
-            style={{
-                minHeight: `
-                    ${zoomLevel * 100}px
-                `
-            }}
+            // style={{
+            //     minHeight: `
+            //         ${zoomLevel * 100}px
+            //     `
+            // }}
         >
             <div className='taskHourTime'>
                 <h1>{hour > 9 ? hour : `0${hour}`}:00</h1>
