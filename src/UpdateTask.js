@@ -20,7 +20,6 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
             }
         } else if (i === task.end.hour) {
             for (let j = 0; j <= task.end.minute; j++) {
-                console.log(j, task.end)
                 availableMinutesEnd.includes(j) || availableMinutesEnd.push(j)
             }
         }
@@ -28,7 +27,6 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
     availableHours.sort((a, b) => a - b)
     availableMinutesEnd.sort((a, b) => a - b)
     availableMinutesStart.sort((a, b) => a - b)
-    // console.log(availableHours, availableMinutesStart, availableMinutesEnd)
     return (
         <div className='UpdateTaskContainer'>
             <form id='UpdateTaskForm' 
@@ -39,12 +37,12 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
                         id: task.id,
                         name: event.target.name.value,
                         start: { 
-                            hour: event.target.startHour.value,
-                            minute: event.target.startMin.value 
+                            hour: parseInt(event.target.startHour.value),
+                            minute: parseInt(event.target.startMin.value) 
                         },
                         end: {
-                            hour: event.target.endHour.value,
-                            minute: event.target.endMin.value
+                            hour: parseInt(event.target.endHour.value),
+                            minute: parseInt(event.target.endMin.value),
                         },
                         mandatory: event.target.mandatory.checked,
                         active: event.target.active.checked
@@ -64,8 +62,7 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
                         <select name='startHour' 
                             value={task.start.hour} 
                             onChange={event => {
-                                console.log(event.target.value)
-                                updateTaskForm({ start: { hour: event.target.value }})
+                                updateTaskForm({ start: { hour: parseInt(event.target.value) }})
                             }}
                         >
                             {availableHours.filter(hour => hour < task.end.hour)
@@ -83,7 +80,7 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
                     <label name='startMin'>start minutes
                         <select name='startMin' 
                             value={task.start.minute} 
-                            onChange={event => updateTaskForm({ start: { minute: event.target.value }})}
+                            onChange={event => updateTaskForm({ start: { minute: parseInt(event.target.value) }})}
                         >
                             {availableMinutesStart.map(minute => {
                                 return (
@@ -101,7 +98,7 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
                     <label name='endHour'>end hour
                         <select name='endHour' 
                             value={task.end.hour}
-                            onChange={event => updateTaskForm({ end: { hour: event.target.value }})}
+                            onChange={event => updateTaskForm({ end: { hour: parseInt(event.target.value) }})}
                             >
                             {availableHours.filter(hour => hour > task.start.hour)
                             .map(hour => {
@@ -118,7 +115,7 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
                     <label name='endMinutes'>end minutes
                         <select name='endMinutes' 
                             value={task.end.minute}
-                            onChange={event => updateTaskForm({ end: {minute: event.target.value }})}
+                            onChange={event => updateTaskForm({ end: {minute: parseInt(event.target.value) }})}
                         >
                             {availableMinutesEnd.map(minute => {
                                 return (
