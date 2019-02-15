@@ -24,43 +24,23 @@ export default class TaskAttack extends React.Component {
         this.timeUpdate = setInterval(() => {
             this.setState({ currentTime: new Date() })
         }, 1000)
-        // this.autoScroll = setInterval(() => {
-        //     const taskHourPadding = document.getElementsByClassName('taskHourPadding')[0]
-        //     !this.props.selectedTask && taskHourPadding.scrollIntoView()
-        // }, 60 * 1000)  // 30 seconds
     }
 
     componentDidMount() {
         fetch('/attack')
         .then(res => res.json())
-        .then(data => this.scrubData({ ...data, username: data.user && data.user.name }))
+        .then(data => this.setState({ 
+            ...data, 
+            username: data.user && data.user.name 
+        }))
         .then(() => {
-            const taskHourPadding = document.getElementsByClassName('taskHourPadding')[0]
-            !this.props.selectedTask && taskHourPadding.scrollIntoView()
+            // const taskHourPadding = document.getElementsByClassName('taskHourPadding')[0]
+            // !this.props.selectedTask && taskHourPadding.scrollIntoView()
         })
     }
 
     componentWillUnmount() {
         clearInterval(this.timeUpdate)
-    }
-
-    scrubData(data) {
-        this.setState({
-            ...data,
-            // tasks: data.tasks ? data.tasks.map(task => {
-            //     return {
-            //         ...task,
-            //         time_start: task.time_start
-            //             .split(':')
-            //             .map(number => parseInt(number))
-            //             .slice(0, 2),
-            //         time_end: task.time_end
-            //             .split(':')
-            //             .map(number => parseInt(number))
-            //             .slice(0, 2),
-            //     }
-            // }) : this.state.tasks
-        })
     }
 
     // CREATE
@@ -86,7 +66,7 @@ export default class TaskAttack extends React.Component {
         })
         .then(res => res.json())
         // will need to receive all tasks here
-        .then(({tasks, newTask}) => this.scrubData({ tasks, selectedTask: newTask }))
+        .then(({tasks, newTask}) => this.setState({ tasks, selectedTask: newTask }))
     }
 
     // RETRIEVE
@@ -99,7 +79,7 @@ export default class TaskAttack extends React.Component {
             body: JSON.stringify(loginAttempt)
         })
         .then(res => res.json())
-        .then(data => this.scrubData({ ...data, username: data.user.name }))
+        .then(data => this.setState({ ...data, username: data.user.name }))
     }
 
     _selectUser = () => this.setState({ 
@@ -143,7 +123,7 @@ export default class TaskAttack extends React.Component {
         })
         .then(res => res.json())
         // will need to receive all tasks here
-        .then(tasks => this.scrubData({ 
+        .then(tasks => this.setState({ 
             tasks,
             // selectedTask: null
         }))
@@ -184,13 +164,6 @@ export default class TaskAttack extends React.Component {
                 || (
                     <div className='TaskAttack'
                         onClick={() => this.setState({ updatingUser: false })}
-                        // onScroll={() => { // reset auto scroll after user scrolls
-                        //     clearInterval(this.autoScroll)
-                        //     this.autoScroll = setInterval(() => {
-                        //         const taskHourPadding = document.getElementsByClassName('taskHourPadding')[0]
-                        //         !this.props.selectedTask && taskHourPadding.scrollIntoView()
-                        //     }, 1 * 1000)  // 30 seconds
-                        // }}
                     >
                         {this.state.updatingUser &&
                             <UpdateUser 

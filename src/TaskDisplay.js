@@ -1,6 +1,5 @@
 import React from 'react'
 import TaskHour from './TaskHour'
-import { getTaskTime } from './TaskCell'
 
 export default class TaskDisplay extends React.Component {
     constructor(props) {
@@ -35,36 +34,36 @@ export default class TaskDisplay extends React.Component {
         if (tasks.length !== 0) {
             for (let i = 0; i < tasks.length; i++) {
                 const task = tasks[i]
-                const taskTimeStart = getTaskTime(task).start
+                // const taskTimeStart = { hour: task.start.hour, minute: task.start.minute }
                 // come back to first task for last task's comparison
                 const prevTask = tasks[i + 1] || tasks[0]
-                const prevTaskTimeEnd = getTaskTime(prevTask).end
+                // const prevTaskTimeEnd= { hour: prevTask.end.hour, minute: prevTask.end.minute }
                 // if start hour is not prev end hour or start minute is not prev end minute
-                if (taskTimeStart.hour !== prevTaskTimeEnd.hour || 
-                taskTimeStart.minute !== prevTaskTimeEnd.minute) {
+                if (task.start.hour !== prevTask.end.hour || 
+                task.start.minute !== prevTask.end.minute) {
                     // if this was last task of day
-                    if (taskTimeStart.hour < prevTaskTimeEnd.hour ||
-                        (taskTimeStart.hour === prevTaskTimeEnd.hour &&
-                            taskTimeStart.minute < prevTaskTimeEnd.minute)) {
-                        if (prevTaskTimeEnd.hour < 23 || prevTaskTimeEnd.minute < 59) {
+                    if (task.start.hour < prevTask.end.hour ||
+                        (task.start.hour === prevTask.end.hour &&
+                            task.start.minute < prevTask.end.minute)) {
+                        if (prevTask.end.hour < 23 || prevTask.end.minute < 59) {
                             availableTimes.push({
                                 ...availableTask,
-                                time_start: getTaskTimeString(prevTaskTimeEnd),
-                                time_end: '23:59',
+                                start: prevTask.end,
+                                end: { hour: 23, minute: 59 },
                             })
                         }
-                        if (taskTimeStart.hour > 0 || taskTimeStart.minute > 0) {
+                        if (task.start.hour > 0 || task.start.minute > 0) {
                             availableTimes.push({
                                 ...availableTask,
-                                time_start: '00:00',
-                                time_end: getTaskTimeString(taskTimeStart),
+                                start: { hour: 0, minute: 0 },
+                                end: task.start,
                             })
                         }
                     } else {
                         availableTimes.push({
                             ...availableTask,
-                            time_start: getTaskTimeString(prevTaskTimeEnd),
-                            time_end: getTaskTimeString(taskTimeStart),
+                            start: prevTask.end,
+                            end: task.start,
                         })
                     }
                 }
@@ -72,8 +71,8 @@ export default class TaskDisplay extends React.Component {
         } else { 
             availableTimes.push({ 
                 ...availableTask,
-                time_start: '00:00',
-                time_end: '00:00',
+                start: { hour: 0, minute: 0 },
+                end: { hour: 0, minute: 0 },
             })
         }
         (availableTimes.length > 0 ?
@@ -83,23 +82,24 @@ export default class TaskDisplay extends React.Component {
 
     _timeIsTaken = (task) => {
         const { tasks } = this.state
-        const taskTime = getTaskTime(task)
         for (let i = 0; i < tasks.length; i++) {
-            if (task.id === tasks[i].id) { continue }
-            const otherTaskTime = getTaskTime(tasks[i])
+            const otherTask = tasks[i]
+            // if task is task being checked
+            if (task.id === otherTask.id) { continue }
+
             // if task start time occurs during other task time
-            const startsAfterOtherTaskStarts = taskTime.start.hour > otherTaskTime.start.hour ||
-                (taskTime.start.hour === otherTaskTime.start.hour &&
-                    taskTime.start.minute > otherTaskTime.start.minute)
-            const startsBeforeOtherTaskEnds = taskTime.start.hour < otherTaskTime.end.hour ||
-            (taskTime.start.hour === otherTaskTime.end.hour &&
-                taskTime.start.minute < otherTaskTime.end.minute)
-            const endsAfterOtherTaskStarts = taskTime.end.hour > otherTaskTime.start.hour ||
-            (taskTime.end.hour === otherTaskTime.start.hour &&
-                taskTime.end.minute > otherTaskTime.start.minute)
-            const endsBeforeOtherTaskEnds = taskTime.end.hour < otherTaskTime.end.hour ||
-            (taskTime.end.hour === otherTaskTime.end.hour &&
-                taskTime.end.minute < otherTaskTime.end.minute)
+            const startsAfterOtherTaskStarts = task.start.hour > otherTask.start.hour ||
+                (task.start.hour === otherTask.start.hour &&
+                    task.start.minute > otherTask.start.minute)
+            const startsBeforeOtherTaskEnds = task.start.hour < otherTask.end.hour ||
+                (task.start.hour === otherTask.end.hour &&
+                    task.start.minute < otherTask.end.minute)
+            const endsAfterOtherTaskStarts = task.end.hour > otherTask.start.hour ||
+                (task.end.hour === otherTask.start.hour &&
+                    task.end.minute > otherTask.start.minute)
+            const endsBeforeOtherTaskEnds = task.end.hour < otherTask.end.hour ||
+                (task.end.hour === otherTask.end.hour &&
+                    task.end.minute < otherTask.end.minute)
             if ((startsAfterOtherTaskStarts && startsBeforeOtherTaskEnds) ||
             (endsAfterOtherTaskStarts && endsBeforeOtherTaskEnds)) {
                 return true
@@ -122,18 +122,13 @@ export default class TaskDisplay extends React.Component {
         // combine tasks and available times for display
         const cells = [...tasks, ...this.state.availableTimes]
         const cellsSorted = cells.sort((taskA, taskB) => {
-                                const taskAStart = getTaskTime(taskA).start
-                                const taskBStart = getTaskTime(taskB).start
-                                return taskBStart.hour - taskAStart.hour ||
-                                taskBStart.minute - taskAStart.minute
+                                return taskB.start.hour - taskA.start.hour ||
+                                taskB.start.minute - taskA.start.minute
                             })
         const taskHours = []
         cellsSorted.forEach(cell => {
-            const hourStart = parseInt(cell.time_start.slice(0, 2))
-            const hourEnd = parseInt(cell.time_end.slice(0, 2))
-            const minuteEnd = parseInt(cell.time_end.slice(3, 5))
-            for (let i = hourStart; i <= hourEnd; i++) {
-                if (i !== hourEnd || minuteEnd) { // do not add task if ending 'on the hour'
+            for (let i = cell.start.hour; i <= cell.end.hour; i++) {
+                if (i !== cell.end.hour || cell.end.minute) { // do not add task if ending 'on the hour'
                     taskHours[i] = taskHours[i] ? 
                     [...taskHours[i], cell] :
                     [cell]
@@ -175,16 +170,13 @@ export default class TaskDisplay extends React.Component {
     }
 }
 
-export const getTaskTimeString = (taskTime) => {
-    const taskTimeArray = [taskTime.hour, taskTime.minute]
-    return taskTimeArray.map(time => time > 9 ? `${time}` : `0${time}`).join(':')
-}
-
 export const timesHaveChanged = (tasks, oldTasks) => {
     if (tasks.length !== oldTasks.length) { return true }
     for (let i = 0; i < tasks.length; i++) {
-        if (tasks[i].time_start !== oldTasks[i].time_start ||
-        tasks[i].time_end !== oldTasks[i].time_end) {
+        if ((tasks[i].start.hour !== oldTasks[i].start.hour ||
+            tasks[i].start.minute !== oldTasks[i].start.minute) ||
+        (tasks[i].end.hour !== oldTasks[i].end.hour ||
+            tasks[i].end.minute !== oldTasks[i].end.minute)) {
             return true
         }
     }
