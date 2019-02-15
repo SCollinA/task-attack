@@ -24,6 +24,8 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
             }
         }
     }
+    // if available time end time === task.start, add those available hours
+    // if available time start time ===  task.end, add those availble hours
     availableHours.sort((a, b) => a - b)
     availableMinutesEnd.sort((a, b) => a - b)
     availableMinutesStart.sort((a, b) => a - b)
