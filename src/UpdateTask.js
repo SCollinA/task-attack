@@ -43,7 +43,7 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
                                 updateTaskForm({ start: { hour: parseInt(event.target.value) }})
                             }}
                         >
-                            {availableHours.filter(hour => hour < task.end.hour)
+                            {availableHours.filter(hour => hour <= task.end.hour)
                             .map(hour => {
                                 return (
                                     <option key={hour}
@@ -78,7 +78,7 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
                             value={task.end.hour}
                             onChange={event => updateTaskForm({ end: { hour: parseInt(event.target.value) }})}
                             >
-                            {availableHours.filter(hour => hour > task.start.hour)
+                            {availableHours.filter(hour => hour >= task.start.hour)
                             .map(hour => {
                                 return (
                                     <option key={hour}
