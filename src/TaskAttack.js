@@ -19,44 +19,28 @@ export default class TaskAttack extends React.Component {
             selectedTask: null,
             selectedHour: null,
             updatingUser: false,
+            currentTime: new Date(),
         }
-        // this.autoScroll = setInterval(() => {
-        //     const taskHourPadding = document.getElementsByClassName('taskHourPadding')[0]
-        //     !this.props.selectedTask && taskHourPadding.scrollIntoView()
-        // }, 60 * 1000)  // 30 seconds
+        this.timeUpdate = setInterval(() => {
+            this.setState({ currentTime: new Date() })
+        }, 1000)
     }
 
     componentDidMount() {
         fetch('/attack')
         .then(res => res.json())
-        .then(data => this.scrubData({ ...data, username: data.user && data.user.name }))
+        .then(data => this.setState({ 
+            ...data, 
+            username: data.user && data.user.name 
+        }))
         .then(() => {
-            const taskHourPadding = document.getElementsByClassName('taskHourPadding')[0]
-            !this.props.selectedTask && taskHourPadding.scrollIntoView()
+            // const taskHourPadding = document.getElementsByClassName('taskHourPadding')[0]
+            // !this.props.selectedTask && taskHourPadding.scrollIntoView()
         })
     }
 
     componentWillUnmount() {
-        clearInterval(this.autoScroll)
-    }
-
-    scrubData(data) {
-        this.setState({
-            ...data,
-            // tasks: data.tasks ? data.tasks.map(task => {
-            //     return {
-            //         ...task,
-            //         time_start: task.time_start
-            //             .split(':')
-            //             .map(number => parseInt(number))
-            //             .slice(0, 2),
-            //         time_end: task.time_end
-            //             .split(':')
-            //             .map(number => parseInt(number))
-            //             .slice(0, 2),
-            //     }
-            // }) : this.state.tasks
-        })
+        clearInterval(this.timeUpdate)
     }
 
     // CREATE
@@ -82,7 +66,7 @@ export default class TaskAttack extends React.Component {
         })
         .then(res => res.json())
         // will need to receive all tasks here
-        .then(({tasks, newTask}) => this.scrubData({ tasks, selectedTask: newTask }))
+        .then(({tasks, newTask}) => this.setState({ tasks, selectedTask: newTask }))
     }
 
     // RETRIEVE
@@ -95,7 +79,7 @@ export default class TaskAttack extends React.Component {
             body: JSON.stringify(loginAttempt)
         })
         .then(res => res.json())
-        .then(data => this.scrubData({ ...data, username: data.user.name }))
+        .then(data => this.setState({ ...data, username: data.user.name }))
     }
 
     _selectUser = () => this.setState({ 
@@ -139,7 +123,7 @@ export default class TaskAttack extends React.Component {
         })
         .then(res => res.json())
         // will need to receive all tasks here
-        .then(tasks => this.scrubData({ 
+        .then(tasks => this.setState({ 
             tasks,
             // selectedTask: null
         }))
@@ -163,7 +147,7 @@ export default class TaskAttack extends React.Component {
     
     render() {
         const isLoggedIn = this.state.user && true
-        const currentTime = new Date()
+        const { currentTime } = this.state
         return (
             <div id='TaskAttack'>
                 <TaskHeader 
@@ -180,13 +164,6 @@ export default class TaskAttack extends React.Component {
                 || (
                     <div className='TaskAttack'
                         onClick={() => this.setState({ updatingUser: false })}
-                        // onScroll={() => { // reset auto scroll after user scrolls
-                        //     clearInterval(this.autoScroll)
-                        //     this.autoScroll = setInterval(() => {
-                        //         const taskHourPadding = document.getElementsByClassName('taskHourPadding')[0]
-                        //         !this.props.selectedTask && taskHourPadding.scrollIntoView()
-                        //     }, 1 * 1000)  // 30 seconds
-                        // }}
                     >
                         {this.state.updatingUser &&
                             <UpdateUser 
@@ -203,6 +180,7 @@ export default class TaskAttack extends React.Component {
                             updateTask={this._updateTask}
                             addTask={this._addTask}
                             deleteTask={this._deleteTask}
+                            currentTime={currentTime}
                         />
                         <div className='TaskTime'>
                             <h1>
@@ -215,6 +193,11 @@ export default class TaskAttack extends React.Component {
                                 {`${currentTime.getMinutes() > 9 ?
                                 currentTime.getMinutes() :
                                 `0${currentTime.getMinutes()}`}`}
+                            </h1>
+                            <h1>
+                                {`${currentTime.getSeconds() > 9 ?
+                                currentTime.getSeconds() :
+                                `0${currentTime.getSeconds()}`}`}
                             </h1>
                         </div>
                     </div>
