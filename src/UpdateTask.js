@@ -4,7 +4,7 @@ import TaskCancel from './TaskCancel'
 
 export default function UpdateTask({ task, updateTaskForm, selectedTask, selectTask, updateTask, availableTimes, deleteTask }) {
     const {start, end} = findTaskAvailable(task, availableTimes)
-    const { availableHours, availableMinutesStart, availableMinutesEnd } = findAvailability({start, end})
+    const { availableHours, availableMinutesStart, availableMinutesEnd } = findAvailability(task, start, end)
     return (
         <div className='UpdateTaskContainer'>
             <form id='UpdateTaskForm' 
@@ -137,36 +137,31 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
     )
 } 
 
-function findAvailability(task) {
+function findAvailability(task, start, end) {
     const availableHours = []
     const availableMinutesStart = []
     const availableMinutesEnd = []
     // loop through time of task adding to availability
-    for (let i = task.start.hour; i <= task.end.hour; i++) {
-        // add hour
+    for (let i = start.hour; i <= end.hour; i++) {
+        // add all hours of availability
         availableHours.push(i)
-        // if availability starts and ends in same hour
-        if (task.start.hour === task.end.hour) {
-            // add all minutes in that availability
-            for (let j = task.start.minute; j <= task.end.minute; j++) {
-                // do not add minute if already present
-                availableMinutesStart.includes(j) || availableMinutesStart.push(j)
-                availableMinutesEnd.includes(j) || availableMinutesEnd.push(j)
-            }
-            // if availability starts this hour
-        } else if (i === task.start.hour) {
-            // add minutes starting at availability start
-            for (let j = task.start.minute; j < 60; j++) {
-                availableMinutesStart.includes(j) || availableMinutesStart.push(j)
-            }
-            // add 0 minute of next hour?
-            // availableMinutesStart.includes(0) || availableMinutesStart.push(0)
-            // if availability ends this hour
-        } else if (i === task.end.hour) {
-            // add minutes up to availability end
-            for (let j = 0; j <= task.end.minute; j++) {
-                availableMinutesEnd.includes(j) || availableMinutesEnd.push(j)
-            }
+    }
+    // if task starts and ends in same hour
+    if (task.start.hour === task.end.hour) {
+        // add all minutes in that availability
+        for (let i = task.start.minute; i <= task.end.minute; i++) {
+            // do not add minute if already present
+            availableMinutesStart.includes(i) || availableMinutesStart.push(i)
+            availableMinutesEnd.includes(i) || availableMinutesEnd.push(i)
+        }
+    } else {
+        // add minutes starting at availability start
+        for (let i = task.start.minute; i < 60; i++) {
+            availableMinutesStart.includes(i) || availableMinutesStart.push(i)
+        }
+        // add minutes up to availability end
+        for (let i = 0; i <= task.end.minute; i++) {
+            availableMinutesEnd.includes(i) || availableMinutesEnd.push(i)
         }
     }
     availableHours.sort((a, b) => a - b)
