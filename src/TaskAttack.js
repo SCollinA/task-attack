@@ -37,8 +37,8 @@ export default class TaskAttack extends React.Component {
                 username: data.user && data.user.name 
             }))
             .then(() => {
-                // const taskHourPadding = document.getElementsByClassName('taskHourPadding')[0]
-                // !this.props.selectedTask && taskHourPadding.scrollIntoView()
+                const taskHourPadding = document.getElementById('taskHourPadding')
+                !this.props.selectedTask && taskHourPadding.scrollIntoView()
                 this.setState({ isLoading: false })
             })
         })
