@@ -24,58 +24,94 @@ export default class TaskDisplay extends React.Component {
     }
 
     findAvailableTimes(tasks) {
-        const availableTimes = []
+        const availableTimes = [] // array to push found available times
+        // free time task object
         const availableTask = {
             name: 'free time - click to add task',
             mandatory: false,
             active: true,
             free: true,
         }
-        if (tasks.length !== 0) {
-            for (let i = 0; i < tasks.length; i++) {
-                const task = tasks[i]
-                // come back to first task for last task's comparison
-                const prevTask = tasks[i + 1] || tasks[0]
-                // if start hour is not prev end hour or start minute is not prev end minute
-                if (task.start.hour !== prevTask.end.hour || 
-                task.start.minute !== prevTask.end.minute) {
-                    // if this was last task of day
-                    if (task.start.hour < prevTask.end.hour ||
-                        (task.start.hour === prevTask.end.hour &&
-                            task.start.minute < prevTask.end.minute)) {
-                        if (prevTask.end.hour < 23 || prevTask.end.minute < 59) {
-                            availableTimes.push({
-                                ...availableTask,
-                                start: prevTask.end,
-                                end: { hour: 23, minute: 59 },
-                            })
-                        }
-                        if (task.start.hour > 0 || task.start.minute > 0) {
-                            availableTimes.push({
-                                ...availableTask,
-                                start: { hour: 0, minute: 0 },
-                                end: task.start,
-                            })
-                        }
-                    } else {
-                        availableTimes.push({
-                            ...availableTask,
-                            start: prevTask.end,
-                            end: task.start,
-                        })
-                    }
-                }
-            }
-        } else { 
+        // if there are no tasks
+        if (tasks.length === 0) {
+            // push the whole day as free time
             availableTimes.push({ 
                 ...availableTask,
                 start: { hour: 0, minute: 0 },
                 end: { hour: 23, minute: 59 },
             })
-        }
-        (availableTimes.length > 0 ?
+        } else { // if there are tasks
+            // for each task
+            for (let i = 0; i < tasks.length; i++) {
+                // take the task
+                const task = tasks[i]
+                if (i === 0 && 
+                    (task.start.hour > 0 || task.start.minute > 0)) {
+                    availableTimes.push({
+                        ...availableTask,
+                        start: { hour: 0, minute: 0 },
+                        // if the first task starts on the hour
+                        end: task.start.minute === 0 ? 
+                        { // availability ends the hour before
+                            hour: task.start.hour - 1,
+                            minute: 59,
+                        } : { // else it ends the minute before
+                            hour: task.start.hour,
+                            minute: task.start.minute - 1,
+                        },
+                    })
+                // if this was last task of day
+                // if prev task does not end at 23:59
+                } else if (i === tasks.length - 1 && 
+                    (task.end.hour < 23 || task.end.minute < 59)) {
+                    // add remaining time in day
+                    availableTimes.push({
+                        ...availableTask,
+                        // if prev task ends on 59
+                        start: task.end.minute === 59 ? 
+                            { // advance to next hour
+                                hour: task.end.hour + 1,
+                                minute: 0,
+                            } : { // else just advance minute
+                                hour: task.end.hour,
+                                minute: task.end.minute + 1,
+                            },
+                            // last availability of day
+                        end: { hour: 23, minute: 59 },
+                    })
+                // this is just a task in the middle 
+                } else {
+                    console.log('free time in the middle')
+                    console.log(task)
+                    availableTimes.push({
+                        ...availableTask,
+                        // if prev task ends on 59
+                        start: tasks[i - 1].end.minute === 59 ? 
+                        { // advance to next hour
+                            hour: tasks[i - 1].end.hour + 1,
+                            minute: 0,
+                        } : { // else just advance minute
+                            hour: tasks[i - 1].end.hour,
+                            minute: tasks[i - 1].end.minute + 1,
+                        },
+                        // if the first task starts on the hour
+                        end: task.start.minute === 0 ? 
+                        { // availability ends the hour before
+                            hour: task.start.hour - 1,
+                            minute: 59,
+                        } : { // else it ends the minute before
+                            hour: task.start.hour,
+                            minute: task.start.minute - 1,
+                        },
+                    })
+                    console.log(availableTimes)
+                } // if free time starts or ends day
+            } // for each task loop complete
+        } // if there are tasks complete
+        // if available times is empty, the day is full
+        availableTimes.length > 0 ?
         this.setState({ availableTimes, isFull: false }) :
-        this.setState({ availableTimes, isFull: true }))
+        this.setState({ availableTimes, isFull: true })
     }
 
     _timeIsTaken = (task) => {

@@ -3,8 +3,8 @@ import TaskDelete from './TaskDelete'
 import TaskCancel from './TaskCancel'
 
 export default function UpdateTask({ task, updateTaskForm, selectedTask, selectTask, updateTask, availableTimes, deleteTask }) {
-    const taskAvailable = findTaskAvailable(task, availableTimes)
-    const { availableHours, availableMinutesStart, availableMinutesEnd } = findAvailability(taskAvailable)
+    const {start, end} = findTaskAvailable(task, availableTimes)
+    const { availableHours, availableMinutesStart, availableMinutesEnd } = findAvailability({start, end})
     return (
         <div className='UpdateTaskContainer'>
             <form id='UpdateTaskForm' 
@@ -142,18 +142,29 @@ function findAvailability(task) {
     const availableMinutesStart = []
     const availableMinutesEnd = []
     // loop through time of task adding to availability
+    console.log(task)
     for (let i = task.start.hour; i <= task.end.hour; i++) {
-        availableHours.includes(i) || availableHours.push(i)
-        if (i === task.start.hour && task.start.hour === task.end.hour) {
+        // add hour
+        availableHours.push(i)
+        // if availability starts and ends in same hour
+        if (task.start.hour === task.end.hour) {
+            // add all minutes in that availability
             for (let j = task.start.minute; j <= task.end.minute; j++) {
+                // do not add minute if already present
                 availableMinutesStart.includes(j) || availableMinutesStart.push(j)
                 availableMinutesEnd.includes(j) || availableMinutesEnd.push(j)
             }
+            // if availability starts this hour
         } else if (i === task.start.hour) {
+            // add minutes starting at availability start
             for (let j = task.start.minute; j < 60; j++) {
                 availableMinutesStart.includes(j) || availableMinutesStart.push(j)
             }
+            // add 0 minute of next hour?
+            // availableMinutesStart.includes(0) || availableMinutesStart.push(0)
+            // if availability ends this hour
         } else if (i === task.end.hour) {
+            // add minutes up to availability end
             for (let j = 0; j <= task.end.minute; j++) {
                 availableMinutesEnd.includes(j) || availableMinutesEnd.push(j)
             }
@@ -185,8 +196,8 @@ function findTaskAvailable(task, availableTimes) {
         // if time.start.minute === task.end.minut
         // taskAvailable.end = time.end
         const availableEnd = availableTimes.find(end => {
-            return end.start.hour === taskAvailable.end.hour &&
-            end.start.minute === taskAvailable.end.minute
+            return (end.start.hour === taskAvailable.end.hour &&
+            end.start.minute === taskAvailable.end.minute)
         })
         taskAvailable.end = availableEnd ? availableEnd.end : taskAvailable.end    
         // repeat until no availableTimes found

@@ -25,7 +25,6 @@ export default class TaskCell extends React.Component {
             }
         }
         const updatingTask = { ...this.state.task, ...task, ...taskTime }
-        console.log(taskTime)
         if (taskTimeIsValid(taskTime) && !timeIsTaken(updatingTask)) {
             this.setState({ 
                 task: updatingTask,
