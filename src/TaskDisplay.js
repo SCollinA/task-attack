@@ -208,7 +208,7 @@ export default class TaskDisplay extends React.Component {
                         `
                     }}
                 >
-                    <div className='taskHourPadding'></div>
+                    <div id='taskHourPadding'></div>
                     <h1>you are here</h1>
                     <div className='taskHoursComplete'
                         style={{

@@ -173,7 +173,7 @@ html, body, #root, #TaskAttack {
   justify-content: flex-end;
 }
 
-.taskHourPadding {
+#taskHourPadding {
   position: relative;
   height: 15%;
 }
@@ -189,7 +189,7 @@ html, body, #root, #TaskAttack {
   z-index: -1;
 }
 
-.taskHourPadding + h1 {
+#taskHourPadding + h1 {
   position: sticky;
   top: 1%;
   right: 10%;
