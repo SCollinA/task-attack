@@ -27,12 +27,12 @@ html, body, #root, #TaskAttack {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  font-size: 4em;
+  letter-spacing: 75px;
 }
-
-.TaskLoad {
+.TaskLoad > svg {
   animation: taskLoad 5s linear infinite;
 }
-
 @keyframes taskLoad {
   from {
     transform: rotate(0deg);
