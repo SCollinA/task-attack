@@ -167,7 +167,7 @@ html, body, #root, #TaskAttack {
   top: 0;
   height: 100%;
   width: 100%;
-  z-index: -1;
+  z-index: -2;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -179,7 +179,9 @@ html, body, #root, #TaskAttack {
 }
 
 .taskHoursComplete {
-  background-color: rgba(0, 0, 0, 0.5);
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  border-top: dotted black 5px;
+  border-radius: unset;
   width: 100%;
   position: relative;
   bottom: 0;
@@ -187,7 +189,7 @@ html, body, #root, #TaskAttack {
   z-index: -1;
 }
 
-.taskHoursComplete > h1 {
+.taskHourPadding + h1 {
   position: sticky;
   top: 1%;
   right: 10%;

@@ -188,8 +188,28 @@ export default class TaskDisplay extends React.Component {
                         />
                     )).reverse()}
                 </div>
-                <div className='taskHoursCompleteWrapper'>
+                <div className='taskHoursCompleteWrapper'
+                    style={{
+                        background: `
+                            linear-gradient(
+                                to bottom,
+                                transparent, 
+                                ${
+                                    100 - 
+                                    ((((currentTime.getHours() * 60) + 
+                                        currentTime.getMinutes()) 
+                                        / (24 * 60)) 
+                                    * 100)
+                                }%, 
+                                rgba(0, 0, 0, 0.5),
+                                rgba(0, 0, 0, 0.75),
+                                rgba(0, 0, 0, 1)
+                            )
+                        `
+                    }}
+                >
                     <div className='taskHourPadding'></div>
+                    <h1>you are here</h1>
                     <div className='taskHoursComplete'
                         style={{
                             height: `
@@ -200,7 +220,6 @@ export default class TaskDisplay extends React.Component {
                             `,
                         }}
                         >
-                        <h1>you are here</h1>
                     </div>
                 </div>
             </div>
