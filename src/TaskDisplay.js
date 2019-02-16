@@ -45,6 +45,8 @@ export default class TaskDisplay extends React.Component {
             for (let i = 0; i < tasks.length; i++) {
                 // take the task
                 const task = tasks[i]
+                // if this is the first task
+                // if it starts after midnight
                 if (i === 0 && 
                     (task.start.hour > 0 || task.start.minute > 0)) {
                     availableTimes.push({
@@ -60,27 +62,10 @@ export default class TaskDisplay extends React.Component {
                             minute: task.start.minute - 1,
                         },
                     })
-                // if this was last task of day
-                // if prev task does not end at 23:59
-                } else if (i === tasks.length - 1 && 
-                    (task.end.hour < 23 || task.end.minute < 59)) {
-                    // add remaining time in day
-                    availableTimes.push({
-                        ...availableTask,
-                        // if prev task ends on 59
-                        start: task.end.minute === 59 ? 
-                            { // advance to next hour
-                                hour: task.end.hour + 1,
-                                minute: 0,
-                            } : { // else just advance minute
-                                hour: task.end.hour,
-                                minute: task.end.minute + 1,
-                            },
-                            // last availability of day
-                        end: { hour: 23, minute: 59 },
-                    })
-                // this is just a task in the middle 
-                } else {
+                // if there is time before this task
+                } else if (task.start.hour > tasks[i - 1].end.hour ||
+                    task.start.minute > tasks[i - 1].end.minute + 1) {
+                    // add the free time before this task
                     availableTimes.push({
                         ...availableTask,
                         // if prev task ends on 59
@@ -102,7 +87,27 @@ export default class TaskDisplay extends React.Component {
                             minute: task.start.minute - 1,
                         },
                     })
-                } // if free time starts or ends day
+                } // if free time starts or ends day complete
+                // if this was last task of day
+                // if this task does not end at 23:59
+                if (i === tasks.length - 1 && 
+                    (task.end.hour < 23 || task.end.minute < 59)) {
+                    // add remaining time in day
+                    availableTimes.push({
+                        ...availableTask,
+                        // if prev task ends on 59
+                        start: task.end.minute === 59 ? 
+                            { // advance to next hour
+                                hour: task.end.hour + 1,
+                                minute: 0,
+                            } : { // else just advance minute
+                                hour: task.end.hour,
+                                minute: task.end.minute + 1,
+                            },
+                            // last availability of day
+                        end: { hour: 23, minute: 59 },
+                    })
+                }
             } // for each task loop complete
         } // if there are tasks complete
         // if available times is empty, the day is full

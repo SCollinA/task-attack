@@ -204,5 +204,6 @@ function findTaskAvailable(task, availableTimes) {
     } while (!(taskAvailable.start.hour === prevTask.start.hour && 
         taskAvailable.start.minute === prevTask.start.minute) && !(taskAvailable.end.hour === prevTask.end.hour && 
         taskAvailable.end.minute === prevTask.end.minute))
+    console.log(taskAvailable)
     return taskAvailable
 }
