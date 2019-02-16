@@ -93,7 +93,7 @@ export default function UpdateTask({ task, updateTaskForm, selectedTask, selectT
                     <label name='endMinute'>end minutes
                         <select name='endMinute' 
                             value={task.end.minute}
-                            onChange={event => updateTaskForm({ end: {minute: parseInt(event.target.value) }})}
+                            onChange={event => updateTaskForm({ end: { minute: parseInt(event.target.value) }})}
                         >
                             {availableMinutesEnd.map(minute => {
                                 return (
@@ -154,7 +154,6 @@ function findAvailability(task, start, end) {
         end: task.start.hour < task.end.hour ? 60 : task.end.minute
     }
     while (minutesStart.start < minutesStart.end) {
-        console.log(minutesStart.start, minutesStart.end)
         availableMinutesStart.push(minutesStart.start)
         minutesStart.start++
     }

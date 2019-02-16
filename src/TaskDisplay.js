@@ -46,22 +46,23 @@ export default class TaskDisplay extends React.Component {
                 // take the task
                 const task = tasks[i]
                 // if this is the first task
-                // if it starts after midnight
-                if (i === 0 && 
-                    (task.start.hour > 0 || task.start.minute > 0)) {
-                    availableTimes.push({
-                        ...availableTask,
-                        start: { hour: 0, minute: 0 },
-                        // if the first task starts on the hour
-                        end: task.start.minute === 0 ? 
-                        { // availability ends the hour before
-                            hour: task.start.hour - 1,
-                            minute: 59,
-                        } : { // else it ends the minute before
-                            hour: task.start.hour,
-                            minute: task.start.minute - 1,
-                        },
-                    })
+                if (i === 0) {
+                    // if it starts after midnight
+                    if (task.start.hour > 0 || task.start.minute > 0) {
+                        availableTimes.push({
+                            ...availableTask,
+                            start: { hour: 0, minute: 0 },
+                            // if the first task starts on the hour
+                            end: task.start.minute === 0 ? 
+                            { // availability ends the hour before
+                                hour: task.start.hour - 1,
+                                minute: 59,
+                            } : { // else it ends the minute before
+                                hour: task.start.hour,
+                                minute: task.start.minute - 1,
+                            },
+                        })
+                    }
                 // if there is time before this task
                 } else if (task.start.hour > tasks[i - 1].end.hour ||
                     task.start.minute > tasks[i - 1].end.minute + 1) {
