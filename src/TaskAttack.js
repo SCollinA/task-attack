@@ -4,6 +4,7 @@ import TaskHeader from './TaskHeader'
 import Login from './TaskLogin';
 import TaskDisplay from './TaskDisplay';
 import UpdateUser from './UpdateUser';
+import TaskLoad from './TaskLoad'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserPlus, faUserAstronaut, faDoorClosed, faDoorOpen, faPlus, faTrashAlt, faBan } from '@fortawesome/free-solid-svg-icons'
@@ -20,6 +21,7 @@ export default class TaskAttack extends React.Component {
             selectedHour: null,
             updatingUser: false,
             currentTime: new Date(),
+            isLoading: false,
         }
         this.timeUpdate = setInterval(() => {
             this.setState({ currentTime: new Date() })
@@ -27,15 +29,18 @@ export default class TaskAttack extends React.Component {
     }
 
     componentDidMount() {
-        fetch('/attack')
-        .then(res => res.json())
-        .then(data => this.setState({ 
-            ...data, 
-            username: data.user && data.user.name 
-        }))
-        .then(() => {
-            // const taskHourPadding = document.getElementsByClassName('taskHourPadding')[0]
-            // !this.props.selectedTask && taskHourPadding.scrollIntoView()
+        this.setState({ isLoading: true }, () => {
+            fetch('/attack')
+            .then(res => res.json())
+            .then(data => this.setState({ 
+                ...data, 
+                username: data.user && data.user.name 
+            }))
+            .then(() => {
+                // const taskHourPadding = document.getElementsByClassName('taskHourPadding')[0]
+                // !this.props.selectedTask && taskHourPadding.scrollIntoView()
+                this.setState({ isLoading: false })
+            })
         })
     }
 
@@ -45,41 +50,50 @@ export default class TaskAttack extends React.Component {
 
     // CREATE
     _register = (newUser) => {
-        fetch('signup', {
-            method: 'post',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(newUser)
+        this.setState({ isLoading: true }, () => {
+            fetch('signup', {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newUser)
+            })
+            .then(res => res.json())
+            .then(user => this.setState({ user, username: user.name }))
+            .then(() => this.setState({ isLoading: false }))
         })
-        .then(res => res.json())
-        .then(user => this.setState({ user, username: user.name }))
     }
 
     _addTask = (newTask) => {
-        fetch('addTask', {
-            method: 'post',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(newTask)
+        this.setState({ isLoading: true }, () => {
+            fetch('addTask', {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newTask)
+            })
+            .then(res => res.json())
+            // will need to receive all tasks here
+            .then(({tasks, newTask}) => this.setState({ tasks, selectedTask: newTask }))
+            .then(() => this.setState({ isLoading: false }))
         })
-        .then(res => res.json())
-        // will need to receive all tasks here
-        .then(({tasks, newTask}) => this.setState({ tasks, selectedTask: newTask }))
     }
 
     // RETRIEVE
     _login = (loginAttempt) => {
-        fetch('login', {
-            method: 'post',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(loginAttempt)
+        this.setState({ isLoading: true }, () => {
+            fetch('login', {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(loginAttempt)
+            })
+            .then(res => res.json())
+            .then(data => this.setState({ ...data, username: data.user.name }))
+            .then(() => this.setState({ isLoading: false }))
         })
-        .then(res => res.json())
-        .then(data => this.setState({ ...data, username: data.user.name }))
     }
 
     _selectUser = () => this.setState({ 
@@ -102,31 +116,37 @@ export default class TaskAttack extends React.Component {
     _updateUsername = (username) => this.setState({ username })
 
     _updateUser = (updatedUser) => {
-        fetch('updateUser', {
-            method: 'post',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(updatedUser)
+        this.setState({ isLoading: true }, () => {
+            fetch('updateUser', {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updatedUser)
+            })
+            .then(res => res.json())
+            .then(user => this.setState({ user, updatingUser: false }))
+            .then(() => this.setState({ isLoading: false }))
         })
-        .then(res => res.json())
-        .then(user => this.setState({ user, updatingUser: false }))
     }
 
     _updateTask = (updatedTask) => {
-        fetch(`updateTask/${updatedTask.id}`, {
-            method: 'post',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(updatedTask)
+        this.setState({ isLoading: true}, () => {
+            fetch(`updateTask/${updatedTask.id}`, {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updatedTask)
+            })
+            .then(res => res.json())
+            // will need to receive all tasks here
+            .then(tasks => this.setState({ 
+                tasks,
+                // selectedTask: null
+            }))
+            .then(() => this.setState({ isLoading: false }))
         })
-        .then(res => res.json())
-        // will need to receive all tasks here
-        .then(tasks => this.setState({ 
-            tasks,
-            // selectedTask: null
-        }))
     }
 
     // DELETE
@@ -147,9 +167,10 @@ export default class TaskAttack extends React.Component {
     
     render() {
         const isLoggedIn = this.state.user && true
-        const { currentTime } = this.state
+        const { currentTime, isLoading } = this.state
         return (
             <div id='TaskAttack'>
+                {isLoading && <TaskLoad />}
                 <TaskHeader 
                     username={this.state.username}
                     isLoggedIn={isLoggedIn}
