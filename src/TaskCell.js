@@ -70,7 +70,7 @@ export default class TaskCell extends React.Component {
                             getTaskTimeString(this.props.task.start) :
                             getTaskTimeString(this.state.task.start)}
                         </h6>)}
-                        <h4>{this.state.task.name}</h4>
+                        <h4>{task.name}</h4>
                         {/* {this.state.task.end.hour === hour && 
                         (<h6>
                             {this.state.task.free ?

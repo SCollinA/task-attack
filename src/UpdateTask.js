@@ -146,24 +146,30 @@ function findAvailability(task, start, end) {
         // add all hours of availability
         availableHours.push(i)
     }
-    // if task starts and ends in same hour
-    if (task.start.hour === task.end.hour) {
-        // add all minutes in that availability
-        for (let i = task.start.minute; i <= task.end.minute; i++) {
-            // do not add minute if already present
-            availableMinutesStart.includes(i) || availableMinutesStart.push(i)
-            availableMinutesEnd.includes(i) || availableMinutesEnd.push(i)
-        }
-    } else {
-        // add minutes starting at availability start
-        for (let i = task.start.minute; i < 60; i++) {
-            availableMinutesStart.includes(i) || availableMinutesStart.push(i)
-        }
-        // add minutes up to availability end
-        for (let i = 0; i <= task.end.minute; i++) {
-            availableMinutesEnd.includes(i) || availableMinutesEnd.push(i)
-        }
+    // available minutes start
+    let minutesStart = {
+        // set to 0 if availability starts on prev hour
+        start: task.start.hour > start.hour ? 0 : start.minute,
+        // set to task end if ends on same hour
+        end: task.start.hour < task.end.hour ? 60 : task.end.minute
     }
+    while (minutesStart.start < minutesStart.end) {
+        console.log(minutesStart.start, minutesStart.end)
+        availableMinutesStart.push(minutesStart.start)
+        minutesStart.start++
+    }
+    // available minutes end 
+    let minutesEnd = {
+        // set to 0 if availability starts on prev hour
+        start: task.start.hour < task.end.hour ? 0 : task.end.minute,
+        // set to task end if ends on same hour
+        end: task.end.hour < end.hour ? 60 : end.minute
+    }
+    while (minutesEnd.start < minutesEnd.end) {
+        availableMinutesEnd.push(minutesEnd.start)
+        minutesEnd.start++
+    }
+
     availableHours.sort((a, b) => a - b)
     availableMinutesEnd.sort((a, b) => a - b)
     availableMinutesStart.sort((a, b) => a - b)
@@ -174,7 +180,6 @@ function findTaskAvailable(task, availableTimes) {
     const taskAvailable = { ...task } // make copy of task
     const prevAvailable = { ...taskAvailable } // make copy of availability for task
     do {
-        console.log(task, prevAvailable, taskAvailable)
         // reset copy of availability
         prevAvailable.start = { ...taskAvailable.start }
         prevAvailable.end = { ...taskAvailable.end }
