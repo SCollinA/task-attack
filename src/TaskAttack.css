@@ -27,8 +27,8 @@ html, body, #root, #TaskAttack {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  font-size: 4em;
-  letter-spacing: 75px;
+  font-size: 3em;
+  letter-spacing: 31px;
 }
 .TaskLoad > svg {
   animation: taskLoad 5s linear infinite;
