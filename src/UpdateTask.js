@@ -142,7 +142,6 @@ function findAvailability(task) {
     const availableMinutesStart = []
     const availableMinutesEnd = []
     // loop through time of task adding to availability
-    console.log(task)
     for (let i = task.start.hour; i <= task.end.hour; i++) {
         // add hour
         availableHours.push(i)
@@ -178,32 +177,37 @@ function findAvailability(task) {
 
 function findTaskAvailable(task, availableTimes) {
     const taskAvailable = { ...task } // make copy of task
-    const prevTask = { ...taskAvailable }
+    const prevAvailable = { ...taskAvailable } // make copy of availability for task
     do {
-        prevTask.start = { ...taskAvailable.start }
-        prevTask.end = { ...taskAvailable.end }
-        // filter availableTime which time.end.hour === task.start.hour
-        // for each time
-        // if time.end.minute === task.start.minute
-        // taskAvailable.start = time.start
-        const availableStart = availableTimes.find(start => {
-            return start.end.hour === taskAvailable.start.hour && 
-            start.end.minute === taskAvailable.start.minute
+        console.log(task, prevAvailable, taskAvailable)
+        // reset copy of availability
+        prevAvailable.start = { ...taskAvailable.start }
+        prevAvailable.end = { ...taskAvailable.end }
+        // filter availableTime which time.end === task.start
+        // if time ends on hour, task must start on hour
+        const availableStart = availableTimes.find(time => {
+            return time.end.minute === 59 ?
+            time.end.hour === taskAvailable.start.hour - 1 &&
+            taskAvailable.start.minute === 0 :
+            time.end.hour === taskAvailable.start.hour && 
+            time.end.minute === taskAvailable.start.minute - 1
         })
+        // if an available start time was found, apply it
         taskAvailable.start = availableStart ? availableStart.start : taskAvailable.start
-        // filter availableTime which time.start.hour === task.end.hour
-        // for each time
-        // if time.start.minute === task.end.minut
-        // taskAvailable.end = time.end
-        const availableEnd = availableTimes.find(end => {
-            return (end.start.hour === taskAvailable.end.hour &&
-            end.start.minute === taskAvailable.end.minute)
+        // filter availableTime which time.start === task.end
+        // if time starts on hour, task must end on hour
+        const availableEnd = availableTimes.find(time => {
+            return time.start.minute === 0 ?
+            time.start.hour === taskAvailable.end.hour + 1 &&
+            taskAvailable.end.minute === 59 :
+            time.start.hour === taskAvailable.end.hour &&
+            time.start.minute === taskAvailable.end.minute + 1
         })
+        // if available end time found, apply it
         taskAvailable.end = availableEnd ? availableEnd.end : taskAvailable.end    
         // repeat until no availableTimes found
-    } while (!(taskAvailable.start.hour === prevTask.start.hour && 
-        taskAvailable.start.minute === prevTask.start.minute) && !(taskAvailable.end.hour === prevTask.end.hour && 
-        taskAvailable.end.minute === prevTask.end.minute))
-    console.log(taskAvailable)
+    } while (!(taskAvailable.start.hour === prevAvailable.start.hour && 
+        taskAvailable.start.minute === prevAvailable.start.minute) && !(taskAvailable.end.hour === prevAvailable.end.hour && 
+        taskAvailable.end.minute === prevAvailable.end.minute))
     return taskAvailable
 }
