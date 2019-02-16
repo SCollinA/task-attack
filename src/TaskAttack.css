@@ -29,6 +29,19 @@ html, body, #root, #TaskAttack {
   justify-content: space-around;
 }
 
+.TaskLoad {
+  animation: taskLoad 5s linear infinite;
+}
+
+@keyframes taskLoad {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .TaskHeader {
   /* height: 10%; */
   width: 100%;
