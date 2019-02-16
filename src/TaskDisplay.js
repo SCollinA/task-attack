@@ -81,8 +81,6 @@ export default class TaskDisplay extends React.Component {
                     })
                 // this is just a task in the middle 
                 } else {
-                    console.log('free time in the middle')
-                    console.log(task)
                     availableTimes.push({
                         ...availableTask,
                         // if prev task ends on 59
@@ -104,7 +102,6 @@ export default class TaskDisplay extends React.Component {
                             minute: task.start.minute - 1,
                         },
                     })
-                    console.log(availableTimes)
                 } // if free time starts or ends day
             } // for each task loop complete
         } // if there are tasks complete
