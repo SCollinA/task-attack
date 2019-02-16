@@ -4,6 +4,7 @@ import TaskHeader from './TaskHeader'
 import Login from './TaskLogin';
 import TaskDisplay from './TaskDisplay';
 import UpdateUser from './UpdateUser';
+import TaskLoad from './TaskLoad'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserPlus, faUserAstronaut, faDoorClosed, faDoorOpen, faPlus, faTrashAlt, faBan } from '@fortawesome/free-solid-svg-icons'
@@ -36,8 +37,8 @@ export default class TaskAttack extends React.Component {
                 username: data.user && data.user.name 
             }))
             .then(() => {
-                const taskHourPadding = document.getElementsByClassName('taskHourPadding')[0]
-                !this.props.selectedTask && taskHourPadding.scrollIntoView()
+                // const taskHourPadding = document.getElementsByClassName('taskHourPadding')[0]
+                // !this.props.selectedTask && taskHourPadding.scrollIntoView()
                 this.setState({ isLoading: false })
             })
         })
@@ -166,9 +167,10 @@ export default class TaskAttack extends React.Component {
     
     render() {
         const isLoggedIn = this.state.user && true
-        const { currentTime } = this.state
+        const { currentTime, isLoading } = this.state
         return (
             <div id='TaskAttack'>
+                {isLoading && <TaskLoad />}
                 <TaskHeader 
                     username={this.state.username}
                     isLoggedIn={isLoggedIn}
